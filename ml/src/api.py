@@ -42,8 +42,8 @@ app = FastAPI(
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "http://localhost:3000",   # Next.js dev server
-        "https://pathwise.app",    # Production (update with real domain)
+        "http://localhost:3000",
+        "https://pathwise.mr-asanteeprog.workers.dev",
     ],
     allow_credentials=True,
     allow_methods=["*"],

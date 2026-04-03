@@ -42,6 +42,7 @@ export const viewport: Viewport = {
   themeColor: "#4f46e5",
   width: "device-width",
   initialScale: 1,
+  maximumScale: 1,
 };
 
 export default function RootLayout({
@@ -63,7 +64,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="min-h-screen bg-white antialiased">{children}</body>
+      <body className="min-h-screen bg-white antialiased overflow-x-hidden">{children}</body>
     </html>
   );
 }

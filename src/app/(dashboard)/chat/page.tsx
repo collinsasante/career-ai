@@ -264,7 +264,7 @@ export default function ChatPage() {
   const isEmpty = messages.length === 0 && !isStreaming;
 
   return (
-    <div className="flex flex-col h-[calc(100vh-4rem)] lg:h-screen bg-surface-subtle">
+    <div className="flex flex-col -mx-4 sm:-mx-6 lg:-mx-8 -my-8 h-[calc(100vh-3.5rem)] lg:h-screen bg-surface-subtle">
       {/* Header */}
       <div className="bg-white border-b border-slate-100 px-6 py-4 flex items-center justify-between flex-shrink-0">
         <div className="flex items-center gap-3">

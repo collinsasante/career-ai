@@ -34,22 +34,40 @@ const INTEREST_SUGGESTIONS = [
 ];
 
 const SKILL_SUGGESTIONS = [
-  "HTML/CSS", "JavaScript", "TypeScript", "Python", "Java", "C++", "C#", "Go", "Rust", "PHP",
-  "React", "Next.js", "Vue.js", "Angular", "Node.js", "Express", "FastAPI", "Django", "Laravel",
-  "SQL", "PostgreSQL", "MySQL", "MongoDB", "Firebase", "Supabase", "Redis",
-  "Git", "Docker", "Kubernetes", "Linux", "Bash / Shell", "Terraform", "CI/CD",
-  "AWS", "Azure", "Google Cloud",
-  "Swift", "Kotlin", "React Native", "Flutter",
-  "Figma", "Adobe XD", "Photoshop", "Illustrator", "After Effects", "Premiere Pro",
-  "Excel / Spreadsheets", "Power BI", "Tableau", "R", "MATLAB",
-  "Machine Learning", "TensorFlow", "PyTorch", "Scikit-learn", "Data Analysis", "Statistics",
-  "Project Management", "Agile / Scrum", "Product Roadmaps", "JIRA",
-  "Public Speaking", "Writing & Copywriting", "Technical Writing", "Research",
-  "Team Leadership", "Negotiation", "Customer Service", "Sales",
-  "SEO", "Google Analytics", "Social Media Management", "Email Marketing", "PPC Advertising",
-  "Financial Modelling", "Accounting", "Budgeting", "Bookkeeping",
-  "Video Editing", "Photography", "3D Modelling", "Animation",
-  "Networking", "Penetration Testing", "SIEM", "Risk Assessment",
+  // Communication & soft skills
+  "Public Speaking", "Written Communication", "Active Listening", "Storytelling",
+  "Negotiation", "Conflict Resolution", "Persuasion", "Presentation Skills",
+  // Leadership & teamwork
+  "Team Leadership", "People Management", "Mentoring", "Collaboration",
+  "Decision Making", "Critical Thinking", "Problem Solving", "Time Management",
+  // Business & finance
+  "Project Management", "Budgeting", "Financial Analysis", "Accounting",
+  "Business Development", "Sales", "Customer Service", "Market Research",
+  "Strategic Planning", "Stakeholder Management", "Contract Negotiation",
+  // Marketing & creative
+  "Social Media Management", "Content Writing", "Copywriting", "SEO",
+  "Brand Strategy", "Email Marketing", "Photography", "Video Editing",
+  "Graphic Design", "Illustration", "UI/UX Design",
+  // Research & analysis
+  "Data Analysis", "Research", "Report Writing", "Statistics",
+  "Excel / Spreadsheets", "Survey Design", "Literature Review",
+  // Healthcare & wellbeing
+  "Patient Care", "First Aid", "Clinical Assessment", "Health Education",
+  "Counselling", "Mental Health Support", "Nutrition & Dietetics",
+  // Education & training
+  "Teaching", "Curriculum Design", "Training & Facilitation", "Tutoring",
+  "Coaching", "E-Learning Development",
+  // Legal & compliance
+  "Legal Research", "Contract Drafting", "Compliance & Regulation", "Case Management",
+  // Trades & practical
+  "Carpentry", "Electrical Work", "Plumbing", "Welding",
+  "Vehicle Maintenance", "Construction Planning", "Health & Safety",
+  // Technology (general)
+  "Python", "JavaScript", "SQL", "Excel / Spreadsheets", "Data Visualisation",
+  "Web Development", "Cybersecurity", "IT Support", "Network Administration",
+  // Science & environment
+  "Laboratory Skills", "Field Research", "Environmental Assessment",
+  "GIS & Mapping", "Scientific Writing",
 ];
 
 const INDUSTRIES = [
@@ -380,7 +398,7 @@ export default function OnboardingPage() {
                 <TagInput
                   label="Areas of interest"
                   hint="Add at least 2"
-                  placeholder="Type an interest, e.g. Machine Learning, Marketing…"
+                  placeholder="Type an interest, e.g. Healthcare, Marketing, Engineering…"
                   suggestions={INTEREST_SUGGESTIONS}
                   selected={data.interests}
                   onChange={(vals) => update({ interests: vals })}
@@ -401,7 +419,7 @@ export default function OnboardingPage() {
                 <TagInput
                   label="Skills you currently have"
                   hint="Include both technical and soft skills — add at least 2"
-                  placeholder="Type a skill, e.g. Python, Project Management…"
+                  placeholder="Type a skill, e.g. Public Speaking, Project Management…"
                   suggestions={SKILL_SUGGESTIONS}
                   selected={data.skills}
                   onChange={(vals) => update({ skills: vals })}
@@ -410,7 +428,7 @@ export default function OnboardingPage() {
                 <TagInput
                   label="Areas you feel less confident in"
                   hint="Knowing your gaps helps us build a better roadmap"
-                  placeholder="Type a skill gap, e.g. Public Speaking, Docker…"
+                  placeholder="Type a skill gap, e.g. Public Speaking, Data Analysis…"
                   suggestions={SKILL_SUGGESTIONS}
                   selected={data.weak_areas}
                   onChange={(vals) => update({ weak_areas: vals })}
@@ -483,7 +501,7 @@ export default function OnboardingPage() {
                   <div className="flex gap-2">
                     <input
                       className="input-base flex-1"
-                      placeholder="e.g. Start my own business, work at a tech company…"
+                      placeholder="e.g. Start my own business, become a nurse, open a practice…"
                       value={goalInput}
                       onChange={(e) => setGoalInput(e.target.value)}
                       onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), addGoal())}

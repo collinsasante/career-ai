@@ -37,22 +37,40 @@ const INTEREST_SUGGESTIONS = [
 ];
 
 const SKILL_SUGGESTIONS = [
-  "HTML/CSS", "JavaScript", "TypeScript", "Python", "Java", "C++", "C#", "Go", "Rust", "PHP",
-  "React", "Next.js", "Vue.js", "Angular", "Node.js", "Express", "FastAPI", "Django", "Laravel",
-  "SQL", "PostgreSQL", "MySQL", "MongoDB", "Firebase", "Supabase", "Redis",
-  "Git", "Docker", "Kubernetes", "Linux", "Bash / Shell", "Terraform", "CI/CD",
-  "AWS", "Azure", "Google Cloud",
-  "Swift", "Kotlin", "React Native", "Flutter",
-  "Figma", "Adobe XD", "Photoshop", "Illustrator", "After Effects", "Premiere Pro",
-  "Excel / Spreadsheets", "Power BI", "Tableau", "R", "MATLAB",
-  "Machine Learning", "TensorFlow", "PyTorch", "Scikit-learn", "Data Analysis", "Statistics",
-  "Project Management", "Agile / Scrum", "Product Roadmaps", "JIRA",
-  "Public Speaking", "Writing & Copywriting", "Technical Writing", "Research",
-  "Team Leadership", "Negotiation", "Customer Service", "Sales",
-  "SEO", "Google Analytics", "Social Media Management", "Email Marketing", "PPC Advertising",
-  "Financial Modelling", "Accounting", "Budgeting", "Bookkeeping",
-  "Video Editing", "Photography", "3D Modelling", "Animation",
-  "Networking", "Penetration Testing", "SIEM", "Risk Assessment",
+  // Communication & soft skills
+  "Public Speaking", "Written Communication", "Active Listening", "Storytelling",
+  "Negotiation", "Conflict Resolution", "Persuasion", "Presentation Skills",
+  // Leadership & teamwork
+  "Team Leadership", "People Management", "Mentoring", "Collaboration",
+  "Decision Making", "Critical Thinking", "Problem Solving", "Time Management",
+  // Business & finance
+  "Project Management", "Budgeting", "Financial Analysis", "Accounting",
+  "Business Development", "Sales", "Customer Service", "Market Research",
+  "Strategic Planning", "Stakeholder Management", "Contract Negotiation",
+  // Marketing & creative
+  "Social Media Management", "Content Writing", "Copywriting", "SEO",
+  "Brand Strategy", "Email Marketing", "Photography", "Video Editing",
+  "Graphic Design", "Illustration", "UI/UX Design",
+  // Research & analysis
+  "Data Analysis", "Research", "Report Writing", "Statistics",
+  "Excel / Spreadsheets", "Survey Design", "Literature Review",
+  // Healthcare & wellbeing
+  "Patient Care", "First Aid", "Clinical Assessment", "Health Education",
+  "Counselling", "Mental Health Support", "Nutrition & Dietetics",
+  // Education & training
+  "Teaching", "Curriculum Design", "Training & Facilitation", "Tutoring",
+  "Coaching", "E-Learning Development",
+  // Legal & compliance
+  "Legal Research", "Contract Drafting", "Compliance & Regulation", "Case Management",
+  // Trades & practical
+  "Carpentry", "Electrical Work", "Plumbing", "Welding",
+  "Vehicle Maintenance", "Construction Planning", "Health & Safety",
+  // Technology (general)
+  "Python", "JavaScript", "SQL", "Excel / Spreadsheets", "Data Visualisation",
+  "Web Development", "Cybersecurity", "IT Support", "Network Administration",
+  // Science & environment
+  "Laboratory Skills", "Field Research", "Environmental Assessment",
+  "GIS & Mapping", "Scientific Writing",
 ];
 
 const INDUSTRY_SUGGESTIONS = [
@@ -284,7 +302,7 @@ export default function ProfilePage() {
   return (
     <div className="space-y-6 pb-8 pt-2 lg:pt-0 mt-4 lg:mt-0">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div>
           <h1 className="text-2xl font-bold text-slate-900 mb-1">My Profile</h1>
           <p className="text-sm text-slate-500">Keep your profile up to date to improve your recommendations.</p>
@@ -294,28 +312,31 @@ export default function ProfilePage() {
           loading={saving}
           leftIcon={saved ? <CheckCircle2 size={15} /> : undefined}
           variant={saved ? "secondary" : "primary"}
+          className="self-start sm:self-auto"
         >
           {saved ? "Saved!" : "Save Changes"}
         </Button>
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-1 bg-slate-100 p-1 rounded-xl w-fit">
-        {tabs.map((tab) => {
-          const Icon = tab.icon;
-          return (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                activeTab === tab.id ? "bg-white text-slate-900 shadow-sm" : "text-slate-500 hover:text-slate-700"
-              }`}
-            >
-              <Icon size={15} />
-              {tab.label}
-            </button>
-          );
-        })}
+      <div className="overflow-x-auto">
+        <div className="flex gap-1 bg-slate-100 p-1 rounded-xl w-fit">
+          {tabs.map((tab) => {
+            const Icon = tab.icon;
+            return (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all whitespace-nowrap ${
+                  activeTab === tab.id ? "bg-white text-slate-900 shadow-sm" : "text-slate-500 hover:text-slate-700"
+                }`}
+              >
+                <Icon size={14} />
+                {tab.label}
+              </button>
+            );
+          })}
+        </div>
       </div>
 
       {/* Overview */}

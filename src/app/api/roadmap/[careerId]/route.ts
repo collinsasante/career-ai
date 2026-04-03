@@ -21,7 +21,6 @@ import {
 import { generatePersonalizedRoadmap } from "@/lib/agent/roadmap-generator";
 import { CAREERS_DATA } from "@/lib/recommendation/careers-data";
 
-export const runtime = "edge";
 
 // ── GET ──────────────────────────────────────
 
@@ -112,7 +111,7 @@ export async function GET(
       {
         error: isTimeout
           ? "Roadmap generation timed out. Please try again."
-          : "Could not generate roadmap. Ensure the ML API is running (ML_API_URL).",
+          : "Could not generate roadmap. Make sure your ANTHROPIC_API_KEY is configured.",
       },
       { status: isTimeout ? 504 : 500 }
     );
