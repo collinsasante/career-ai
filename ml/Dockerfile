@@ -6,8 +6,15 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY src/ ./src/
-COPY models/ ./models/
+COPY data/ ./data/
 
-EXPOSE 8000
+# Train models at build time so they're baked into the image
+RUN mkdir -p models && \
+    python data/generate_data.py && \
+    python src/train.py && \
+    python data/generate_roadmap_data.py && \
+    python src/train_roadmap.py
 
-CMD ["uvicorn", "src.api:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "2"]
+EXPOSE 10000
+
+CMD ["sh", "-c", "uvicorn src.api:app --host 0.0.0.0 --port ${PORT:-10000}"]
