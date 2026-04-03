@@ -1,0 +1,26 @@
+{
+  "best_model_name": "Logistic Regression",
+  "test_accuracy": 0.9989583333333333,
+  "top3_accuracy": 1.0,
+  "cv_accuracy": 0.9994791666666666,
+  "n_classes": 16,
+  "classes": [
+    "Business Analyst",
+    "Content Writer / Journalist",
+    "Cybersecurity Analyst",
+    "Data Analyst",
+    "Data Scientist",
+    "DevOps Engineer",
+    "Digital Marketer",
+    "Financial Analyst",
+    "Graphic Designer",
+    "HR Specialist",
+    "Healthcare Professional",
+    "Product Manager",
+    "Project Manager",
+    "Software Engineer",
+    "UX/UI Designer",
+    "Video Producer"
+  ],
+  "n_features": 279
+}

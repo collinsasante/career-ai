@@ -1,0 +1,17 @@
+{
+  "level_classes": [
+    "advanced",
+    "builder",
+    "starter"
+  ],
+  "level_accuracy": 0.94,
+  "duration_mae": 0.0631,
+  "num_features": [
+    "n_matching_skills",
+    "n_skill_gaps"
+  ],
+  "cat_features": [
+    "availability",
+    "learning_mode"
+  ]
+}
