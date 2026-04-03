@@ -1,13 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Eye, EyeOff, ArrowRight, CheckCircle2 } from "lucide-react";
 import {
   createUserWithEmailAndPassword,
   updateProfile,
-  signInWithPopup,
+  signInWithRedirect,
+  getRedirectResult,
   sendEmailVerification,
   AuthError,
 } from "firebase/auth";
@@ -62,6 +63,27 @@ export default function RegisterPage() {
 
   const strength = passwordStrength();
 
+  // ── Handle Google redirect result on mount ────
+  useEffect(() => {
+    getRedirectResult(auth)
+      .then(async (credential) => {
+        if (!credential) return;
+        setGoogleLoading(true);
+        const idToken = await credential.user.getIdToken();
+        await createSession(idToken);
+        const isNew =
+          credential.user.metadata.creationTime ===
+          credential.user.metadata.lastSignInTime;
+        router.push(isNew ? "/onboarding" : "/dashboard");
+      })
+      .catch((err) => {
+        const code = (err as AuthError).code ?? "";
+        if (code) setError(friendlyError(code));
+      })
+      .finally(() => setGoogleLoading(false));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
@@ -97,22 +119,12 @@ export default function RegisterPage() {
   const handleGoogle = async () => {
     setError("");
     setGoogleLoading(true);
-
     try {
-      const credential = await signInWithPopup(auth, googleProvider);
-      const idToken = await credential.user.getIdToken();
-      await createSession(idToken);
-      // New Google users → onboarding; returning users → dashboard
-      const isNew =
-        credential.user.metadata.creationTime ===
-        credential.user.metadata.lastSignInTime;
-      router.push(isNew ? "/onboarding" : "/dashboard");
+      await signInWithRedirect(auth, googleProvider);
+      // Page navigates away; result handled in useEffect on return
     } catch (err) {
       const code = (err as AuthError).code ?? "";
-      if (code !== "auth/popup-closed-by-user") {
-        setError(friendlyError(code));
-      }
-    } finally {
+      setError(friendlyError(code));
       setGoogleLoading(false);
     }
   };

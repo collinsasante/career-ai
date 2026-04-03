@@ -7,7 +7,6 @@ const WORK_STYLES   = ["remote", "hybrid", "office", "flexible"] as const;
 const LEARN_MODES   = ["self_paced", "structured", "bootcamp", "university", "mentorship"] as const;
 const AVAILABILITIES = ["full_time", "part_time", "evenings", "weekends", "limited"] as const;
 
-export const runtime = "edge";
 
 export async function GET() {
   const session = await getSession();

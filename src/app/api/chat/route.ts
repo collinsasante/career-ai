@@ -17,7 +17,6 @@ import { runAgent } from "@/lib/agent/runner";
 import { checkRateLimit, LIMITS } from "@/lib/rate-limit";
 import type { ChatApiMessage } from "@/lib/agent/types";
 
-export const runtime = "edge";
 
 const client = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY ?? "",

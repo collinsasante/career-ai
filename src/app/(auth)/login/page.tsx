@@ -1,12 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Eye, EyeOff, ArrowRight } from "lucide-react";
 import {
   signInWithEmailAndPassword,
-  signInWithPopup,
+  signInWithRedirect,
+  getRedirectResult,
   AuthError,
 } from "firebase/auth";
 import { auth, googleProvider } from "@/lib/firebase/client";
@@ -40,8 +41,8 @@ async function createSession(idToken: string): Promise<void> {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ idToken }),
   });
+  const data = await res.json().catch(() => ({}));
   if (!res.ok) {
-    const data = await res.json().catch(() => ({}));
     throw new Error(data.error ?? "Failed to create session.");
   }
 }
@@ -53,6 +54,27 @@ export default function LoginPage() {
   const [googleLoading, setGoogleLoading] = useState(false);
   const [error, setError] = useState("");
   const [form, setForm] = useState({ email: "", password: "" });
+
+  // ── Handle Google redirect result on mount ────
+  useEffect(() => {
+    getRedirectResult(auth)
+      .then(async (credential) => {
+        if (!credential) return;
+        setGoogleLoading(true);
+        const idToken = await credential.user.getIdToken();
+        await createSession(idToken);
+        const isNew =
+          credential.user.metadata.creationTime ===
+          credential.user.metadata.lastSignInTime;
+        router.push(isNew ? "/onboarding" : "/dashboard");
+      })
+      .catch((err) => {
+        const code = (err as AuthError).code ?? "";
+        if (code) setError(friendlyError(code));
+      })
+      .finally(() => setGoogleLoading(false));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // ── Email / password sign in ──────────────────
   const handleSubmit = async (e: React.FormEvent) => {
@@ -77,26 +99,16 @@ export default function LoginPage() {
     }
   };
 
-  // ── Google sign in ────────────────────────────
+  // ── Google sign in (redirect flow — avoids COOP popup issues) ───
   const handleGoogle = async () => {
     setError("");
     setGoogleLoading(true);
-
     try {
-      const credential = await signInWithPopup(auth, googleProvider);
-      const idToken = await credential.user.getIdToken();
-      await createSession(idToken);
-      // New Google users go to onboarding; returning users to dashboard
-      const isNew =
-        credential.user.metadata.creationTime ===
-        credential.user.metadata.lastSignInTime;
-      router.push(isNew ? "/onboarding" : "/dashboard");
+      await signInWithRedirect(auth, googleProvider);
+      // Page will navigate away; result handled in useEffect above on return
     } catch (err) {
       const code = (err as AuthError).code ?? "";
-      if (code !== "auth/popup-closed-by-user") {
-        setError(friendlyError(code));
-      }
-    } finally {
+      setError(friendlyError(code));
       setGoogleLoading(false);
     }
   };

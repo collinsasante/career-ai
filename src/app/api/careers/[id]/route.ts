@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import { CAREERS_DATA } from "@/lib/recommendation/careers-data";
 
-export const runtime = "edge";
 
 export async function GET(
   _request: Request,

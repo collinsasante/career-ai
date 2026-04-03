@@ -8,20 +8,17 @@ main = ".open-next/worker.js"
 # Assets directory
 assets = { directory = ".open-next/assets", binding = "ASSETS" }
 
-# Environment variables
+# Public environment variables (non-secret)
 [vars]
-NEXT_PUBLIC_APP_URL = "https://pathwise.workers.dev"
-
-# D1 Database binding
-[[d1_databases]]
-binding = "DB"
-database_name = "pathwise-db"
-database_id = "YOUR_D1_DATABASE_ID"  # Replace after running: wrangler d1 create pathwise-db
-
-# R2 bucket for document storage (optional)
-# [[r2_buckets]]
-# binding = "R2"
-# bucket_name = "pathwise-uploads"
+NEXT_PUBLIC_APP_URL = "https://pathwise.mr-asanteeprog.workers.dev"
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN = "career-ai-413d6.firebaseapp.com"
+NEXT_PUBLIC_FIREBASE_PROJECT_ID = "career-ai-413d6"
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET = "career-ai-413d6.firebasestorage.app"
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID = "778116508406"
+NEXT_PUBLIC_FIREBASE_APP_ID = "1:778116508406:web:e9e6db955d4916433cdad7"
+FIREBASE_PROJECT_ID = "career-ai-413d6"
+AIRTABLE_BASE_ID = "app4oXKyE7XgTrIQk"
+ML_API_URL = "https://career-ai-vljk.onrender.com"
 
 [env.production]
 vars = { ENVIRONMENT = "production" }

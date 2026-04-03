@@ -13,7 +13,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { verifyFirebaseToken } from "@/lib/firebase/verify-token";
 import { createSession } from "@/lib/auth/session";
 
-export const runtime = "edge";
 
 export async function POST(request: NextRequest) {
   try {
@@ -27,14 +26,13 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Verify the Firebase ID token using Google's public keys
-    const firebaseUser = await verifyFirebaseToken(idToken);
+    const firebaseUser = await verifyFirebaseToken(idToken).catch((err) => {
+      console.error("[Session] Token verification failed:", err);
+      return null;
+    });
 
     if (!firebaseUser) {
-      return NextResponse.json(
-        { error: "Invalid or expired token. Please sign in again." },
-        { status: 401 }
-      );
+      return NextResponse.json({ error: "Invalid or expired token." }, { status: 401 });
     }
 
     // Create our own session JWT (keeps middleware + getSession() unchanged)

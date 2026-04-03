@@ -3,7 +3,6 @@ import { getSession } from "@/lib/auth/session";
 import { saveFeedback } from "@/lib/airtable/client";
 import { sanitiseEnum, sanitiseString } from "@/lib/sanitise";
 
-export const runtime = "edge";
 
 const RATINGS = ["helpful", "not_helpful"] as const;
 

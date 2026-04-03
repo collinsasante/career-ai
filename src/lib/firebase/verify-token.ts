@@ -56,7 +56,10 @@ export async function verifyFirebaseToken(
       name,
       picture: payload.picture as string | undefined,
     };
-  } catch {
-    return null;
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
+    console.error("[Firebase] Token verification failed:", message);
+    // Re-throw so the caller can include the reason in debug output
+    throw new Error(message);
   }
 }

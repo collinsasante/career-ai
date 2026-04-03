@@ -26,7 +26,6 @@ import {
 } from "@/lib/airtable/client";
 import type { ProfileInput } from "@/lib/agent/recommend";
 
-export const runtime = "edge";
 
 // ── GET — return stored recommendations ───────
 
