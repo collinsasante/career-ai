@@ -9,7 +9,6 @@ import {
   updateProfile,
   signInWithRedirect,
   getRedirectResult,
-  sendEmailVerification,
   AuthError,
 } from "firebase/auth";
 import { auth, googleProvider } from "@/lib/firebase/client";
@@ -33,11 +32,11 @@ function friendlyError(code: string): string {
   }
 }
 
-async function createSession(idToken: string): Promise<void> {
+async function createSession(idToken: string, isNewUser = false): Promise<void> {
   const res = await fetch("/api/auth/session", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ idToken }),
+    body: JSON.stringify({ idToken, isNewUser }),
   });
   if (!res.ok) {
     const data = await res.json().catch(() => ({}));
@@ -69,11 +68,11 @@ export default function RegisterPage() {
       .then(async (credential) => {
         if (!credential) return;
         setGoogleLoading(true);
-        const idToken = await credential.user.getIdToken();
-        await createSession(idToken);
         const isNew =
           credential.user.metadata.creationTime ===
           credential.user.metadata.lastSignInTime;
+        const idToken = await credential.user.getIdToken();
+        await createSession(idToken, isNew);
         router.push(isNew ? "/onboarding" : "/dashboard");
       })
       .catch((err) => {
@@ -103,10 +102,8 @@ export default function RegisterPage() {
       );
       // Save display name
       await updateProfile(credential.user, { displayName: form.name.trim() });
-      // Send email verification (non-blocking — don't fail registration if this errors)
-      sendEmailVerification(credential.user).catch(() => {});
       const idToken = await credential.user.getIdToken();
-      await createSession(idToken);
+      await createSession(idToken, true);
       router.push("/onboarding");
     } catch (err) {
       const code = (err as AuthError).code ?? "";

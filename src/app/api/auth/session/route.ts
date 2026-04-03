@@ -12,12 +12,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import { verifyFirebaseToken } from "@/lib/firebase/verify-token";
 import { createSession } from "@/lib/auth/session";
+import { sendEmail } from "@/lib/email/resend";
+import { welcomeEmail } from "@/lib/email/templates";
 
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { idToken } = body as { idToken: string };
+    const { idToken, isNewUser } = body as { idToken: string; isNewUser?: boolean };
 
     if (!idToken) {
       return NextResponse.json(
@@ -58,6 +60,12 @@ export async function POST(request: NextRequest) {
       maxAge: 60 * 60 * 24 * 7, // 7 days
       path: "/",
     });
+
+    // Send welcome email for new registrations (fire-and-forget)
+    if (isNewUser && firebaseUser.email) {
+      const { subject, html } = welcomeEmail(firebaseUser.name);
+      sendEmail({ to: firebaseUser.email, subject, html }).catch(() => {});
+    }
 
     return response;
   } catch (err) {
