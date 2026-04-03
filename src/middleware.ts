@@ -31,9 +31,14 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(loginUrl);
   }
 
-  // Redirect authenticated users away from auth pages
+  // Redirect authenticated users away from auth pages (but not landing page)
   if (isAuthPath && session) {
     return NextResponse.redirect(new URL("/dashboard", request.url));
+  }
+
+  // Never redirect away from landing page — logged-in users can still view it
+  if (pathname === "/" && session) {
+    return NextResponse.next();
   }
 
   return NextResponse.next();

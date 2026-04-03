@@ -191,7 +191,11 @@ const trustPoints = [
   "Covers every industry — not just tech",
 ];
 
-export function Hero() {
+interface HeroProps {
+  session?: { name: string } | null;
+}
+
+export function Hero({ session }: HeroProps) {
   return (
     <section className="relative overflow-hidden bg-white pt-6 pb-20 md:pt-8 md:pb-28">
       {/* Background grid */}
@@ -285,30 +289,47 @@ export function Hero() {
               className="flex flex-col sm:flex-row gap-3"
               style={{ animation: "fadeUp 0.6s ease 0.65s both" }}
             >
-              <Link href="/register">
-                <Button
-                  variant="primary"
-                  size="lg"
-                  rightIcon={<ArrowRight size={16} />}
-                  className="shadow-md shadow-brand-600/20 hover:shadow-lg hover:shadow-brand-600/30 transition-shadow"
-                >
-                  Start for Free
-                </Button>
-              </Link>
-              <a href="#how-it-works">
-                <Button variant="outline" size="lg">
-                  See How It Works
-                </Button>
-              </a>
+              {session ? (
+                <Link href="/dashboard">
+                  <Button
+                    variant="primary"
+                    size="lg"
+                    rightIcon={<ArrowRight size={16} />}
+                    className="shadow-md shadow-brand-600/20 hover:shadow-lg hover:shadow-brand-600/30 transition-shadow"
+                  >
+                    Go to Dashboard
+                  </Button>
+                </Link>
+              ) : (
+                <>
+                  <Link href="/register">
+                    <Button
+                      variant="primary"
+                      size="lg"
+                      rightIcon={<ArrowRight size={16} />}
+                      className="shadow-md shadow-brand-600/20 hover:shadow-lg hover:shadow-brand-600/30 transition-shadow"
+                    >
+                      Start for Free
+                    </Button>
+                  </Link>
+                  <a href="#how-it-works">
+                    <Button variant="outline" size="lg">
+                      See How It Works
+                    </Button>
+                  </a>
+                </>
+              )}
             </div>
 
             {/* Sub-note */}
-            <p
-              className="mt-5 text-xs text-slate-400"
-              style={{ animation: "fadeUp 0.6s ease 0.75s both" }}
-            >
-              No credit card required · Free to start · Results in minutes
-            </p>
+            {!session && (
+              <p
+                className="mt-5 text-xs text-slate-400"
+                style={{ animation: "fadeUp 0.6s ease 0.75s both" }}
+              >
+                No credit card required · Free to start · Results in minutes
+              </p>
+            )}
           </div>
 
           {/* Right — preview */}

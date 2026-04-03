@@ -9,13 +9,16 @@ import { RoadmapPreview } from "@/components/landing/roadmap-preview";
 import { Testimonials } from "@/components/landing/testimonials";
 import { FAQ } from "@/components/landing/faq";
 import { FinalCTA } from "@/components/landing/final-cta";
+import { getSession } from "@/lib/auth/session";
 
-export default function LandingPage() {
+export default async function LandingPage() {
+  const session = await getSession();
+
   return (
     <>
-      <Navbar variant="landing" />
+      <Navbar variant="landing" session={session} />
       <main>
-        <Hero />
+        <Hero session={session} />
         <ProblemSection />
         <HowItWorks />
         <Features />
