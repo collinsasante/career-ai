@@ -12,10 +12,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { verifyFirebaseToken } from "@/lib/firebase/verify-token";
 import { createSession } from "@/lib/auth/session";
-import { sendEmail } from "@/lib/email/resend";
-import { welcomeEmail } from "@/lib/email/templates";
-
-
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
@@ -28,10 +24,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const firebaseUser = await verifyFirebaseToken(idToken).catch((err) => {
-      console.error("[Session] Token verification failed:", err);
-      return null;
-    });
+    const firebaseUser = await verifyFirebaseToken(idToken).catch(() => null);
 
     if (!firebaseUser) {
       return NextResponse.json({ error: "Invalid or expired token." }, { status: 401 });
@@ -60,12 +53,6 @@ export async function POST(request: NextRequest) {
       maxAge: 60 * 60 * 24 * 7, // 7 days
       path: "/",
     });
-
-    // Send welcome email for new registrations (fire-and-forget)
-    if (isNewUser && firebaseUser.email) {
-      const { subject, html } = welcomeEmail(firebaseUser.name);
-      sendEmail({ to: firebaseUser.email, subject, html }).catch(() => {});
-    }
 
     return response;
   } catch (err) {

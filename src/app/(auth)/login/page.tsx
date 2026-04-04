@@ -1,13 +1,12 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Eye, EyeOff, ArrowRight } from "lucide-react";
 import {
   signInWithEmailAndPassword,
-  signInWithRedirect,
-  getRedirectResult,
+  signInWithPopup,
   AuthError,
 } from "firebase/auth";
 import { auth, googleProvider } from "@/lib/firebase/client";
@@ -54,28 +53,6 @@ export default function LoginPage() {
   const [googleLoading, setGoogleLoading] = useState(false);
   const [error, setError] = useState("");
   const [form, setForm] = useState({ email: "", password: "" });
-
-  // ── Handle Google redirect result on mount ────
-  useEffect(() => {
-    getRedirectResult(auth)
-      .then(async (credential) => {
-        if (!credential) return;
-        setGoogleLoading(true);
-        const idToken = await credential.user.getIdToken();
-        await createSession(idToken);
-        const isNew =
-          credential.user.metadata.creationTime ===
-          credential.user.metadata.lastSignInTime;
-        router.push(isNew ? "/onboarding" : "/dashboard");
-      })
-      .catch((err) => {
-        const code = (err as AuthError).code ?? "";
-        if (code) setError(friendlyError(code));
-      })
-      .finally(() => setGoogleLoading(false));
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   // ── Email / password sign in ──────────────────
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -99,13 +76,18 @@ export default function LoginPage() {
     }
   };
 
-  // ── Google sign in (redirect flow — avoids COOP popup issues) ───
+  // ── Google sign in ────────────────────────────
   const handleGoogle = async () => {
     setError("");
     setGoogleLoading(true);
     try {
-      await signInWithRedirect(auth, googleProvider);
-      // Page will navigate away; result handled in useEffect above on return
+      const result = await signInWithPopup(auth, googleProvider);
+      const idToken = await result.user.getIdToken();
+      await createSession(idToken);
+      const isNew =
+        result.user.metadata.creationTime ===
+        result.user.metadata.lastSignInTime;
+      router.push(isNew ? "/onboarding" : "/dashboard");
     } catch (err) {
       const code = (err as AuthError).code ?? "";
       setError(friendlyError(code));

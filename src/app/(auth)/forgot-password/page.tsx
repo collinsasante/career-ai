@@ -3,6 +3,8 @@
 import { useState } from "react";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight } from "lucide-react";
+import { sendPasswordResetEmail } from "firebase/auth";
+import { auth } from "@/lib/firebase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
@@ -18,15 +20,11 @@ export default function ForgotPasswordPage() {
     setLoading(true);
 
     try {
-      await fetch("/api/auth/forgot-password", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: email.trim() }),
-      });
-      // Always show success — API never reveals if email exists
+      await sendPasswordResetEmail(auth, email.trim());
       setSent(true);
     } catch {
-      setError("Network error. Check your connection and try again.");
+      // Always show success — don't reveal if email exists
+      setSent(true);
     } finally {
       setLoading(false);
     }

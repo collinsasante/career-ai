@@ -333,6 +333,15 @@ export async function getRoadmap(userId: string, careerId: string): Promise<obje
   }
 }
 
+/** Delete a cached roadmap for a user+career so it gets regenerated. */
+export async function deleteRoadmap(userId: string, careerId: string): Promise<void> {
+  const existing = await listRecords<AirtableRoadmap>(
+    "Roadmaps",
+    `AND({userId} = "${userId}", {careerId} = "${careerId}")`
+  );
+  await Promise.all(existing.map((r) => deleteRecord("Roadmaps", r.id)));
+}
+
 /** Save a personalized roadmap for a user+career (upsert). */
 export async function saveRoadmap(
   userId: string,

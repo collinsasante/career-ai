@@ -162,7 +162,7 @@ def _generic_fallback(
                     "id": "p1-s1",
                     "title": "Research the core curriculum",
                     "description": "Identify the top online courses, books, and communities for this career.",
-                    "resources": [{"title": "Coursera — search your career title", "type": "course"}],
+                    "resources": [{"title": f"{career_id.replace('-', ' ').title()} fundamentals full course", "type": "course"}],
                 }
             ],
         },

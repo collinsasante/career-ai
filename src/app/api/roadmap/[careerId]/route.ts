@@ -15,10 +15,32 @@ import { getRecommendations } from "@/lib/airtable/client";
 import {
   getRoadmap,
   saveRoadmap,
+  deleteRoadmap,
   getProgress,
   saveProgress,
 } from "@/lib/airtable/client";
-import { generatePersonalizedRoadmap } from "@/lib/agent/roadmap-generator";
+import {
+  generatePersonalizedRoadmap,
+  type PersonalizedRoadmap,
+} from "@/lib/agent/roadmap-generator";
+
+function enrichWithYouTubeLinks(roadmap: PersonalizedRoadmap): PersonalizedRoadmap {
+  return {
+    ...roadmap,
+    phases: roadmap.phases.map((phase) => ({
+      ...phase,
+      steps: phase.steps.map((step) => ({
+        ...step,
+        resources: step.resources.map((r) => ({
+          ...r,
+          url: r.url ?? ((r.type === "video" || r.type === "course")
+            ? `https://www.youtube.com/results?search_query=${encodeURIComponent(r.title)}`
+            : undefined),
+        })),
+      })),
+    })),
+  };
+}
 import { CAREERS_DATA } from "@/lib/recommendation/careers-data";
 
 
@@ -52,7 +74,7 @@ export async function GET(
   try {
     const cached = await getRoadmap(session.userId, careerId);
     if (cached) {
-      return NextResponse.json({ data: { roadmap: cached, completedSteps } });
+      return NextResponse.json({ data: { roadmap: enrichWithYouTubeLinks(cached as PersonalizedRoadmap), completedSteps } });
     }
   } catch {
     // cache miss or Airtable unavailable — continue to generation
@@ -103,7 +125,7 @@ export async function GET(
     // Cache in Airtable (fire-and-forget — don't block response)
     saveRoadmap(session.userId, careerId, roadmap).catch(() => {});
 
-    return NextResponse.json({ data: { roadmap, completedSteps } });
+    return NextResponse.json({ data: { roadmap: enrichWithYouTubeLinks(roadmap), completedSteps } });
   } catch (err) {
     const isTimeout = err instanceof Error && err.message === "timeout";
     console.error("[Roadmap] Generation failed:", err);
@@ -149,5 +171,26 @@ export async function POST(
   } catch (err) {
     console.error("[Roadmap Progress] Save failed:", err);
     return NextResponse.json({ error: "Failed to save progress." }, { status: 500 });
+  }
+}
+
+// ── DELETE — clear cached roadmap so next GET regenerates it ──
+export async function DELETE(
+  _request: Request,
+  { params }: { params: Promise<{ careerId: string }> }
+) {
+  const session = await getSession();
+  if (!session) {
+    return NextResponse.json({ error: "Unauthorised." }, { status: 401 });
+  }
+
+  const { careerId } = await params;
+
+  try {
+    await deleteRoadmap(session.userId, careerId);
+    return NextResponse.json({ success: true });
+  } catch (err) {
+    console.error("[Roadmap] Delete cache failed:", err);
+    return NextResponse.json({ error: "Failed to clear roadmap cache." }, { status: 500 });
   }
 }

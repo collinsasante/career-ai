@@ -88,7 +88,20 @@ function StepCard({
                 {step.resources.map((r, i) => (
                   <div key={i} className="flex items-center gap-2">
                     {RESOURCE_ICONS[r.type] ?? <ExternalLink size={12} className="text-slate-400" />}
-                    <span className="text-xs text-slate-700">{r.title}</span>
+                    {r.url ? (
+                      <a
+                        href={r.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-xs text-brand-600 hover:text-brand-800 hover:underline flex items-center gap-1"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        {r.title}
+                        <ExternalLink size={10} className="flex-shrink-0" />
+                      </a>
+                    ) : (
+                      <span className="text-xs text-slate-700">{r.title}</span>
+                    )}
                     <Badge variant="slate" size="sm" className="capitalize">{r.type}</Badge>
                   </div>
                 ))}
@@ -193,10 +206,13 @@ export default function RoadmapDetailPage() {
   const [error,          setError]          = useState<string | null>(null);
   const [saving,         setSaving]         = useState(false);
 
-  const fetchRoadmap = useCallback(async () => {
+  const fetchRoadmap = useCallback(async (clearCache = false) => {
     setLoading(true);
     setError(null);
     try {
+      if (clearCache) {
+        await fetch(`/api/roadmap/${careerId}`, { method: "DELETE" });
+      }
       const res = await fetch(`/api/roadmap/${careerId}`);
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
@@ -240,8 +256,8 @@ export default function RoadmapDetailPage() {
       <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
         <Loader2 size={32} className="text-brand-600 animate-spin" />
         <div className="text-center">
-          <p className="text-sm font-semibold text-slate-700">Generating your personalised roadmap...</p>
-          <p className="text-xs text-slate-400 mt-1">Claude is building a plan tailored to your profile</p>
+          <p className="text-sm font-semibold text-slate-700">Building your personalised roadmap...</p>
+          <p className="text-xs text-slate-400 mt-1">Analysing your profile and skills — this takes a few seconds</p>
         </div>
       </div>
     );
@@ -256,9 +272,9 @@ export default function RoadmapDetailPage() {
         </div>
         <div>
           <p className="text-sm font-semibold text-slate-700">{error ?? "Roadmap unavailable"}</p>
-          <p className="text-xs text-slate-400 mt-1">Make sure your ANTHROPIC_API_KEY is configured.</p>
+          <p className="text-xs text-slate-400 mt-1">Something went wrong. Please try again in a moment.</p>
         </div>
-        <Button onClick={fetchRoadmap} variant="outline" leftIcon={<RefreshCw size={14} />}>
+        <Button onClick={() => fetchRoadmap(false)} variant="outline" leftIcon={<RefreshCw size={14} />}>
           Try again
         </Button>
       </div>
@@ -303,7 +319,7 @@ export default function RoadmapDetailPage() {
               <span className="text-xs font-bold text-brand-600">{overallPct}% done</span>
             </div>
             <button
-              onClick={fetchRoadmap}
+              onClick={() => fetchRoadmap(true)}
               className="text-xs text-slate-400 hover:text-slate-600 flex items-center gap-1"
             >
               <RefreshCw size={11} />

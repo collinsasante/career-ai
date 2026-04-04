@@ -13,6 +13,7 @@
 export interface RoadmapResource {
   title: string;
   type: "course" | "book" | "video" | "practice" | "project";
+  url?: string;
 }
 
 export interface RoadmapStep {
@@ -124,7 +125,12 @@ export async function generatePersonalizedRoadmap(
       id:          s.id,
       title:       s.title,
       description: s.description,
-      resources:   s.resources ?? [],
+      resources:   (s.resources ?? []).map((r) => ({
+        ...r,
+        url: (r.type === "video" || r.type === "course")
+          ? `https://www.youtube.com/results?search_query=${encodeURIComponent(r.title)}`
+          : r.url,
+      })),
     })),
   }));
 

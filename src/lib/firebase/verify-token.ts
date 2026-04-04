@@ -6,13 +6,10 @@
 // via `jose` — no Firebase Admin SDK, no Node.js needed.
 // ─────────────────────────────────────────────
 
-import { createRemoteJWKSet, jwtVerify } from "jose";
+import { createLocalJWKSet, jwtVerify } from "jose";
 
 const GOOGLE_JWKS_URL =
   "https://www.googleapis.com/service_accounts/v1/jwk/securetoken@system.gserviceaccount.com";
-
-// Cached JWKS set — jose handles automatic key rotation internally
-const JWKS = createRemoteJWKSet(new URL(GOOGLE_JWKS_URL));
 
 export interface FirebaseTokenPayload {
   uid: string;
@@ -40,6 +37,13 @@ export async function verifyFirebaseToken(
       return null;
     }
 
+    const jwksResponse = await fetch(GOOGLE_JWKS_URL);
+    if (!jwksResponse.ok) {
+      throw new Error(`Failed to fetch JWKS: ${jwksResponse.status}`);
+    }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const jwks = await jwksResponse.json() as any;
+    const JWKS = createLocalJWKSet(jwks);
     const { payload } = await jwtVerify(idToken, JWKS, {
       issuer: `https://securetoken.google.com/${projectId}`,
       audience: projectId,

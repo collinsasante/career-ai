@@ -3596,4 +3596,6998 @@ ROADMAP_TEMPLATES: dict[str, dict] = {
             },
         ],
     },
+
+    # ──────────────────────────────────────────────────────────────────────
+    "electrical-engineer": {
+        "career_title": "Electrical Engineer",
+        "phases": [
+            {
+                "id": "phase-1", "phase_number": 1,
+                "title": "Electrical Fundamentals",
+                "description": "Master the core theory of circuits, electromagnetism, and signals that underpin all electrical engineering work.",
+                "base_weeks": 5,
+                "skills_covered": ["Circuit Analysis", "Ohm's Law", "AC/DC Theory", "Electromagnetism", "Thermodynamics"],
+                "steps": [
+                    {
+                        "id": "p1-s1", "level": "starter_only",
+                        "title": "DC & AC circuit analysis",
+                        "description": "Kirchhoff's laws, Thevenin/Norton equivalents, phasors, and power factor. These are the foundation of every electrical design you will ever do.",
+                        "resources": [
+                            {"title": "All About Circuits — DC/AC Textbook (free)", "type": "course"},
+                            {"title": "MIT OpenCourseWare — Circuits and Electronics 6.002", "type": "video"},
+                            {"title": "Engineering Circuit Analysis by Hayt & Kemmerly (book)", "type": "book"},
+                        ],
+                    },
+                    {
+                        "id": "p1-s2", "level": "all",
+                        "title": "Electromagnetism and fields",
+                        "description": "Maxwell's equations, Faraday's law, inductance, and transformer theory. You need this for motors, generators, and transmission lines.",
+                        "resources": [
+                            {"title": "MIT OpenCourseWare — Electromagnetic Fields and Energy", "type": "video"},
+                            {"title": "Hayt Engineering Electromagnetics (book)", "type": "book"},
+                        ],
+                    },
+                    {
+                        "id": "p1-s3", "level": "all",
+                        "title": "Electronic components and devices",
+                        "description": "Diodes, BJTs, MOSFETs, op-amps. Understand I-V characteristics and how to read datasheets before picking components.",
+                        "resources": [
+                            {"title": "The Art of Electronics by Horowitz & Hill (book)", "type": "book"},
+                            {"title": "Electronics Tutorials — Semiconductor Theory", "type": "course"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-2", "phase_number": 2,
+                "title": "Core Engineering Tools & Simulation",
+                "description": "Learn the software tools that practising electrical engineers use daily for design, simulation, and documentation.",
+                "base_weeks": 5,
+                "skills_covered": ["MATLAB", "Simulink", "AutoCAD Electrical", "LTspice", "PSpice"],
+                "steps": [
+                    {
+                        "id": "p2-s1", "level": "all",
+                        "title": "MATLAB & Simulink for electrical engineering",
+                        "description": "Signal processing, control system modelling, and power systems simulation. MATLAB is the industry-standard tool in power and control engineering.",
+                        "resources": [
+                            {"title": "MATLAB Onramp — Free Official MATLAB Tutorial", "type": "course"},
+                            {"title": "MATLAB & Simulink for Electrical Engineers — Udemy", "type": "video"},
+                        ],
+                    },
+                    {
+                        "id": "p2-s2", "level": "all",
+                        "title": "Circuit simulation with LTspice",
+                        "description": "Simulate analogue and mixed-signal circuits before building them. LTspice is free and widely used in industry for PCB design verification.",
+                        "resources": [
+                            {"title": "LTspice Tutorial — Getting Started with SPICE Simulation", "type": "video"},
+                            {"title": "Analog Devices — LTspice free download and training", "type": "practice"},
+                        ],
+                    },
+                    {
+                        "id": "p2-s3", "level": "builder_plus",
+                        "title": "AutoCAD Electrical for schematic design",
+                        "description": "Industry-standard CAD for electrical schematics, panel layouts, and cable schedules. Required for most industrial and infrastructure roles.",
+                        "resources": [
+                            {"title": "AutoCAD Electrical — Official Autodesk Training", "type": "course"},
+                            {"title": "LinkedIn Learning — AutoCAD Electrical Essential Training", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-3", "phase_number": 3,
+                "title": "Power Systems & Control Engineering",
+                "description": "Apply your fundamentals to real-world power generation, distribution, and control systems.",
+                "base_weeks": 6,
+                "skills_covered": ["Power Systems", "Control Theory", "PLC Programming", "Protection Systems", "Transformers"],
+                "steps": [
+                    {
+                        "id": "p3-s1", "level": "all",
+                        "title": "Power systems analysis",
+                        "description": "Load flow, short-circuit analysis, and protection coordination. Used in grid, renewable energy, and industrial power design.",
+                        "resources": [
+                            {"title": "Power Systems Analysis by Glover, Sarma & Overbye (book)", "type": "book"},
+                            {"title": "edX — Power Systems Fundamentals", "type": "course"},
+                        ],
+                    },
+                    {
+                        "id": "p3-s2", "level": "all",
+                        "title": "Control systems and feedback theory",
+                        "description": "PID controllers, Laplace transforms, Bode plots, and stability analysis. Control theory is core to robotics, aerospace, and industrial automation.",
+                        "resources": [
+                            {"title": "MIT OpenCourseWare — Feedback Control Systems 6.302", "type": "video"},
+                            {"title": "Control System Engineering by Nise (book)", "type": "book"},
+                        ],
+                    },
+                    {
+                        "id": "p3-s3", "level": "builder_plus",
+                        "title": "PLC programming for industrial automation",
+                        "description": "Ladder logic, function block diagrams, and structured text in IEC 61131-3. PLCs control manufacturing, water treatment, and energy systems.",
+                        "resources": [
+                            {"title": "PLCopen — Free IEC 61131-3 Programming Guide", "type": "course"},
+                            {"title": "Siemens TIA Portal PLC Programming Tutorial", "type": "video"},
+                        ],
+                    },
+                    {
+                        "id": "p3-s4", "level": "advanced_only",
+                        "title": "Renewable energy systems and grid integration",
+                        "description": "Solar PV, wind turbines, battery storage, and inverter design. The fastest-growing area of electrical engineering globally.",
+                        "resources": [
+                            {"title": "Coursera — Solar Energy by TU Delft", "type": "course"},
+                            {"title": "Power Electronics by Ned Mohan (book)", "type": "book"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-4", "phase_number": 4,
+                "title": "Projects, Standards & Professional Registration",
+                "description": "Build a portfolio of real projects and understand the professional standards required in electrical engineering practice.",
+                "base_weeks": 4,
+                "skills_covered": ["IET Wiring Regulations", "BS 7671", "IEEE Standards", "Technical Reports", "Professional Registration"],
+                "steps": [
+                    {
+                        "id": "p4-s1", "level": "all",
+                        "title": "Build a capstone electrical engineering project",
+                        "description": "Design and simulate a complete system — e.g. a motor drive, solar inverter, or smart home controller. Document it with full calculations, schematics, and a technical report.",
+                        "resources": [
+                            {"title": "Arduino & ESP32 Electronics Projects for Engineers", "type": "project"},
+                            {"title": "GitHub — Host your project documentation and schematics", "type": "project"},
+                        ],
+                    },
+                    {
+                        "id": "p4-s2", "level": "all",
+                        "title": "Electrical standards and regulations",
+                        "description": "BS 7671 (IET Wiring Regulations) for the UK, NEC for the US, or IEC 60364. Engineers who understand regulations are far more employable.",
+                        "resources": [
+                            {"title": "IET Wiring Regulations BS 7671 — Official IET Guide", "type": "book"},
+                            {"title": "IEEE Standards Association — Free Student Access", "type": "course"},
+                        ],
+                    },
+                    {
+                        "id": "p4-s3", "level": "all",
+                        "title": "Professional registration and chartership",
+                        "description": "IEng or CEng via the IET (UK), PE licence via NCEES (US). Chartership is the mark of a fully qualified professional engineer and significantly increases salary ceiling.",
+                        "resources": [
+                            {"title": "IET — Routes to Engineering Registration (free guide)", "type": "course"},
+                            {"title": "NCEES — Professional Engineer Exam Study Materials", "type": "book"},
+                        ],
+                    },
+                ],
+            },
+        ],
+    },
+
+    # ──────────────────────────────────────────────────────────────────────
+    "solicitor-lawyer": {
+        "career_title": "Solicitor / Lawyer",
+        "phases": [
+            {
+                "id": "phase-1", "phase_number": 1,
+                "title": "Foundations",
+                "description": "Build the essential knowledge base required to work as a Solicitor / Lawyer.",
+                "base_weeks": 4,
+                "skills_covered": ["Research", "Writing & Copywriting", "Negotiation"],
+                "steps": [
+                    {
+                        "id": "p1-s1", "level": "starter_only",
+                        "title": "Core theory and fundamentals",
+                        "description": "Advise clients on legal matters, draft agreements, and represent them through complex legal processes. Start with the foundational concepts that every Solicitor / Lawyer must understand.",
+                        "resources": [{"title": "Research fundamentals full course", "type": "video"}, {"title": "Writing & Copywriting fundamentals full course", "type": "video"}],
+                    },
+                    {
+                        "id": "p1-s2", "level": "all",
+                        "title": "Industry overview and career landscape",
+                        "description": "Understand the day-to-day reality of working as a Solicitor / Lawyer, including typical roles such as Trainee Solicitor and Partner.",
+                        "resources": [
+                            {"title": "A day in the life of a Solicitor / Lawyer", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-2", "phase_number": 2,
+                "title": "Core Tools & Practical Skills",
+                "description": "Learn the tools and hands-on skills used in the Solicitor / Lawyer profession.",
+                "base_weeks": 5,
+                "skills_covered": ["Westlaw", "LexisNexis", "Clio"],
+                "steps": [
+                    {
+                        "id": "p2-s1", "level": "all",
+                        "title": "Key tools and software",
+                        "description": "Get hands-on with the tools used daily: Westlaw, LexisNexis, Clio.",
+                        "resources": [{"title": "Westlaw tutorial for beginners", "type": "video"}, {"title": "LexisNexis tutorial for beginners", "type": "video"}],
+                    },
+                    {
+                        "id": "p2-s2", "level": "builder_plus",
+                        "title": "Practical exercises and mini-projects",
+                        "description": "Apply your knowledge through structured exercises. Practical experience is what separates candidates at interview.",
+                        "resources": [
+                            {"title": "Solicitor / Lawyer practical projects for your portfolio", "type": "project"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-3", "phase_number": 3,
+                "title": "Advanced Skills & Specialism",
+                "description": "Develop deeper expertise and begin to specialise within the Solicitor / Lawyer field.",
+                "base_weeks": 5,
+                "skills_covered": ["Public Speaking", "Accounting", "Research"],
+                "steps": [
+                    {
+                        "id": "p3-s1", "level": "all",
+                        "title": "Advanced techniques",
+                        "description": "Move beyond the basics and tackle more complex, realistic problems faced by mid-level Solicitor / Lawyers.",
+                        "resources": [{"title": "Advanced Public Speaking for Solicitor / Lawyers", "type": "course"}, {"title": "Advanced Accounting for Solicitor / Lawyers", "type": "course"}],
+                    },
+                    {
+                        "id": "p3-s2", "level": "advanced_only",
+                        "title": "Specialism and leadership",
+                        "description": "Explore specialist areas within the Solicitor / Lawyer field and develop the strategic thinking needed for senior roles.",
+                        "resources": [
+                            {"title": "Partner — how to reach the senior level", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-4", "phase_number": 4,
+                "title": "Portfolio & Job Preparation",
+                "description": "Build a portfolio, prepare your applications, and land your first Solicitor / Lawyer role.",
+                "base_weeks": 3,
+                "skills_covered": ["Portfolio", "Job Applications", "Interview Preparation"],
+                "steps": [
+                    {
+                        "id": "p4-s1", "level": "all",
+                        "title": "Build a portfolio project",
+                        "description": "Create at least one substantial project that demonstrates your Solicitor / Lawyer skills. This is the single most important thing you can do before applying.",
+                        "resources": [
+                            {"title": "Solicitor / Lawyer portfolio — what to include and how to present it", "type": "video"},
+                            {"title": "GitHub — Host your project portfolio", "type": "project"},
+                        ],
+                    },
+                    {
+                        "id": "p4-s2", "level": "all",
+                        "title": "Job search and interview preparation",
+                        "description": "Polish your CV, practise common Solicitor / Lawyer interview questions, and start applying. Networking accounts for over 70% of hires.",
+                        "resources": [{"title": "How to become a Solicitor / Lawyer — career roadmap", "type": "video"}, {"title": "LinkedIn — Solicitor / Lawyer job search and networking", "type": "practice"}],
+                    },
+                ],
+            },
+        ],
+    },
+    # ──────────────────────────────────────────────────────────────────────
+    "paralegal": {
+        "career_title": "Paralegal",
+        "phases": [
+            {
+                "id": "phase-1", "phase_number": 1,
+                "title": "Foundations",
+                "description": "Build the essential knowledge base required to work as a Paralegal.",
+                "base_weeks": 4,
+                "skills_covered": ["Research", "Writing & Copywriting", "Technical Writing"],
+                "steps": [
+                    {
+                        "id": "p1-s1", "level": "starter_only",
+                        "title": "Core theory and fundamentals",
+                        "description": "Support legal teams with research, document management, client communication, and case preparation. Start with the foundational concepts that every Paralegal must understand.",
+                        "resources": [{"title": "Research fundamentals full course", "type": "video"}, {"title": "Writing & Copywriting fundamentals full course", "type": "video"}],
+                    },
+                    {
+                        "id": "p1-s2", "level": "all",
+                        "title": "Industry overview and career landscape",
+                        "description": "Understand the day-to-day reality of working as a Paralegal, including typical roles such as Paralegal and Legal Executive.",
+                        "resources": [
+                            {"title": "A day in the life of a Paralegal", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-2", "phase_number": 2,
+                "title": "Core Tools & Practical Skills",
+                "description": "Learn the tools and hands-on skills used in the Paralegal profession.",
+                "base_weeks": 5,
+                "skills_covered": ["LexisNexis", "Clio", "Microsoft 365"],
+                "steps": [
+                    {
+                        "id": "p2-s1", "level": "all",
+                        "title": "Key tools and software",
+                        "description": "Get hands-on with the tools used daily: LexisNexis, Clio, Microsoft 365.",
+                        "resources": [{"title": "LexisNexis tutorial for beginners", "type": "video"}, {"title": "Clio tutorial for beginners", "type": "video"}],
+                    },
+                    {
+                        "id": "p2-s2", "level": "builder_plus",
+                        "title": "Practical exercises and mini-projects",
+                        "description": "Apply your knowledge through structured exercises. Practical experience is what separates candidates at interview.",
+                        "resources": [
+                            {"title": "Paralegal practical projects for your portfolio", "type": "project"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-3", "phase_number": 3,
+                "title": "Advanced Skills & Specialism",
+                "description": "Develop deeper expertise and begin to specialise within the Paralegal field.",
+                "base_weeks": 5,
+                "skills_covered": ["Customer Service", "Negotiation", "Research"],
+                "steps": [
+                    {
+                        "id": "p3-s1", "level": "all",
+                        "title": "Advanced techniques",
+                        "description": "Move beyond the basics and tackle more complex, realistic problems faced by mid-level Paralegals.",
+                        "resources": [{"title": "Advanced Customer Service for Paralegals", "type": "course"}, {"title": "Advanced Negotiation for Paralegals", "type": "course"}],
+                    },
+                    {
+                        "id": "p3-s2", "level": "advanced_only",
+                        "title": "Specialism and leadership",
+                        "description": "Explore specialist areas within the Paralegal field and develop the strategic thinking needed for senior roles.",
+                        "resources": [
+                            {"title": "Legal Executive — how to reach the senior level", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-4", "phase_number": 4,
+                "title": "Portfolio & Job Preparation",
+                "description": "Build a portfolio, prepare your applications, and land your first Paralegal role.",
+                "base_weeks": 3,
+                "skills_covered": ["Portfolio", "Job Applications", "Interview Preparation"],
+                "steps": [
+                    {
+                        "id": "p4-s1", "level": "all",
+                        "title": "Build a portfolio project",
+                        "description": "Create at least one substantial project that demonstrates your Paralegal skills. This is the single most important thing you can do before applying.",
+                        "resources": [
+                            {"title": "Paralegal portfolio — what to include and how to present it", "type": "video"},
+                            {"title": "GitHub — Host your project portfolio", "type": "project"},
+                        ],
+                    },
+                    {
+                        "id": "p4-s2", "level": "all",
+                        "title": "Job search and interview preparation",
+                        "description": "Polish your CV, practise common Paralegal interview questions, and start applying. Networking accounts for over 70% of hires.",
+                        "resources": [{"title": "How to become a Paralegal — career roadmap", "type": "video"}, {"title": "LinkedIn — Paralegal job search and networking", "type": "practice"}],
+                    },
+                ],
+            },
+        ],
+    },
+    # ──────────────────────────────────────────────────────────────────────
+    "compliance-officer": {
+        "career_title": "Compliance Officer",
+        "phases": [
+            {
+                "id": "phase-1", "phase_number": 1,
+                "title": "Foundations",
+                "description": "Build the essential knowledge base required to work as a Compliance Officer.",
+                "base_weeks": 4,
+                "skills_covered": ["Research", "Writing & Copywriting", "Risk Assessment"],
+                "steps": [
+                    {
+                        "id": "p1-s1", "level": "starter_only",
+                        "title": "Core theory and fundamentals",
+                        "description": "Ensure organisations meet legal, regulatory, and ethical standards across their operations. Start with the foundational concepts that every Compliance Officer must understand.",
+                        "resources": [{"title": "Research fundamentals full course", "type": "video"}, {"title": "Writing & Copywriting fundamentals full course", "type": "video"}],
+                    },
+                    {
+                        "id": "p1-s2", "level": "all",
+                        "title": "Industry overview and career landscape",
+                        "description": "Understand the day-to-day reality of working as a Compliance Officer, including typical roles such as Compliance Analyst and AML Analyst.",
+                        "resources": [
+                            {"title": "A day in the life of a Compliance Officer", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-2", "phase_number": 2,
+                "title": "Core Tools & Practical Skills",
+                "description": "Learn the tools and hands-on skills used in the Compliance Officer profession.",
+                "base_weeks": 5,
+                "skills_covered": ["Compliance management software", "Excel", "LexisNexis"],
+                "steps": [
+                    {
+                        "id": "p2-s1", "level": "all",
+                        "title": "Key tools and software",
+                        "description": "Get hands-on with the tools used daily: Compliance management software, Excel, LexisNexis.",
+                        "resources": [{"title": "Compliance management software tutorial for beginners", "type": "video"}, {"title": "Excel tutorial for beginners", "type": "video"}],
+                    },
+                    {
+                        "id": "p2-s2", "level": "builder_plus",
+                        "title": "Practical exercises and mini-projects",
+                        "description": "Apply your knowledge through structured exercises. Practical experience is what separates candidates at interview.",
+                        "resources": [
+                            {"title": "Compliance Officer practical projects for your portfolio", "type": "project"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-3", "phase_number": 3,
+                "title": "Advanced Skills & Specialism",
+                "description": "Develop deeper expertise and begin to specialise within the Compliance Officer field.",
+                "base_weeks": 5,
+                "skills_covered": ["Negotiation", "Public Speaking", "Research"],
+                "steps": [
+                    {
+                        "id": "p3-s1", "level": "all",
+                        "title": "Advanced techniques",
+                        "description": "Move beyond the basics and tackle more complex, realistic problems faced by mid-level Compliance Officers.",
+                        "resources": [{"title": "Advanced Negotiation for Compliance Officers", "type": "course"}, {"title": "Advanced Public Speaking for Compliance Officers", "type": "course"}],
+                    },
+                    {
+                        "id": "p3-s2", "level": "advanced_only",
+                        "title": "Specialism and leadership",
+                        "description": "Explore specialist areas within the Compliance Officer field and develop the strategic thinking needed for senior roles.",
+                        "resources": [
+                            {"title": "AML Analyst — how to reach the senior level", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-4", "phase_number": 4,
+                "title": "Portfolio & Job Preparation",
+                "description": "Build a portfolio, prepare your applications, and land your first Compliance Officer role.",
+                "base_weeks": 3,
+                "skills_covered": ["Portfolio", "Job Applications", "Interview Preparation"],
+                "steps": [
+                    {
+                        "id": "p4-s1", "level": "all",
+                        "title": "Build a portfolio project",
+                        "description": "Create at least one substantial project that demonstrates your Compliance Officer skills. This is the single most important thing you can do before applying.",
+                        "resources": [
+                            {"title": "Compliance Officer portfolio — what to include and how to present it", "type": "video"},
+                            {"title": "GitHub — Host your project portfolio", "type": "project"},
+                        ],
+                    },
+                    {
+                        "id": "p4-s2", "level": "all",
+                        "title": "Job search and interview preparation",
+                        "description": "Polish your CV, practise common Compliance Officer interview questions, and start applying. Networking accounts for over 70% of hires.",
+                        "resources": [{"title": "How to become a Compliance Officer — career roadmap", "type": "video"}, {"title": "LinkedIn — Compliance Officer job search and networking", "type": "practice"}],
+                    },
+                ],
+            },
+        ],
+    },
+    # ──────────────────────────────────────────────────────────────────────
+    "civil-engineer": {
+        "career_title": "Civil Engineer",
+        "phases": [
+            {
+                "id": "phase-1", "phase_number": 1,
+                "title": "Foundations",
+                "description": "Build the essential knowledge base required to work as a Civil Engineer.",
+                "base_weeks": 4,
+                "skills_covered": ["Engineering", "Project Management", "Research"],
+                "steps": [
+                    {
+                        "id": "p1-s1", "level": "starter_only",
+                        "title": "Core theory and fundamentals",
+                        "description": "Design, plan, and oversee the construction of infrastructure including roads, bridges, buildings, and utilities. Start with the foundational concepts that every Civil Engineer must understand.",
+                        "resources": [{"title": "Engineering fundamentals full course", "type": "video"}, {"title": "Project Management fundamentals full course", "type": "video"}],
+                    },
+                    {
+                        "id": "p1-s2", "level": "all",
+                        "title": "Industry overview and career landscape",
+                        "description": "Understand the day-to-day reality of working as a Civil Engineer, including typical roles such as Graduate Civil Engineer and Chartered Engineer.",
+                        "resources": [
+                            {"title": "A day in the life of a Civil Engineer", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-2", "phase_number": 2,
+                "title": "Core Tools & Practical Skills",
+                "description": "Learn the tools and hands-on skills used in the Civil Engineer profession.",
+                "base_weeks": 5,
+                "skills_covered": ["AutoCAD", "Revit", "Civil 3D"],
+                "steps": [
+                    {
+                        "id": "p2-s1", "level": "all",
+                        "title": "Key tools and software",
+                        "description": "Get hands-on with the tools used daily: AutoCAD, Revit, Civil 3D.",
+                        "resources": [{"title": "AutoCAD tutorial for beginners", "type": "video"}, {"title": "Revit tutorial for beginners", "type": "video"}],
+                    },
+                    {
+                        "id": "p2-s2", "level": "builder_plus",
+                        "title": "Practical exercises and mini-projects",
+                        "description": "Apply your knowledge through structured exercises. Practical experience is what separates candidates at interview.",
+                        "resources": [
+                            {"title": "Civil Engineer practical projects for your portfolio", "type": "project"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-3", "phase_number": 3,
+                "title": "Advanced Skills & Specialism",
+                "description": "Develop deeper expertise and begin to specialise within the Civil Engineer field.",
+                "base_weeks": 5,
+                "skills_covered": ["Statistics", "Technical Writing", "Engineering"],
+                "steps": [
+                    {
+                        "id": "p3-s1", "level": "all",
+                        "title": "Advanced techniques",
+                        "description": "Move beyond the basics and tackle more complex, realistic problems faced by mid-level Civil Engineers.",
+                        "resources": [{"title": "Advanced Statistics for Civil Engineers", "type": "course"}, {"title": "Advanced Technical Writing for Civil Engineers", "type": "course"}],
+                    },
+                    {
+                        "id": "p3-s2", "level": "advanced_only",
+                        "title": "Specialism and leadership",
+                        "description": "Explore specialist areas within the Civil Engineer field and develop the strategic thinking needed for senior roles.",
+                        "resources": [
+                            {"title": "Chartered Engineer — how to reach the senior level", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-4", "phase_number": 4,
+                "title": "Portfolio & Job Preparation",
+                "description": "Build a portfolio, prepare your applications, and land your first Civil Engineer role.",
+                "base_weeks": 3,
+                "skills_covered": ["Portfolio", "Job Applications", "Interview Preparation"],
+                "steps": [
+                    {
+                        "id": "p4-s1", "level": "all",
+                        "title": "Build a portfolio project",
+                        "description": "Create at least one substantial project that demonstrates your Civil Engineer skills. This is the single most important thing you can do before applying.",
+                        "resources": [
+                            {"title": "Civil Engineer portfolio — what to include and how to present it", "type": "video"},
+                            {"title": "GitHub — Host your project portfolio", "type": "project"},
+                        ],
+                    },
+                    {
+                        "id": "p4-s2", "level": "all",
+                        "title": "Job search and interview preparation",
+                        "description": "Polish your CV, practise common Civil Engineer interview questions, and start applying. Networking accounts for over 70% of hires.",
+                        "resources": [{"title": "How to become a Civil Engineer — career roadmap", "type": "video"}, {"title": "LinkedIn — Civil Engineer job search and networking", "type": "practice"}],
+                    },
+                ],
+            },
+        ],
+    },
+    # ──────────────────────────────────────────────────────────────────────
+    "mechanical-engineer": {
+        "career_title": "Mechanical Engineer",
+        "phases": [
+            {
+                "id": "phase-1", "phase_number": 1,
+                "title": "Foundations",
+                "description": "Build the essential knowledge base required to work as a Mechanical Engineer.",
+                "base_weeks": 4,
+                "skills_covered": ["Engineering", "Statistics", "Technical Writing"],
+                "steps": [
+                    {
+                        "id": "p1-s1", "level": "starter_only",
+                        "title": "Core theory and fundamentals",
+                        "description": "Design, analyse, and manufacture mechanical systems from consumer products to industrial machinery. Start with the foundational concepts that every Mechanical Engineer must understand.",
+                        "resources": [{"title": "Engineering fundamentals full course", "type": "video"}, {"title": "Statistics fundamentals full course", "type": "video"}],
+                    },
+                    {
+                        "id": "p1-s2", "level": "all",
+                        "title": "Industry overview and career landscape",
+                        "description": "Understand the day-to-day reality of working as a Mechanical Engineer, including typical roles such as Graduate Mechanical Engineer and Chartered Mechanical Engineer.",
+                        "resources": [
+                            {"title": "A day in the life of a Mechanical Engineer", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-2", "phase_number": 2,
+                "title": "Core Tools & Practical Skills",
+                "description": "Learn the tools and hands-on skills used in the Mechanical Engineer profession.",
+                "base_weeks": 5,
+                "skills_covered": ["SolidWorks", "CATIA", "ANSYS"],
+                "steps": [
+                    {
+                        "id": "p2-s1", "level": "all",
+                        "title": "Key tools and software",
+                        "description": "Get hands-on with the tools used daily: SolidWorks, CATIA, ANSYS.",
+                        "resources": [{"title": "SolidWorks tutorial for beginners", "type": "video"}, {"title": "CATIA tutorial for beginners", "type": "video"}],
+                    },
+                    {
+                        "id": "p2-s2", "level": "builder_plus",
+                        "title": "Practical exercises and mini-projects",
+                        "description": "Apply your knowledge through structured exercises. Practical experience is what separates candidates at interview.",
+                        "resources": [
+                            {"title": "Mechanical Engineer practical projects for your portfolio", "type": "project"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-3", "phase_number": 3,
+                "title": "Advanced Skills & Specialism",
+                "description": "Develop deeper expertise and begin to specialise within the Mechanical Engineer field.",
+                "base_weeks": 5,
+                "skills_covered": ["Research", "Project Management", "Engineering"],
+                "steps": [
+                    {
+                        "id": "p3-s1", "level": "all",
+                        "title": "Advanced techniques",
+                        "description": "Move beyond the basics and tackle more complex, realistic problems faced by mid-level Mechanical Engineers.",
+                        "resources": [{"title": "Advanced Research for Mechanical Engineers", "type": "course"}, {"title": "Advanced Project Management for Mechanical Engineers", "type": "course"}],
+                    },
+                    {
+                        "id": "p3-s2", "level": "advanced_only",
+                        "title": "Specialism and leadership",
+                        "description": "Explore specialist areas within the Mechanical Engineer field and develop the strategic thinking needed for senior roles.",
+                        "resources": [
+                            {"title": "Chartered Mechanical Engineer — how to reach the senior level", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-4", "phase_number": 4,
+                "title": "Portfolio & Job Preparation",
+                "description": "Build a portfolio, prepare your applications, and land your first Mechanical Engineer role.",
+                "base_weeks": 3,
+                "skills_covered": ["Portfolio", "Job Applications", "Interview Preparation"],
+                "steps": [
+                    {
+                        "id": "p4-s1", "level": "all",
+                        "title": "Build a portfolio project",
+                        "description": "Create at least one substantial project that demonstrates your Mechanical Engineer skills. This is the single most important thing you can do before applying.",
+                        "resources": [
+                            {"title": "Mechanical Engineer portfolio — what to include and how to present it", "type": "video"},
+                            {"title": "GitHub — Host your project portfolio", "type": "project"},
+                        ],
+                    },
+                    {
+                        "id": "p4-s2", "level": "all",
+                        "title": "Job search and interview preparation",
+                        "description": "Polish your CV, practise common Mechanical Engineer interview questions, and start applying. Networking accounts for over 70% of hires.",
+                        "resources": [{"title": "How to become a Mechanical Engineer — career roadmap", "type": "video"}, {"title": "LinkedIn — Mechanical Engineer job search and networking", "type": "practice"}],
+                    },
+                ],
+            },
+        ],
+    },
+    # ──────────────────────────────────────────────────────────────────────
+    "electrician": {
+        "career_title": "Electrician",
+        "phases": [
+            {
+                "id": "phase-1", "phase_number": 1,
+                "title": "Foundations",
+                "description": "Build the essential knowledge base required to work as a Electrician.",
+                "base_weeks": 4,
+                "skills_covered": ["Engineering", "Risk Assessment", "Customer Service"],
+                "steps": [
+                    {
+                        "id": "p1-s1", "level": "starter_only",
+                        "title": "Core theory and fundamentals",
+                        "description": "Install, maintain, and repair electrical wiring and systems in residential, commercial, and industrial settings. Start with the foundational concepts that every Electrician must understand.",
+                        "resources": [{"title": "Engineering fundamentals full course", "type": "video"}, {"title": "Risk Assessment fundamentals full course", "type": "video"}],
+                    },
+                    {
+                        "id": "p1-s2", "level": "all",
+                        "title": "Industry overview and career landscape",
+                        "description": "Understand the day-to-day reality of working as a Electrician, including typical roles such as Apprentice Electrician and Electrical Contractor.",
+                        "resources": [
+                            {"title": "A day in the life of a Electrician", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-2", "phase_number": 2,
+                "title": "Core Tools & Practical Skills",
+                "description": "Learn the tools and hands-on skills used in the Electrician profession.",
+                "base_weeks": 5,
+                "skills_covered": ["Multimeters", "Cable testers", "Conduit benders"],
+                "steps": [
+                    {
+                        "id": "p2-s1", "level": "all",
+                        "title": "Key tools and software",
+                        "description": "Get hands-on with the tools used daily: Multimeters, Cable testers, Conduit benders.",
+                        "resources": [{"title": "Multimeters tutorial for beginners", "type": "video"}, {"title": "Cable testers tutorial for beginners", "type": "video"}],
+                    },
+                    {
+                        "id": "p2-s2", "level": "builder_plus",
+                        "title": "Practical exercises and mini-projects",
+                        "description": "Apply your knowledge through structured exercises. Practical experience is what separates candidates at interview.",
+                        "resources": [
+                            {"title": "Electrician practical projects for your portfolio", "type": "project"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-3", "phase_number": 3,
+                "title": "Advanced Skills & Specialism",
+                "description": "Develop deeper expertise and begin to specialise within the Electrician field.",
+                "base_weeks": 5,
+                "skills_covered": ["Technical Writing", "Engineering", "Risk Assessment"],
+                "steps": [
+                    {
+                        "id": "p3-s1", "level": "all",
+                        "title": "Advanced techniques",
+                        "description": "Move beyond the basics and tackle more complex, realistic problems faced by mid-level Electricians.",
+                        "resources": [{"title": "Advanced Technical Writing for Electricians", "type": "course"}],
+                    },
+                    {
+                        "id": "p3-s2", "level": "advanced_only",
+                        "title": "Specialism and leadership",
+                        "description": "Explore specialist areas within the Electrician field and develop the strategic thinking needed for senior roles.",
+                        "resources": [
+                            {"title": "Electrical Contractor — how to reach the senior level", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-4", "phase_number": 4,
+                "title": "Portfolio & Job Preparation",
+                "description": "Build a portfolio, prepare your applications, and land your first Electrician role.",
+                "base_weeks": 3,
+                "skills_covered": ["Portfolio", "Job Applications", "Interview Preparation"],
+                "steps": [
+                    {
+                        "id": "p4-s1", "level": "all",
+                        "title": "Build a portfolio project",
+                        "description": "Create at least one substantial project that demonstrates your Electrician skills. This is the single most important thing you can do before applying.",
+                        "resources": [
+                            {"title": "Electrician portfolio — what to include and how to present it", "type": "video"},
+                            {"title": "GitHub — Host your project portfolio", "type": "project"},
+                        ],
+                    },
+                    {
+                        "id": "p4-s2", "level": "all",
+                        "title": "Job search and interview preparation",
+                        "description": "Polish your CV, practise common Electrician interview questions, and start applying. Networking accounts for over 70% of hires.",
+                        "resources": [{"title": "How to become a Electrician — career roadmap", "type": "video"}, {"title": "LinkedIn — Electrician job search and networking", "type": "practice"}],
+                    },
+                ],
+            },
+        ],
+    },
+    # ──────────────────────────────────────────────────────────────────────
+    "plumber": {
+        "career_title": "Plumber",
+        "phases": [
+            {
+                "id": "phase-1", "phase_number": 1,
+                "title": "Foundations",
+                "description": "Build the essential knowledge base required to work as a Plumber.",
+                "base_weeks": 4,
+                "skills_covered": ["Engineering", "Customer Service", "Risk Assessment"],
+                "steps": [
+                    {
+                        "id": "p1-s1", "level": "starter_only",
+                        "title": "Core theory and fundamentals",
+                        "description": "Install and maintain water, heating, and drainage systems in homes, businesses, and industrial facilities. Start with the foundational concepts that every Plumber must understand.",
+                        "resources": [{"title": "Engineering fundamentals full course", "type": "video"}, {"title": "Customer Service fundamentals full course", "type": "video"}],
+                    },
+                    {
+                        "id": "p1-s2", "level": "all",
+                        "title": "Industry overview and career landscape",
+                        "description": "Understand the day-to-day reality of working as a Plumber, including typical roles such as Apprentice Plumber and Plumbing Contractor.",
+                        "resources": [
+                            {"title": "A day in the life of a Plumber", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-2", "phase_number": 2,
+                "title": "Core Tools & Practical Skills",
+                "description": "Learn the tools and hands-on skills used in the Plumber profession.",
+                "base_weeks": 5,
+                "skills_covered": ["Pipe cutters", "Soldering equipment", "Pressure testing equipment"],
+                "steps": [
+                    {
+                        "id": "p2-s1", "level": "all",
+                        "title": "Key tools and software",
+                        "description": "Get hands-on with the tools used daily: Pipe cutters, Soldering equipment, Pressure testing equipment.",
+                        "resources": [{"title": "Pipe cutters tutorial for beginners", "type": "video"}, {"title": "Soldering equipment tutorial for beginners", "type": "video"}],
+                    },
+                    {
+                        "id": "p2-s2", "level": "builder_plus",
+                        "title": "Practical exercises and mini-projects",
+                        "description": "Apply your knowledge through structured exercises. Practical experience is what separates candidates at interview.",
+                        "resources": [
+                            {"title": "Plumber practical projects for your portfolio", "type": "project"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-3", "phase_number": 3,
+                "title": "Advanced Skills & Specialism",
+                "description": "Develop deeper expertise and begin to specialise within the Plumber field.",
+                "base_weeks": 5,
+                "skills_covered": ["Engineering", "Customer Service", "Risk Assessment"],
+                "steps": [
+                    {
+                        "id": "p3-s1", "level": "all",
+                        "title": "Advanced techniques",
+                        "description": "Move beyond the basics and tackle more complex, realistic problems faced by mid-level Plumbers.",
+                        "resources": [{"title": "Advanced Engineering for Plumbers", "type": "course"}, {"title": "Advanced Customer Service for Plumbers", "type": "course"}],
+                    },
+                    {
+                        "id": "p3-s2", "level": "advanced_only",
+                        "title": "Specialism and leadership",
+                        "description": "Explore specialist areas within the Plumber field and develop the strategic thinking needed for senior roles.",
+                        "resources": [
+                            {"title": "Plumbing Contractor — how to reach the senior level", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-4", "phase_number": 4,
+                "title": "Portfolio & Job Preparation",
+                "description": "Build a portfolio, prepare your applications, and land your first Plumber role.",
+                "base_weeks": 3,
+                "skills_covered": ["Portfolio", "Job Applications", "Interview Preparation"],
+                "steps": [
+                    {
+                        "id": "p4-s1", "level": "all",
+                        "title": "Build a portfolio project",
+                        "description": "Create at least one substantial project that demonstrates your Plumber skills. This is the single most important thing you can do before applying.",
+                        "resources": [
+                            {"title": "Plumber portfolio — what to include and how to present it", "type": "video"},
+                            {"title": "GitHub — Host your project portfolio", "type": "project"},
+                        ],
+                    },
+                    {
+                        "id": "p4-s2", "level": "all",
+                        "title": "Job search and interview preparation",
+                        "description": "Polish your CV, practise common Plumber interview questions, and start applying. Networking accounts for over 70% of hires.",
+                        "resources": [{"title": "How to become a Plumber — career roadmap", "type": "video"}, {"title": "LinkedIn — Plumber job search and networking", "type": "practice"}],
+                    },
+                ],
+            },
+        ],
+    },
+    # ──────────────────────────────────────────────────────────────────────
+    "aerospace-engineer": {
+        "career_title": "Aerospace Engineer",
+        "phases": [
+            {
+                "id": "phase-1", "phase_number": 1,
+                "title": "Foundations",
+                "description": "Build the essential knowledge base required to work as a Aerospace Engineer.",
+                "base_weeks": 4,
+                "skills_covered": ["Engineering", "Statistics", "Research"],
+                "steps": [
+                    {
+                        "id": "p1-s1", "level": "starter_only",
+                        "title": "Core theory and fundamentals",
+                        "description": "Design, test, and develop aircraft, spacecraft, satellites, and related systems and components. Start with the foundational concepts that every Aerospace Engineer must understand.",
+                        "resources": [{"title": "Engineering fundamentals full course", "type": "video"}, {"title": "Statistics fundamentals full course", "type": "video"}],
+                    },
+                    {
+                        "id": "p1-s2", "level": "all",
+                        "title": "Industry overview and career landscape",
+                        "description": "Understand the day-to-day reality of working as a Aerospace Engineer, including typical roles such as Graduate Aerospace Engineer and Flight Test Engineer.",
+                        "resources": [
+                            {"title": "A day in the life of a Aerospace Engineer", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-2", "phase_number": 2,
+                "title": "Core Tools & Practical Skills",
+                "description": "Learn the tools and hands-on skills used in the Aerospace Engineer profession.",
+                "base_weeks": 5,
+                "skills_covered": ["MATLAB", "ANSYS", "CATIA"],
+                "steps": [
+                    {
+                        "id": "p2-s1", "level": "all",
+                        "title": "Key tools and software",
+                        "description": "Get hands-on with the tools used daily: MATLAB / Simulink, ANSYS, CATIA.",
+                        "resources": [{"title": "MATLAB / Simulink tutorial for beginners", "type": "video"}, {"title": "ANSYS tutorial for beginners", "type": "video"}],
+                    },
+                    {
+                        "id": "p2-s2", "level": "builder_plus",
+                        "title": "Practical exercises and mini-projects",
+                        "description": "Apply your knowledge through structured exercises. Practical experience is what separates candidates at interview.",
+                        "resources": [
+                            {"title": "Aerospace Engineer practical projects for your portfolio", "type": "project"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-3", "phase_number": 3,
+                "title": "Advanced Skills & Specialism",
+                "description": "Develop deeper expertise and begin to specialise within the Aerospace Engineer field.",
+                "base_weeks": 5,
+                "skills_covered": ["Technical Writing", "MATLAB", "Engineering"],
+                "steps": [
+                    {
+                        "id": "p3-s1", "level": "all",
+                        "title": "Advanced techniques",
+                        "description": "Move beyond the basics and tackle more complex, realistic problems faced by mid-level Aerospace Engineers.",
+                        "resources": [{"title": "Advanced Technical Writing for Aerospace Engineers", "type": "course"}, {"title": "Advanced MATLAB for Aerospace Engineers", "type": "course"}],
+                    },
+                    {
+                        "id": "p3-s2", "level": "advanced_only",
+                        "title": "Specialism and leadership",
+                        "description": "Explore specialist areas within the Aerospace Engineer field and develop the strategic thinking needed for senior roles.",
+                        "resources": [
+                            {"title": "Flight Test Engineer — how to reach the senior level", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-4", "phase_number": 4,
+                "title": "Portfolio & Job Preparation",
+                "description": "Build a portfolio, prepare your applications, and land your first Aerospace Engineer role.",
+                "base_weeks": 3,
+                "skills_covered": ["Portfolio", "Job Applications", "Interview Preparation"],
+                "steps": [
+                    {
+                        "id": "p4-s1", "level": "all",
+                        "title": "Build a portfolio project",
+                        "description": "Create at least one substantial project that demonstrates your Aerospace Engineer skills. This is the single most important thing you can do before applying.",
+                        "resources": [
+                            {"title": "Aerospace Engineer portfolio — what to include and how to present it", "type": "video"},
+                            {"title": "GitHub — Host your project portfolio", "type": "project"},
+                        ],
+                    },
+                    {
+                        "id": "p4-s2", "level": "all",
+                        "title": "Job search and interview preparation",
+                        "description": "Polish your CV, practise common Aerospace Engineer interview questions, and start applying. Networking accounts for over 70% of hires.",
+                        "resources": [{"title": "How to become a Aerospace Engineer — career roadmap", "type": "video"}, {"title": "LinkedIn — Aerospace Engineer job search and networking", "type": "practice"}],
+                    },
+                ],
+            },
+        ],
+    },
+    # ──────────────────────────────────────────────────────────────────────
+    "chemical-engineer": {
+        "career_title": "Chemical Engineer",
+        "phases": [
+            {
+                "id": "phase-1", "phase_number": 1,
+                "title": "Foundations",
+                "description": "Build the essential knowledge base required to work as a Chemical Engineer.",
+                "base_weeks": 4,
+                "skills_covered": ["Engineering", "Statistics", "Research"],
+                "steps": [
+                    {
+                        "id": "p1-s1", "level": "starter_only",
+                        "title": "Core theory and fundamentals",
+                        "description": "Design and operate processes that transform raw materials into useful products at industrial scale. Start with the foundational concepts that every Chemical Engineer must understand.",
+                        "resources": [{"title": "Engineering fundamentals full course", "type": "video"}, {"title": "Statistics fundamentals full course", "type": "video"}],
+                    },
+                    {
+                        "id": "p1-s2", "level": "all",
+                        "title": "Industry overview and career landscape",
+                        "description": "Understand the day-to-day reality of working as a Chemical Engineer, including typical roles such as Graduate Chemical Engineer and Environmental Engineer.",
+                        "resources": [
+                            {"title": "A day in the life of a Chemical Engineer", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-2", "phase_number": 2,
+                "title": "Core Tools & Practical Skills",
+                "description": "Learn the tools and hands-on skills used in the Chemical Engineer profession.",
+                "base_weeks": 5,
+                "skills_covered": ["Aspen Plus", "MATLAB", "HYSYS"],
+                "steps": [
+                    {
+                        "id": "p2-s1", "level": "all",
+                        "title": "Key tools and software",
+                        "description": "Get hands-on with the tools used daily: Aspen Plus, MATLAB, HYSYS.",
+                        "resources": [{"title": "Aspen Plus tutorial for beginners", "type": "video"}, {"title": "MATLAB tutorial for beginners", "type": "video"}],
+                    },
+                    {
+                        "id": "p2-s2", "level": "builder_plus",
+                        "title": "Practical exercises and mini-projects",
+                        "description": "Apply your knowledge through structured exercises. Practical experience is what separates candidates at interview.",
+                        "resources": [
+                            {"title": "Chemical Engineer practical projects for your portfolio", "type": "project"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-3", "phase_number": 3,
+                "title": "Advanced Skills & Specialism",
+                "description": "Develop deeper expertise and begin to specialise within the Chemical Engineer field.",
+                "base_weeks": 5,
+                "skills_covered": ["Risk Assessment", "Technical Writing", "Engineering"],
+                "steps": [
+                    {
+                        "id": "p3-s1", "level": "all",
+                        "title": "Advanced techniques",
+                        "description": "Move beyond the basics and tackle more complex, realistic problems faced by mid-level Chemical Engineers.",
+                        "resources": [{"title": "Advanced Risk Assessment for Chemical Engineers", "type": "course"}, {"title": "Advanced Technical Writing for Chemical Engineers", "type": "course"}],
+                    },
+                    {
+                        "id": "p3-s2", "level": "advanced_only",
+                        "title": "Specialism and leadership",
+                        "description": "Explore specialist areas within the Chemical Engineer field and develop the strategic thinking needed for senior roles.",
+                        "resources": [
+                            {"title": "Environmental Engineer — how to reach the senior level", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-4", "phase_number": 4,
+                "title": "Portfolio & Job Preparation",
+                "description": "Build a portfolio, prepare your applications, and land your first Chemical Engineer role.",
+                "base_weeks": 3,
+                "skills_covered": ["Portfolio", "Job Applications", "Interview Preparation"],
+                "steps": [
+                    {
+                        "id": "p4-s1", "level": "all",
+                        "title": "Build a portfolio project",
+                        "description": "Create at least one substantial project that demonstrates your Chemical Engineer skills. This is the single most important thing you can do before applying.",
+                        "resources": [
+                            {"title": "Chemical Engineer portfolio — what to include and how to present it", "type": "video"},
+                            {"title": "GitHub — Host your project portfolio", "type": "project"},
+                        ],
+                    },
+                    {
+                        "id": "p4-s2", "level": "all",
+                        "title": "Job search and interview preparation",
+                        "description": "Polish your CV, practise common Chemical Engineer interview questions, and start applying. Networking accounts for over 70% of hires.",
+                        "resources": [{"title": "How to become a Chemical Engineer — career roadmap", "type": "video"}, {"title": "LinkedIn — Chemical Engineer job search and networking", "type": "practice"}],
+                    },
+                ],
+            },
+        ],
+    },
+    # ──────────────────────────────────────────────────────────────────────
+    "nurse": {
+        "career_title": "Nurse",
+        "phases": [
+            {
+                "id": "phase-1", "phase_number": 1,
+                "title": "Foundations",
+                "description": "Build the essential knowledge base required to work as a Nurse.",
+                "base_weeks": 4,
+                "skills_covered": ["Customer Service", "Public Speaking", "Research"],
+                "steps": [
+                    {
+                        "id": "p1-s1", "level": "starter_only",
+                        "title": "Core theory and fundamentals",
+                        "description": "Deliver direct patient care, administer treatments, and support recovery in hospitals, clinics, and community settings. Start with the foundational concepts that every Nurse must understand.",
+                        "resources": [{"title": "Customer Service fundamentals full course", "type": "video"}, {"title": "Public Speaking fundamentals full course", "type": "video"}],
+                    },
+                    {
+                        "id": "p1-s2", "level": "all",
+                        "title": "Industry overview and career landscape",
+                        "description": "Understand the day-to-day reality of working as a Nurse, including typical roles such as Staff Nurse and Nurse Manager.",
+                        "resources": [
+                            {"title": "A day in the life of a Nurse", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-2", "phase_number": 2,
+                "title": "Core Tools & Practical Skills",
+                "description": "Learn the tools and hands-on skills used in the Nurse profession.",
+                "base_weeks": 5,
+                "skills_covered": ["Electronic Health Records (EHR)", "EPIC", "Meditech"],
+                "steps": [
+                    {
+                        "id": "p2-s1", "level": "all",
+                        "title": "Key tools and software",
+                        "description": "Get hands-on with the tools used daily: Electronic Health Records (EHR), EPIC, Meditech.",
+                        "resources": [{"title": "Electronic Health Records (EHR) tutorial for beginners", "type": "video"}, {"title": "EPIC tutorial for beginners", "type": "video"}],
+                    },
+                    {
+                        "id": "p2-s2", "level": "builder_plus",
+                        "title": "Practical exercises and mini-projects",
+                        "description": "Apply your knowledge through structured exercises. Practical experience is what separates candidates at interview.",
+                        "resources": [
+                            {"title": "Nurse practical projects for your portfolio", "type": "project"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-3", "phase_number": 3,
+                "title": "Advanced Skills & Specialism",
+                "description": "Develop deeper expertise and begin to specialise within the Nurse field.",
+                "base_weeks": 5,
+                "skills_covered": ["Technical Writing", "Statistics", "Customer Service"],
+                "steps": [
+                    {
+                        "id": "p3-s1", "level": "all",
+                        "title": "Advanced techniques",
+                        "description": "Move beyond the basics and tackle more complex, realistic problems faced by mid-level Nurses.",
+                        "resources": [{"title": "Advanced Technical Writing for Nurses", "type": "course"}, {"title": "Advanced Statistics for Nurses", "type": "course"}],
+                    },
+                    {
+                        "id": "p3-s2", "level": "advanced_only",
+                        "title": "Specialism and leadership",
+                        "description": "Explore specialist areas within the Nurse field and develop the strategic thinking needed for senior roles.",
+                        "resources": [
+                            {"title": "Nurse Manager — how to reach the senior level", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-4", "phase_number": 4,
+                "title": "Portfolio & Job Preparation",
+                "description": "Build a portfolio, prepare your applications, and land your first Nurse role.",
+                "base_weeks": 3,
+                "skills_covered": ["Portfolio", "Job Applications", "Interview Preparation"],
+                "steps": [
+                    {
+                        "id": "p4-s1", "level": "all",
+                        "title": "Build a portfolio project",
+                        "description": "Create at least one substantial project that demonstrates your Nurse skills. This is the single most important thing you can do before applying.",
+                        "resources": [
+                            {"title": "Nurse portfolio — what to include and how to present it", "type": "video"},
+                            {"title": "GitHub — Host your project portfolio", "type": "project"},
+                        ],
+                    },
+                    {
+                        "id": "p4-s2", "level": "all",
+                        "title": "Job search and interview preparation",
+                        "description": "Polish your CV, practise common Nurse interview questions, and start applying. Networking accounts for over 70% of hires.",
+                        "resources": [{"title": "How to become a Nurse — career roadmap", "type": "video"}, {"title": "LinkedIn — Nurse job search and networking", "type": "practice"}],
+                    },
+                ],
+            },
+        ],
+    },
+    # ──────────────────────────────────────────────────────────────────────
+    "pharmacist": {
+        "career_title": "Pharmacist",
+        "phases": [
+            {
+                "id": "phase-1", "phase_number": 1,
+                "title": "Foundations",
+                "description": "Build the essential knowledge base required to work as a Pharmacist.",
+                "base_weeks": 4,
+                "skills_covered": ["Research", "Customer Service", "Statistics"],
+                "steps": [
+                    {
+                        "id": "p1-s1", "level": "starter_only",
+                        "title": "Core theory and fundamentals",
+                        "description": "Dispense medications, counsel patients on drug therapies, and ensure safe and effective pharmaceutical care. Start with the foundational concepts that every Pharmacist must understand.",
+                        "resources": [{"title": "Research fundamentals full course", "type": "video"}, {"title": "Customer Service fundamentals full course", "type": "video"}],
+                    },
+                    {
+                        "id": "p1-s2", "level": "all",
+                        "title": "Industry overview and career landscape",
+                        "description": "Understand the day-to-day reality of working as a Pharmacist, including typical roles such as Pre-registration Pharmacist and Pharmaceutical Scientist.",
+                        "resources": [
+                            {"title": "A day in the life of a Pharmacist", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-2", "phase_number": 2,
+                "title": "Core Tools & Practical Skills",
+                "description": "Learn the tools and hands-on skills used in the Pharmacist profession.",
+                "base_weeks": 5,
+                "skills_covered": ["Dispensing systems", "EPIC", "Rx software"],
+                "steps": [
+                    {
+                        "id": "p2-s1", "level": "all",
+                        "title": "Key tools and software",
+                        "description": "Get hands-on with the tools used daily: Dispensing systems, EPIC, Rx software.",
+                        "resources": [{"title": "Dispensing systems tutorial for beginners", "type": "video"}, {"title": "EPIC tutorial for beginners", "type": "video"}],
+                    },
+                    {
+                        "id": "p2-s2", "level": "builder_plus",
+                        "title": "Practical exercises and mini-projects",
+                        "description": "Apply your knowledge through structured exercises. Practical experience is what separates candidates at interview.",
+                        "resources": [
+                            {"title": "Pharmacist practical projects for your portfolio", "type": "project"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-3", "phase_number": 3,
+                "title": "Advanced Skills & Specialism",
+                "description": "Develop deeper expertise and begin to specialise within the Pharmacist field.",
+                "base_weeks": 5,
+                "skills_covered": ["Technical Writing", "Public Speaking", "Research"],
+                "steps": [
+                    {
+                        "id": "p3-s1", "level": "all",
+                        "title": "Advanced techniques",
+                        "description": "Move beyond the basics and tackle more complex, realistic problems faced by mid-level Pharmacists.",
+                        "resources": [{"title": "Advanced Technical Writing for Pharmacists", "type": "course"}, {"title": "Advanced Public Speaking for Pharmacists", "type": "course"}],
+                    },
+                    {
+                        "id": "p3-s2", "level": "advanced_only",
+                        "title": "Specialism and leadership",
+                        "description": "Explore specialist areas within the Pharmacist field and develop the strategic thinking needed for senior roles.",
+                        "resources": [
+                            {"title": "Pharmaceutical Scientist — how to reach the senior level", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-4", "phase_number": 4,
+                "title": "Portfolio & Job Preparation",
+                "description": "Build a portfolio, prepare your applications, and land your first Pharmacist role.",
+                "base_weeks": 3,
+                "skills_covered": ["Portfolio", "Job Applications", "Interview Preparation"],
+                "steps": [
+                    {
+                        "id": "p4-s1", "level": "all",
+                        "title": "Build a portfolio project",
+                        "description": "Create at least one substantial project that demonstrates your Pharmacist skills. This is the single most important thing you can do before applying.",
+                        "resources": [
+                            {"title": "Pharmacist portfolio — what to include and how to present it", "type": "video"},
+                            {"title": "GitHub — Host your project portfolio", "type": "project"},
+                        ],
+                    },
+                    {
+                        "id": "p4-s2", "level": "all",
+                        "title": "Job search and interview preparation",
+                        "description": "Polish your CV, practise common Pharmacist interview questions, and start applying. Networking accounts for over 70% of hires.",
+                        "resources": [{"title": "How to become a Pharmacist — career roadmap", "type": "video"}, {"title": "LinkedIn — Pharmacist job search and networking", "type": "practice"}],
+                    },
+                ],
+            },
+        ],
+    },
+    # ──────────────────────────────────────────────────────────────────────
+    "physiotherapist": {
+        "career_title": "Physiotherapist",
+        "phases": [
+            {
+                "id": "phase-1", "phase_number": 1,
+                "title": "Foundations",
+                "description": "Build the essential knowledge base required to work as a Physiotherapist.",
+                "base_weeks": 4,
+                "skills_covered": ["Research", "Customer Service", "Public Speaking"],
+                "steps": [
+                    {
+                        "id": "p1-s1", "level": "starter_only",
+                        "title": "Core theory and fundamentals",
+                        "description": "Help people recover from injury, manage pain, and restore movement and physical function. Start with the foundational concepts that every Physiotherapist must understand.",
+                        "resources": [{"title": "Research fundamentals full course", "type": "video"}, {"title": "Customer Service fundamentals full course", "type": "video"}],
+                    },
+                    {
+                        "id": "p1-s2", "level": "all",
+                        "title": "Industry overview and career landscape",
+                        "description": "Understand the day-to-day reality of working as a Physiotherapist, including typical roles such as Newly Qualified Physiotherapist and Advanced Practitioner.",
+                        "resources": [
+                            {"title": "A day in the life of a Physiotherapist", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-2", "phase_number": 2,
+                "title": "Core Tools & Practical Skills",
+                "description": "Learn the tools and hands-on skills used in the Physiotherapist profession.",
+                "base_weeks": 5,
+                "skills_covered": ["Assessment tools", "Exercise prescription software", "EPIC"],
+                "steps": [
+                    {
+                        "id": "p2-s1", "level": "all",
+                        "title": "Key tools and software",
+                        "description": "Get hands-on with the tools used daily: Assessment tools, Exercise prescription software, EPIC / SystmOne.",
+                        "resources": [{"title": "Assessment tools tutorial for beginners", "type": "video"}, {"title": "Exercise prescription software tutorial for beginners", "type": "video"}],
+                    },
+                    {
+                        "id": "p2-s2", "level": "builder_plus",
+                        "title": "Practical exercises and mini-projects",
+                        "description": "Apply your knowledge through structured exercises. Practical experience is what separates candidates at interview.",
+                        "resources": [
+                            {"title": "Physiotherapist practical projects for your portfolio", "type": "project"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-3", "phase_number": 3,
+                "title": "Advanced Skills & Specialism",
+                "description": "Develop deeper expertise and begin to specialise within the Physiotherapist field.",
+                "base_weeks": 5,
+                "skills_covered": ["Statistics", "Research", "Customer Service"],
+                "steps": [
+                    {
+                        "id": "p3-s1", "level": "all",
+                        "title": "Advanced techniques",
+                        "description": "Move beyond the basics and tackle more complex, realistic problems faced by mid-level Physiotherapists.",
+                        "resources": [{"title": "Advanced Statistics for Physiotherapists", "type": "course"}],
+                    },
+                    {
+                        "id": "p3-s2", "level": "advanced_only",
+                        "title": "Specialism and leadership",
+                        "description": "Explore specialist areas within the Physiotherapist field and develop the strategic thinking needed for senior roles.",
+                        "resources": [
+                            {"title": "Advanced Practitioner — how to reach the senior level", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-4", "phase_number": 4,
+                "title": "Portfolio & Job Preparation",
+                "description": "Build a portfolio, prepare your applications, and land your first Physiotherapist role.",
+                "base_weeks": 3,
+                "skills_covered": ["Portfolio", "Job Applications", "Interview Preparation"],
+                "steps": [
+                    {
+                        "id": "p4-s1", "level": "all",
+                        "title": "Build a portfolio project",
+                        "description": "Create at least one substantial project that demonstrates your Physiotherapist skills. This is the single most important thing you can do before applying.",
+                        "resources": [
+                            {"title": "Physiotherapist portfolio — what to include and how to present it", "type": "video"},
+                            {"title": "GitHub — Host your project portfolio", "type": "project"},
+                        ],
+                    },
+                    {
+                        "id": "p4-s2", "level": "all",
+                        "title": "Job search and interview preparation",
+                        "description": "Polish your CV, practise common Physiotherapist interview questions, and start applying. Networking accounts for over 70% of hires.",
+                        "resources": [{"title": "How to become a Physiotherapist — career roadmap", "type": "video"}, {"title": "LinkedIn — Physiotherapist job search and networking", "type": "practice"}],
+                    },
+                ],
+            },
+        ],
+    },
+    # ──────────────────────────────────────────────────────────────────────
+    "psychologist": {
+        "career_title": "Psychologist",
+        "phases": [
+            {
+                "id": "phase-1", "phase_number": 1,
+                "title": "Foundations",
+                "description": "Build the essential knowledge base required to work as a Psychologist.",
+                "base_weeks": 4,
+                "skills_covered": ["Research", "Public Speaking", "Statistics"],
+                "steps": [
+                    {
+                        "id": "p1-s1", "level": "starter_only",
+                        "title": "Core theory and fundamentals",
+                        "description": "Assess and support mental health, behaviour, and wellbeing through evidence-based psychological therapies. Start with the foundational concepts that every Psychologist must understand.",
+                        "resources": [{"title": "Research fundamentals full course", "type": "video"}, {"title": "Public Speaking fundamentals full course", "type": "video"}],
+                    },
+                    {
+                        "id": "p1-s2", "level": "all",
+                        "title": "Industry overview and career landscape",
+                        "description": "Understand the day-to-day reality of working as a Psychologist, including typical roles such as Assistant Psychologist and Research Psychologist.",
+                        "resources": [
+                            {"title": "A day in the life of a Psychologist", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-2", "phase_number": 2,
+                "title": "Core Tools & Practical Skills",
+                "description": "Learn the tools and hands-on skills used in the Psychologist profession.",
+                "base_weeks": 5,
+                "skills_covered": ["Psychometric assessment tools", "SPSS", "Electronic health records"],
+                "steps": [
+                    {
+                        "id": "p2-s1", "level": "all",
+                        "title": "Key tools and software",
+                        "description": "Get hands-on with the tools used daily: Psychometric assessment tools, SPSS, Electronic health records.",
+                        "resources": [{"title": "Psychometric assessment tools tutorial for beginners", "type": "video"}, {"title": "SPSS tutorial for beginners", "type": "video"}],
+                    },
+                    {
+                        "id": "p2-s2", "level": "builder_plus",
+                        "title": "Practical exercises and mini-projects",
+                        "description": "Apply your knowledge through structured exercises. Practical experience is what separates candidates at interview.",
+                        "resources": [
+                            {"title": "Psychologist practical projects for your portfolio", "type": "project"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-3", "phase_number": 3,
+                "title": "Advanced Skills & Specialism",
+                "description": "Develop deeper expertise and begin to specialise within the Psychologist field.",
+                "base_weeks": 5,
+                "skills_covered": ["Writing & Copywriting", "Customer Service", "Research"],
+                "steps": [
+                    {
+                        "id": "p3-s1", "level": "all",
+                        "title": "Advanced techniques",
+                        "description": "Move beyond the basics and tackle more complex, realistic problems faced by mid-level Psychologists.",
+                        "resources": [{"title": "Advanced Writing & Copywriting for Psychologists", "type": "course"}, {"title": "Advanced Customer Service for Psychologists", "type": "course"}],
+                    },
+                    {
+                        "id": "p3-s2", "level": "advanced_only",
+                        "title": "Specialism and leadership",
+                        "description": "Explore specialist areas within the Psychologist field and develop the strategic thinking needed for senior roles.",
+                        "resources": [
+                            {"title": "Research Psychologist — how to reach the senior level", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-4", "phase_number": 4,
+                "title": "Portfolio & Job Preparation",
+                "description": "Build a portfolio, prepare your applications, and land your first Psychologist role.",
+                "base_weeks": 3,
+                "skills_covered": ["Portfolio", "Job Applications", "Interview Preparation"],
+                "steps": [
+                    {
+                        "id": "p4-s1", "level": "all",
+                        "title": "Build a portfolio project",
+                        "description": "Create at least one substantial project that demonstrates your Psychologist skills. This is the single most important thing you can do before applying.",
+                        "resources": [
+                            {"title": "Psychologist portfolio — what to include and how to present it", "type": "video"},
+                            {"title": "GitHub — Host your project portfolio", "type": "project"},
+                        ],
+                    },
+                    {
+                        "id": "p4-s2", "level": "all",
+                        "title": "Job search and interview preparation",
+                        "description": "Polish your CV, practise common Psychologist interview questions, and start applying. Networking accounts for over 70% of hires.",
+                        "resources": [{"title": "How to become a Psychologist — career roadmap", "type": "video"}, {"title": "LinkedIn — Psychologist job search and networking", "type": "practice"}],
+                    },
+                ],
+            },
+        ],
+    },
+    # ──────────────────────────────────────────────────────────────────────
+    "biomedical-scientist": {
+        "career_title": "Biomedical Scientist",
+        "phases": [
+            {
+                "id": "phase-1", "phase_number": 1,
+                "title": "Foundations",
+                "description": "Build the essential knowledge base required to work as a Biomedical Scientist.",
+                "base_weeks": 4,
+                "skills_covered": ["Research", "Statistics", "Technical Writing"],
+                "steps": [
+                    {
+                        "id": "p1-s1", "level": "starter_only",
+                        "title": "Core theory and fundamentals",
+                        "description": "Analyse patient samples in medical laboratories to support diagnosis and treatment of disease. Start with the foundational concepts that every Biomedical Scientist must understand.",
+                        "resources": [{"title": "Research fundamentals full course", "type": "video"}, {"title": "Statistics fundamentals full course", "type": "video"}],
+                    },
+                    {
+                        "id": "p1-s2", "level": "all",
+                        "title": "Industry overview and career landscape",
+                        "description": "Understand the day-to-day reality of working as a Biomedical Scientist, including typical roles such as Trainee BMS and Laboratory Manager.",
+                        "resources": [
+                            {"title": "A day in the life of a Biomedical Scientist", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-2", "phase_number": 2,
+                "title": "Core Tools & Practical Skills",
+                "description": "Learn the tools and hands-on skills used in the Biomedical Scientist profession.",
+                "base_weeks": 5,
+                "skills_covered": ["PCR machines", "Flow cytometers", "Spectrophotometers"],
+                "steps": [
+                    {
+                        "id": "p2-s1", "level": "all",
+                        "title": "Key tools and software",
+                        "description": "Get hands-on with the tools used daily: PCR machines, Flow cytometers, Spectrophotometers.",
+                        "resources": [{"title": "PCR machines tutorial for beginners", "type": "video"}, {"title": "Flow cytometers tutorial for beginners", "type": "video"}],
+                    },
+                    {
+                        "id": "p2-s2", "level": "builder_plus",
+                        "title": "Practical exercises and mini-projects",
+                        "description": "Apply your knowledge through structured exercises. Practical experience is what separates candidates at interview.",
+                        "resources": [
+                            {"title": "Biomedical Scientist practical projects for your portfolio", "type": "project"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-3", "phase_number": 3,
+                "title": "Advanced Skills & Specialism",
+                "description": "Develop deeper expertise and begin to specialise within the Biomedical Scientist field.",
+                "base_weeks": 5,
+                "skills_covered": ["Data Analysis", "Research", "Statistics"],
+                "steps": [
+                    {
+                        "id": "p3-s1", "level": "all",
+                        "title": "Advanced techniques",
+                        "description": "Move beyond the basics and tackle more complex, realistic problems faced by mid-level Biomedical Scientists.",
+                        "resources": [{"title": "Advanced Data Analysis for Biomedical Scientists", "type": "course"}],
+                    },
+                    {
+                        "id": "p3-s2", "level": "advanced_only",
+                        "title": "Specialism and leadership",
+                        "description": "Explore specialist areas within the Biomedical Scientist field and develop the strategic thinking needed for senior roles.",
+                        "resources": [
+                            {"title": "Laboratory Manager — how to reach the senior level", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-4", "phase_number": 4,
+                "title": "Portfolio & Job Preparation",
+                "description": "Build a portfolio, prepare your applications, and land your first Biomedical Scientist role.",
+                "base_weeks": 3,
+                "skills_covered": ["Portfolio", "Job Applications", "Interview Preparation"],
+                "steps": [
+                    {
+                        "id": "p4-s1", "level": "all",
+                        "title": "Build a portfolio project",
+                        "description": "Create at least one substantial project that demonstrates your Biomedical Scientist skills. This is the single most important thing you can do before applying.",
+                        "resources": [
+                            {"title": "Biomedical Scientist portfolio — what to include and how to present it", "type": "video"},
+                            {"title": "GitHub — Host your project portfolio", "type": "project"},
+                        ],
+                    },
+                    {
+                        "id": "p4-s2", "level": "all",
+                        "title": "Job search and interview preparation",
+                        "description": "Polish your CV, practise common Biomedical Scientist interview questions, and start applying. Networking accounts for over 70% of hires.",
+                        "resources": [{"title": "How to become a Biomedical Scientist — career roadmap", "type": "video"}, {"title": "LinkedIn — Biomedical Scientist job search and networking", "type": "practice"}],
+                    },
+                ],
+            },
+        ],
+    },
+    # ──────────────────────────────────────────────────────────────────────
+    "environmental-scientist": {
+        "career_title": "Environmental Scientist",
+        "phases": [
+            {
+                "id": "phase-1", "phase_number": 1,
+                "title": "Foundations",
+                "description": "Build the essential knowledge base required to work as a Environmental Scientist.",
+                "base_weeks": 4,
+                "skills_covered": ["Research", "Statistics", "Technical Writing"],
+                "steps": [
+                    {
+                        "id": "p1-s1", "level": "starter_only",
+                        "title": "Core theory and fundamentals",
+                        "description": "Study and help protect natural environments, ecosystems, and resources from pollution and climate change. Start with the foundational concepts that every Environmental Scientist must understand.",
+                        "resources": [{"title": "Research fundamentals full course", "type": "video"}, {"title": "Statistics fundamentals full course", "type": "video"}],
+                    },
+                    {
+                        "id": "p1-s2", "level": "all",
+                        "title": "Industry overview and career landscape",
+                        "description": "Understand the day-to-day reality of working as a Environmental Scientist, including typical roles such as Environmental Consultant and Sustainability Manager.",
+                        "resources": [
+                            {"title": "A day in the life of a Environmental Scientist", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-2", "phase_number": 2,
+                "title": "Core Tools & Practical Skills",
+                "description": "Learn the tools and hands-on skills used in the Environmental Scientist profession.",
+                "base_weeks": 5,
+                "skills_covered": ["ArcGIS", "R", "Python"],
+                "steps": [
+                    {
+                        "id": "p2-s1", "level": "all",
+                        "title": "Key tools and software",
+                        "description": "Get hands-on with the tools used daily: ArcGIS, R, Python.",
+                        "resources": [{"title": "ArcGIS tutorial for beginners", "type": "video"}, {"title": "R tutorial for beginners", "type": "video"}],
+                    },
+                    {
+                        "id": "p2-s2", "level": "builder_plus",
+                        "title": "Practical exercises and mini-projects",
+                        "description": "Apply your knowledge through structured exercises. Practical experience is what separates candidates at interview.",
+                        "resources": [
+                            {"title": "Environmental Scientist practical projects for your portfolio", "type": "project"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-3", "phase_number": 3,
+                "title": "Advanced Skills & Specialism",
+                "description": "Develop deeper expertise and begin to specialise within the Environmental Scientist field.",
+                "base_weeks": 5,
+                "skills_covered": ["Data Analysis", "GIS", "Research"],
+                "steps": [
+                    {
+                        "id": "p3-s1", "level": "all",
+                        "title": "Advanced techniques",
+                        "description": "Move beyond the basics and tackle more complex, realistic problems faced by mid-level Environmental Scientists.",
+                        "resources": [{"title": "Advanced Data Analysis for Environmental Scientists", "type": "course"}, {"title": "Advanced GIS for Environmental Scientists", "type": "course"}],
+                    },
+                    {
+                        "id": "p3-s2", "level": "advanced_only",
+                        "title": "Specialism and leadership",
+                        "description": "Explore specialist areas within the Environmental Scientist field and develop the strategic thinking needed for senior roles.",
+                        "resources": [
+                            {"title": "Sustainability Manager — how to reach the senior level", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-4", "phase_number": 4,
+                "title": "Portfolio & Job Preparation",
+                "description": "Build a portfolio, prepare your applications, and land your first Environmental Scientist role.",
+                "base_weeks": 3,
+                "skills_covered": ["Portfolio", "Job Applications", "Interview Preparation"],
+                "steps": [
+                    {
+                        "id": "p4-s1", "level": "all",
+                        "title": "Build a portfolio project",
+                        "description": "Create at least one substantial project that demonstrates your Environmental Scientist skills. This is the single most important thing you can do before applying.",
+                        "resources": [
+                            {"title": "Environmental Scientist portfolio — what to include and how to present it", "type": "video"},
+                            {"title": "GitHub — Host your project portfolio", "type": "project"},
+                        ],
+                    },
+                    {
+                        "id": "p4-s2", "level": "all",
+                        "title": "Job search and interview preparation",
+                        "description": "Polish your CV, practise common Environmental Scientist interview questions, and start applying. Networking accounts for over 70% of hires.",
+                        "resources": [{"title": "How to become a Environmental Scientist — career roadmap", "type": "video"}, {"title": "LinkedIn — Environmental Scientist job search and networking", "type": "practice"}],
+                    },
+                ],
+            },
+        ],
+    },
+    # ──────────────────────────────────────────────────────────────────────
+    "management-consultant": {
+        "career_title": "Management Consultant",
+        "phases": [
+            {
+                "id": "phase-1", "phase_number": 1,
+                "title": "Foundations",
+                "description": "Build the essential knowledge base required to work as a Management Consultant.",
+                "base_weeks": 4,
+                "skills_covered": ["Research", "Data Analysis", "Public Speaking"],
+                "steps": [
+                    {
+                        "id": "p1-s1", "level": "starter_only",
+                        "title": "Core theory and fundamentals",
+                        "description": "Advise organisations on strategy, operations, and performance improvement to help them solve complex problems. Start with the foundational concepts that every Management Consultant must understand.",
+                        "resources": [{"title": "Research fundamentals full course", "type": "video"}, {"title": "Data Analysis fundamentals full course", "type": "video"}],
+                    },
+                    {
+                        "id": "p1-s2", "level": "all",
+                        "title": "Industry overview and career landscape",
+                        "description": "Understand the day-to-day reality of working as a Management Consultant, including typical roles such as Analyst and Partner.",
+                        "resources": [
+                            {"title": "A day in the life of a Management Consultant", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-2", "phase_number": 2,
+                "title": "Core Tools & Practical Skills",
+                "description": "Learn the tools and hands-on skills used in the Management Consultant profession.",
+                "base_weeks": 5,
+                "skills_covered": ["Excel", "PowerPoint", "Tableau"],
+                "steps": [
+                    {
+                        "id": "p2-s1", "level": "all",
+                        "title": "Key tools and software",
+                        "description": "Get hands-on with the tools used daily: Excel, PowerPoint, Tableau.",
+                        "resources": [{"title": "Excel tutorial for beginners", "type": "video"}, {"title": "PowerPoint tutorial for beginners", "type": "video"}],
+                    },
+                    {
+                        "id": "p2-s2", "level": "builder_plus",
+                        "title": "Practical exercises and mini-projects",
+                        "description": "Apply your knowledge through structured exercises. Practical experience is what separates candidates at interview.",
+                        "resources": [
+                            {"title": "Management Consultant practical projects for your portfolio", "type": "project"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-3", "phase_number": 3,
+                "title": "Advanced Skills & Specialism",
+                "description": "Develop deeper expertise and begin to specialise within the Management Consultant field.",
+                "base_weeks": 5,
+                "skills_covered": ["Writing & Copywriting", "Project Management", "Excel / Spreadsheets"],
+                "steps": [
+                    {
+                        "id": "p3-s1", "level": "all",
+                        "title": "Advanced techniques",
+                        "description": "Move beyond the basics and tackle more complex, realistic problems faced by mid-level Management Consultants.",
+                        "resources": [{"title": "Advanced Writing & Copywriting for Management Consultants", "type": "course"}, {"title": "Advanced Project Management for Management Consultants", "type": "course"}],
+                    },
+                    {
+                        "id": "p3-s2", "level": "advanced_only",
+                        "title": "Specialism and leadership",
+                        "description": "Explore specialist areas within the Management Consultant field and develop the strategic thinking needed for senior roles.",
+                        "resources": [
+                            {"title": "Partner — how to reach the senior level", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-4", "phase_number": 4,
+                "title": "Portfolio & Job Preparation",
+                "description": "Build a portfolio, prepare your applications, and land your first Management Consultant role.",
+                "base_weeks": 3,
+                "skills_covered": ["Portfolio", "Job Applications", "Interview Preparation"],
+                "steps": [
+                    {
+                        "id": "p4-s1", "level": "all",
+                        "title": "Build a portfolio project",
+                        "description": "Create at least one substantial project that demonstrates your Management Consultant skills. This is the single most important thing you can do before applying.",
+                        "resources": [
+                            {"title": "Management Consultant portfolio — what to include and how to present it", "type": "video"},
+                            {"title": "GitHub — Host your project portfolio", "type": "project"},
+                        ],
+                    },
+                    {
+                        "id": "p4-s2", "level": "all",
+                        "title": "Job search and interview preparation",
+                        "description": "Polish your CV, practise common Management Consultant interview questions, and start applying. Networking accounts for over 70% of hires.",
+                        "resources": [{"title": "How to become a Management Consultant — career roadmap", "type": "video"}, {"title": "LinkedIn — Management Consultant job search and networking", "type": "practice"}],
+                    },
+                ],
+            },
+        ],
+    },
+    # ──────────────────────────────────────────────────────────────────────
+    "supply-chain-manager": {
+        "career_title": "Supply Chain Manager",
+        "phases": [
+            {
+                "id": "phase-1", "phase_number": 1,
+                "title": "Foundations",
+                "description": "Build the essential knowledge base required to work as a Supply Chain Manager.",
+                "base_weeks": 4,
+                "skills_covered": ["Project Management", "Negotiation", "Data Analysis"],
+                "steps": [
+                    {
+                        "id": "p1-s1", "level": "starter_only",
+                        "title": "Core theory and fundamentals",
+                        "description": "Coordinate the flow of goods, information, and resources from supplier to customer efficiently and reliably. Start with the foundational concepts that every Supply Chain Manager must understand.",
+                        "resources": [{"title": "Project Management fundamentals full course", "type": "video"}, {"title": "Negotiation fundamentals full course", "type": "video"}],
+                    },
+                    {
+                        "id": "p1-s2", "level": "all",
+                        "title": "Industry overview and career landscape",
+                        "description": "Understand the day-to-day reality of working as a Supply Chain Manager, including typical roles such as Supply Chain Analyst and Supply Chain Director.",
+                        "resources": [
+                            {"title": "A day in the life of a Supply Chain Manager", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-2", "phase_number": 2,
+                "title": "Core Tools & Practical Skills",
+                "description": "Learn the tools and hands-on skills used in the Supply Chain Manager profession.",
+                "base_weeks": 5,
+                "skills_covered": ["SAP", "Oracle SCM", "Tableau"],
+                "steps": [
+                    {
+                        "id": "p2-s1", "level": "all",
+                        "title": "Key tools and software",
+                        "description": "Get hands-on with the tools used daily: SAP, Oracle SCM, Tableau.",
+                        "resources": [{"title": "SAP tutorial for beginners", "type": "video"}, {"title": "Oracle SCM tutorial for beginners", "type": "video"}],
+                    },
+                    {
+                        "id": "p2-s2", "level": "builder_plus",
+                        "title": "Practical exercises and mini-projects",
+                        "description": "Apply your knowledge through structured exercises. Practical experience is what separates candidates at interview.",
+                        "resources": [
+                            {"title": "Supply Chain Manager practical projects for your portfolio", "type": "project"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-3", "phase_number": 3,
+                "title": "Advanced Skills & Specialism",
+                "description": "Develop deeper expertise and begin to specialise within the Supply Chain Manager field.",
+                "base_weeks": 5,
+                "skills_covered": ["Excel / Spreadsheets", "Agile / Scrum", "Project Management"],
+                "steps": [
+                    {
+                        "id": "p3-s1", "level": "all",
+                        "title": "Advanced techniques",
+                        "description": "Move beyond the basics and tackle more complex, realistic problems faced by mid-level Supply Chain Managers.",
+                        "resources": [{"title": "Advanced Excel / Spreadsheets for Supply Chain Managers", "type": "course"}, {"title": "Advanced Agile / Scrum for Supply Chain Managers", "type": "course"}],
+                    },
+                    {
+                        "id": "p3-s2", "level": "advanced_only",
+                        "title": "Specialism and leadership",
+                        "description": "Explore specialist areas within the Supply Chain Manager field and develop the strategic thinking needed for senior roles.",
+                        "resources": [
+                            {"title": "Supply Chain Director — how to reach the senior level", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-4", "phase_number": 4,
+                "title": "Portfolio & Job Preparation",
+                "description": "Build a portfolio, prepare your applications, and land your first Supply Chain Manager role.",
+                "base_weeks": 3,
+                "skills_covered": ["Portfolio", "Job Applications", "Interview Preparation"],
+                "steps": [
+                    {
+                        "id": "p4-s1", "level": "all",
+                        "title": "Build a portfolio project",
+                        "description": "Create at least one substantial project that demonstrates your Supply Chain Manager skills. This is the single most important thing you can do before applying.",
+                        "resources": [
+                            {"title": "Supply Chain Manager portfolio — what to include and how to present it", "type": "video"},
+                            {"title": "GitHub — Host your project portfolio", "type": "project"},
+                        ],
+                    },
+                    {
+                        "id": "p4-s2", "level": "all",
+                        "title": "Job search and interview preparation",
+                        "description": "Polish your CV, practise common Supply Chain Manager interview questions, and start applying. Networking accounts for over 70% of hires.",
+                        "resources": [{"title": "How to become a Supply Chain Manager — career roadmap", "type": "video"}, {"title": "LinkedIn — Supply Chain Manager job search and networking", "type": "practice"}],
+                    },
+                ],
+            },
+        ],
+    },
+    # ──────────────────────────────────────────────────────────────────────
+    "operations-manager": {
+        "career_title": "Operations Manager",
+        "phases": [
+            {
+                "id": "phase-1", "phase_number": 1,
+                "title": "Foundations",
+                "description": "Build the essential knowledge base required to work as a Operations Manager.",
+                "base_weeks": 4,
+                "skills_covered": ["Project Management", "Team Leadership", "Budgeting"],
+                "steps": [
+                    {
+                        "id": "p1-s1", "level": "starter_only",
+                        "title": "Core theory and fundamentals",
+                        "description": "Oversee the day-to-day operations of a business to ensure efficiency, quality, and profitability. Start with the foundational concepts that every Operations Manager must understand.",
+                        "resources": [{"title": "Project Management fundamentals full course", "type": "video"}, {"title": "Team Leadership fundamentals full course", "type": "video"}],
+                    },
+                    {
+                        "id": "p1-s2", "level": "all",
+                        "title": "Industry overview and career landscape",
+                        "description": "Understand the day-to-day reality of working as a Operations Manager, including typical roles such as Operations Analyst and Plant Manager.",
+                        "resources": [
+                            {"title": "A day in the life of a Operations Manager", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-2", "phase_number": 2,
+                "title": "Core Tools & Practical Skills",
+                "description": "Learn the tools and hands-on skills used in the Operations Manager profession.",
+                "base_weeks": 5,
+                "skills_covered": ["Monday.com", "Asana", "Excel"],
+                "steps": [
+                    {
+                        "id": "p2-s1", "level": "all",
+                        "title": "Key tools and software",
+                        "description": "Get hands-on with the tools used daily: Monday.com, Asana, Excel.",
+                        "resources": [{"title": "Monday.com tutorial for beginners", "type": "video"}, {"title": "Asana tutorial for beginners", "type": "video"}],
+                    },
+                    {
+                        "id": "p2-s2", "level": "builder_plus",
+                        "title": "Practical exercises and mini-projects",
+                        "description": "Apply your knowledge through structured exercises. Practical experience is what separates candidates at interview.",
+                        "resources": [
+                            {"title": "Operations Manager practical projects for your portfolio", "type": "project"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-3", "phase_number": 3,
+                "title": "Advanced Skills & Specialism",
+                "description": "Develop deeper expertise and begin to specialise within the Operations Manager field.",
+                "base_weeks": 5,
+                "skills_covered": ["Data Analysis", "Negotiation", "Public Speaking"],
+                "steps": [
+                    {
+                        "id": "p3-s1", "level": "all",
+                        "title": "Advanced techniques",
+                        "description": "Move beyond the basics and tackle more complex, realistic problems faced by mid-level Operations Managers.",
+                        "resources": [{"title": "Advanced Data Analysis for Operations Managers", "type": "course"}, {"title": "Advanced Negotiation for Operations Managers", "type": "course"}],
+                    },
+                    {
+                        "id": "p3-s2", "level": "advanced_only",
+                        "title": "Specialism and leadership",
+                        "description": "Explore specialist areas within the Operations Manager field and develop the strategic thinking needed for senior roles.",
+                        "resources": [
+                            {"title": "Plant Manager — how to reach the senior level", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-4", "phase_number": 4,
+                "title": "Portfolio & Job Preparation",
+                "description": "Build a portfolio, prepare your applications, and land your first Operations Manager role.",
+                "base_weeks": 3,
+                "skills_covered": ["Portfolio", "Job Applications", "Interview Preparation"],
+                "steps": [
+                    {
+                        "id": "p4-s1", "level": "all",
+                        "title": "Build a portfolio project",
+                        "description": "Create at least one substantial project that demonstrates your Operations Manager skills. This is the single most important thing you can do before applying.",
+                        "resources": [
+                            {"title": "Operations Manager portfolio — what to include and how to present it", "type": "video"},
+                            {"title": "GitHub — Host your project portfolio", "type": "project"},
+                        ],
+                    },
+                    {
+                        "id": "p4-s2", "level": "all",
+                        "title": "Job search and interview preparation",
+                        "description": "Polish your CV, practise common Operations Manager interview questions, and start applying. Networking accounts for over 70% of hires.",
+                        "resources": [{"title": "How to become a Operations Manager — career roadmap", "type": "video"}, {"title": "LinkedIn — Operations Manager job search and networking", "type": "practice"}],
+                    },
+                ],
+            },
+        ],
+    },
+    # ──────────────────────────────────────────────────────────────────────
+    "entrepreneur": {
+        "career_title": "Entrepreneur / Startup Founder",
+        "phases": [
+            {
+                "id": "phase-1", "phase_number": 1,
+                "title": "Foundations",
+                "description": "Build the essential knowledge base required to work as a Entrepreneur / Startup Founder.",
+                "base_weeks": 4,
+                "skills_covered": ["Sales", "Product Roadmaps", "Team Leadership"],
+                "steps": [
+                    {
+                        "id": "p1-s1", "level": "starter_only",
+                        "title": "Core theory and fundamentals",
+                        "description": "Build and grow a company from an idea — taking risks, making decisions, and creating value from scratch. Start with the foundational concepts that every Entrepreneur / Startup Founder must understand.",
+                        "resources": [{"title": "Sales fundamentals full course", "type": "video"}, {"title": "Product Roadmaps fundamentals full course", "type": "video"}],
+                    },
+                    {
+                        "id": "p1-s2", "level": "all",
+                        "title": "Industry overview and career landscape",
+                        "description": "Understand the day-to-day reality of working as a Entrepreneur / Startup Founder, including typical roles such as Founder and Technical Founder.",
+                        "resources": [
+                            {"title": "A day in the life of a Entrepreneur / Startup Founder", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-2", "phase_number": 2,
+                "title": "Core Tools & Practical Skills",
+                "description": "Learn the tools and hands-on skills used in the Entrepreneur / Startup Founder profession.",
+                "base_weeks": 5,
+                "skills_covered": ["Notion", "Stripe", "Webflow"],
+                "steps": [
+                    {
+                        "id": "p2-s1", "level": "all",
+                        "title": "Key tools and software",
+                        "description": "Get hands-on with the tools used daily: Notion, Stripe, Webflow.",
+                        "resources": [{"title": "Notion tutorial for beginners", "type": "video"}, {"title": "Stripe tutorial for beginners", "type": "video"}],
+                    },
+                    {
+                        "id": "p2-s2", "level": "builder_plus",
+                        "title": "Practical exercises and mini-projects",
+                        "description": "Apply your knowledge through structured exercises. Practical experience is what separates candidates at interview.",
+                        "resources": [
+                            {"title": "Entrepreneur / Startup Founder practical projects for your portfolio", "type": "project"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-3", "phase_number": 3,
+                "title": "Advanced Skills & Specialism",
+                "description": "Develop deeper expertise and begin to specialise within the Entrepreneur / Startup Founder field.",
+                "base_weeks": 5,
+                "skills_covered": ["Financial Modelling", "Writing & Copywriting", "Public Speaking"],
+                "steps": [
+                    {
+                        "id": "p3-s1", "level": "all",
+                        "title": "Advanced techniques",
+                        "description": "Move beyond the basics and tackle more complex, realistic problems faced by mid-level Entrepreneur / Startup Founders.",
+                        "resources": [{"title": "Advanced Financial Modelling for Entrepreneur / Startup Founders", "type": "course"}, {"title": "Advanced Writing & Copywriting for Entrepreneur / Startup Founders", "type": "course"}],
+                    },
+                    {
+                        "id": "p3-s2", "level": "advanced_only",
+                        "title": "Specialism and leadership",
+                        "description": "Explore specialist areas within the Entrepreneur / Startup Founder field and develop the strategic thinking needed for senior roles.",
+                        "resources": [
+                            {"title": "Technical Founder — how to reach the senior level", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-4", "phase_number": 4,
+                "title": "Portfolio & Job Preparation",
+                "description": "Build a portfolio, prepare your applications, and land your first Entrepreneur / Startup Founder role.",
+                "base_weeks": 3,
+                "skills_covered": ["Portfolio", "Job Applications", "Interview Preparation"],
+                "steps": [
+                    {
+                        "id": "p4-s1", "level": "all",
+                        "title": "Build a portfolio project",
+                        "description": "Create at least one substantial project that demonstrates your Entrepreneur / Startup Founder skills. This is the single most important thing you can do before applying.",
+                        "resources": [
+                            {"title": "Entrepreneur / Startup Founder portfolio — what to include and how to present it", "type": "video"},
+                            {"title": "GitHub — Host your project portfolio", "type": "project"},
+                        ],
+                    },
+                    {
+                        "id": "p4-s2", "level": "all",
+                        "title": "Job search and interview preparation",
+                        "description": "Polish your CV, practise common Entrepreneur / Startup Founder interview questions, and start applying. Networking accounts for over 70% of hires.",
+                        "resources": [{"title": "How to become a Entrepreneur / Startup Founder — career roadmap", "type": "video"}, {"title": "LinkedIn — Entrepreneur / Startup Founder job search and networking", "type": "practice"}],
+                    },
+                ],
+            },
+        ],
+    },
+    # ──────────────────────────────────────────────────────────────────────
+    "investment-banker": {
+        "career_title": "Investment Banker",
+        "phases": [
+            {
+                "id": "phase-1", "phase_number": 1,
+                "title": "Foundations",
+                "description": "Build the essential knowledge base required to work as a Investment Banker.",
+                "base_weeks": 4,
+                "skills_covered": ["Financial Modelling", "Excel / Spreadsheets", "Accounting"],
+                "steps": [
+                    {
+                        "id": "p1-s1", "level": "starter_only",
+                        "title": "Core theory and fundamentals",
+                        "description": "Advise companies on M&A, capital raising, and complex financial transactions in high-pressure, high-reward environments. Start with the foundational concepts that every Investment Banker must understand.",
+                        "resources": [{"title": "Financial Modelling fundamentals full course", "type": "video"}, {"title": "Excel / Spreadsheets fundamentals full course", "type": "video"}],
+                    },
+                    {
+                        "id": "p1-s2", "level": "all",
+                        "title": "Industry overview and career landscape",
+                        "description": "Understand the day-to-day reality of working as a Investment Banker, including typical roles such as Analyst and Managing Director.",
+                        "resources": [
+                            {"title": "A day in the life of a Investment Banker", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-2", "phase_number": 2,
+                "title": "Core Tools & Practical Skills",
+                "description": "Learn the tools and hands-on skills used in the Investment Banker profession.",
+                "base_weeks": 5,
+                "skills_covered": ["Excel", "Bloomberg", "FactSet"],
+                "steps": [
+                    {
+                        "id": "p2-s1", "level": "all",
+                        "title": "Key tools and software",
+                        "description": "Get hands-on with the tools used daily: Excel, Bloomberg, FactSet.",
+                        "resources": [{"title": "Excel tutorial for beginners", "type": "video"}, {"title": "Bloomberg tutorial for beginners", "type": "video"}],
+                    },
+                    {
+                        "id": "p2-s2", "level": "builder_plus",
+                        "title": "Practical exercises and mini-projects",
+                        "description": "Apply your knowledge through structured exercises. Practical experience is what separates candidates at interview.",
+                        "resources": [
+                            {"title": "Investment Banker practical projects for your portfolio", "type": "project"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-3", "phase_number": 3,
+                "title": "Advanced Skills & Specialism",
+                "description": "Develop deeper expertise and begin to specialise within the Investment Banker field.",
+                "base_weeks": 5,
+                "skills_covered": ["Public Speaking", "Negotiation", "Statistics"],
+                "steps": [
+                    {
+                        "id": "p3-s1", "level": "all",
+                        "title": "Advanced techniques",
+                        "description": "Move beyond the basics and tackle more complex, realistic problems faced by mid-level Investment Bankers.",
+                        "resources": [{"title": "Advanced Public Speaking for Investment Bankers", "type": "course"}, {"title": "Advanced Negotiation for Investment Bankers", "type": "course"}],
+                    },
+                    {
+                        "id": "p3-s2", "level": "advanced_only",
+                        "title": "Specialism and leadership",
+                        "description": "Explore specialist areas within the Investment Banker field and develop the strategic thinking needed for senior roles.",
+                        "resources": [
+                            {"title": "Managing Director — how to reach the senior level", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-4", "phase_number": 4,
+                "title": "Portfolio & Job Preparation",
+                "description": "Build a portfolio, prepare your applications, and land your first Investment Banker role.",
+                "base_weeks": 3,
+                "skills_covered": ["Portfolio", "Job Applications", "Interview Preparation"],
+                "steps": [
+                    {
+                        "id": "p4-s1", "level": "all",
+                        "title": "Build a portfolio project",
+                        "description": "Create at least one substantial project that demonstrates your Investment Banker skills. This is the single most important thing you can do before applying.",
+                        "resources": [
+                            {"title": "Investment Banker portfolio — what to include and how to present it", "type": "video"},
+                            {"title": "GitHub — Host your project portfolio", "type": "project"},
+                        ],
+                    },
+                    {
+                        "id": "p4-s2", "level": "all",
+                        "title": "Job search and interview preparation",
+                        "description": "Polish your CV, practise common Investment Banker interview questions, and start applying. Networking accounts for over 70% of hires.",
+                        "resources": [{"title": "How to become a Investment Banker — career roadmap", "type": "video"}, {"title": "LinkedIn — Investment Banker job search and networking", "type": "practice"}],
+                    },
+                ],
+            },
+        ],
+    },
+    # ──────────────────────────────────────────────────────────────────────
+    "actuary": {
+        "career_title": "Actuary",
+        "phases": [
+            {
+                "id": "phase-1", "phase_number": 1,
+                "title": "Foundations",
+                "description": "Build the essential knowledge base required to work as a Actuary.",
+                "base_weeks": 4,
+                "skills_covered": ["Statistics", "Financial Modelling", "R"],
+                "steps": [
+                    {
+                        "id": "p1-s1", "level": "starter_only",
+                        "title": "Core theory and fundamentals",
+                        "description": "Assess and manage financial risk using mathematics, statistics, and modelling for insurance and pensions. Start with the foundational concepts that every Actuary must understand.",
+                        "resources": [{"title": "Statistics fundamentals full course", "type": "video"}, {"title": "Financial Modelling fundamentals full course", "type": "video"}],
+                    },
+                    {
+                        "id": "p1-s2", "level": "all",
+                        "title": "Industry overview and career landscape",
+                        "description": "Understand the day-to-day reality of working as a Actuary, including typical roles such as Actuarial Analyst and Chief Actuary.",
+                        "resources": [
+                            {"title": "A day in the life of a Actuary", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-2", "phase_number": 2,
+                "title": "Core Tools & Practical Skills",
+                "description": "Learn the tools and hands-on skills used in the Actuary profession.",
+                "base_weeks": 5,
+                "skills_covered": ["Excel", "R", "Python"],
+                "steps": [
+                    {
+                        "id": "p2-s1", "level": "all",
+                        "title": "Key tools and software",
+                        "description": "Get hands-on with the tools used daily: Excel, R, Python.",
+                        "resources": [{"title": "Excel tutorial for beginners", "type": "video"}, {"title": "R tutorial for beginners", "type": "video"}],
+                    },
+                    {
+                        "id": "p2-s2", "level": "builder_plus",
+                        "title": "Practical exercises and mini-projects",
+                        "description": "Apply your knowledge through structured exercises. Practical experience is what separates candidates at interview.",
+                        "resources": [
+                            {"title": "Actuary practical projects for your portfolio", "type": "project"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-3", "phase_number": 3,
+                "title": "Advanced Skills & Specialism",
+                "description": "Develop deeper expertise and begin to specialise within the Actuary field.",
+                "base_weeks": 5,
+                "skills_covered": ["MATLAB", "Excel / Spreadsheets", "Data Analysis"],
+                "steps": [
+                    {
+                        "id": "p3-s1", "level": "all",
+                        "title": "Advanced techniques",
+                        "description": "Move beyond the basics and tackle more complex, realistic problems faced by mid-level Actuarys.",
+                        "resources": [{"title": "Advanced MATLAB for Actuarys", "type": "course"}, {"title": "Advanced Excel / Spreadsheets for Actuarys", "type": "course"}],
+                    },
+                    {
+                        "id": "p3-s2", "level": "advanced_only",
+                        "title": "Specialism and leadership",
+                        "description": "Explore specialist areas within the Actuary field and develop the strategic thinking needed for senior roles.",
+                        "resources": [
+                            {"title": "Chief Actuary — how to reach the senior level", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-4", "phase_number": 4,
+                "title": "Portfolio & Job Preparation",
+                "description": "Build a portfolio, prepare your applications, and land your first Actuary role.",
+                "base_weeks": 3,
+                "skills_covered": ["Portfolio", "Job Applications", "Interview Preparation"],
+                "steps": [
+                    {
+                        "id": "p4-s1", "level": "all",
+                        "title": "Build a portfolio project",
+                        "description": "Create at least one substantial project that demonstrates your Actuary skills. This is the single most important thing you can do before applying.",
+                        "resources": [
+                            {"title": "Actuary portfolio — what to include and how to present it", "type": "video"},
+                            {"title": "GitHub — Host your project portfolio", "type": "project"},
+                        ],
+                    },
+                    {
+                        "id": "p4-s2", "level": "all",
+                        "title": "Job search and interview preparation",
+                        "description": "Polish your CV, practise common Actuary interview questions, and start applying. Networking accounts for over 70% of hires.",
+                        "resources": [{"title": "How to become a Actuary — career roadmap", "type": "video"}, {"title": "LinkedIn — Actuary job search and networking", "type": "practice"}],
+                    },
+                ],
+            },
+        ],
+    },
+    # ──────────────────────────────────────────────────────────────────────
+    "insurance-broker": {
+        "career_title": "Insurance Broker",
+        "phases": [
+            {
+                "id": "phase-1", "phase_number": 1,
+                "title": "Foundations",
+                "description": "Build the essential knowledge base required to work as a Insurance Broker.",
+                "base_weeks": 4,
+                "skills_covered": ["Sales", "Negotiation", "Customer Service"],
+                "steps": [
+                    {
+                        "id": "p1-s1", "level": "starter_only",
+                        "title": "Core theory and fundamentals",
+                        "description": "Advise clients on insurance products, arrange cover, and advocate for fair claims settlements. Start with the foundational concepts that every Insurance Broker must understand.",
+                        "resources": [{"title": "Sales fundamentals full course", "type": "video"}, {"title": "Negotiation fundamentals full course", "type": "video"}],
+                    },
+                    {
+                        "id": "p1-s2", "level": "all",
+                        "title": "Industry overview and career landscape",
+                        "description": "Understand the day-to-day reality of working as a Insurance Broker, including typical roles such as Broking Assistant and Underwriter.",
+                        "resources": [
+                            {"title": "A day in the life of a Insurance Broker", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-2", "phase_number": 2,
+                "title": "Core Tools & Practical Skills",
+                "description": "Learn the tools and hands-on skills used in the Insurance Broker profession.",
+                "base_weeks": 5,
+                "skills_covered": ["Acturis", "Salesforce", "MS Office"],
+                "steps": [
+                    {
+                        "id": "p2-s1", "level": "all",
+                        "title": "Key tools and software",
+                        "description": "Get hands-on with the tools used daily: Acturis, Salesforce, MS Office.",
+                        "resources": [{"title": "Acturis tutorial for beginners", "type": "video"}, {"title": "Salesforce tutorial for beginners", "type": "video"}],
+                    },
+                    {
+                        "id": "p2-s2", "level": "builder_plus",
+                        "title": "Practical exercises and mini-projects",
+                        "description": "Apply your knowledge through structured exercises. Practical experience is what separates candidates at interview.",
+                        "resources": [
+                            {"title": "Insurance Broker practical projects for your portfolio", "type": "project"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-3", "phase_number": 3,
+                "title": "Advanced Skills & Specialism",
+                "description": "Develop deeper expertise and begin to specialise within the Insurance Broker field.",
+                "base_weeks": 5,
+                "skills_covered": ["Research", "Writing & Copywriting", "Sales"],
+                "steps": [
+                    {
+                        "id": "p3-s1", "level": "all",
+                        "title": "Advanced techniques",
+                        "description": "Move beyond the basics and tackle more complex, realistic problems faced by mid-level Insurance Brokers.",
+                        "resources": [{"title": "Advanced Research for Insurance Brokers", "type": "course"}, {"title": "Advanced Writing & Copywriting for Insurance Brokers", "type": "course"}],
+                    },
+                    {
+                        "id": "p3-s2", "level": "advanced_only",
+                        "title": "Specialism and leadership",
+                        "description": "Explore specialist areas within the Insurance Broker field and develop the strategic thinking needed for senior roles.",
+                        "resources": [
+                            {"title": "Underwriter — how to reach the senior level", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-4", "phase_number": 4,
+                "title": "Portfolio & Job Preparation",
+                "description": "Build a portfolio, prepare your applications, and land your first Insurance Broker role.",
+                "base_weeks": 3,
+                "skills_covered": ["Portfolio", "Job Applications", "Interview Preparation"],
+                "steps": [
+                    {
+                        "id": "p4-s1", "level": "all",
+                        "title": "Build a portfolio project",
+                        "description": "Create at least one substantial project that demonstrates your Insurance Broker skills. This is the single most important thing you can do before applying.",
+                        "resources": [
+                            {"title": "Insurance Broker portfolio — what to include and how to present it", "type": "video"},
+                            {"title": "GitHub — Host your project portfolio", "type": "project"},
+                        ],
+                    },
+                    {
+                        "id": "p4-s2", "level": "all",
+                        "title": "Job search and interview preparation",
+                        "description": "Polish your CV, practise common Insurance Broker interview questions, and start applying. Networking accounts for over 70% of hires.",
+                        "resources": [{"title": "How to become a Insurance Broker — career roadmap", "type": "video"}, {"title": "LinkedIn — Insurance Broker job search and networking", "type": "practice"}],
+                    },
+                ],
+            },
+        ],
+    },
+    # ──────────────────────────────────────────────────────────────────────
+    "animator": {
+        "career_title": "Animator / Motion Designer",
+        "phases": [
+            {
+                "id": "phase-1", "phase_number": 1,
+                "title": "Foundations",
+                "description": "Build the essential knowledge base required to work as a Animator / Motion Designer.",
+                "base_weeks": 4,
+                "skills_covered": ["Animation", "3D Modelling", "After Effects"],
+                "steps": [
+                    {
+                        "id": "p1-s1", "level": "starter_only",
+                        "title": "Core theory and fundamentals",
+                        "description": "Create moving images for film, television, games, advertising, and digital content. Start with the foundational concepts that every Animator / Motion Designer must understand.",
+                        "resources": [{"title": "Animation fundamentals full course", "type": "video"}, {"title": "3D Modelling fundamentals full course", "type": "video"}],
+                    },
+                    {
+                        "id": "p1-s2", "level": "all",
+                        "title": "Industry overview and career landscape",
+                        "description": "Understand the day-to-day reality of working as a Animator / Motion Designer, including typical roles such as Junior Animator and Creative Director.",
+                        "resources": [
+                            {"title": "A day in the life of a Animator / Motion Designer", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-2", "phase_number": 2,
+                "title": "Core Tools & Practical Skills",
+                "description": "Learn the tools and hands-on skills used in the Animator / Motion Designer profession.",
+                "base_weeks": 5,
+                "skills_covered": ["Adobe After Effects", "Cinema 4D", "Blender"],
+                "steps": [
+                    {
+                        "id": "p2-s1", "level": "all",
+                        "title": "Key tools and software",
+                        "description": "Get hands-on with the tools used daily: Adobe After Effects, Cinema 4D, Blender.",
+                        "resources": [{"title": "Adobe After Effects tutorial for beginners", "type": "video"}, {"title": "Cinema 4D tutorial for beginners", "type": "video"}],
+                    },
+                    {
+                        "id": "p2-s2", "level": "builder_plus",
+                        "title": "Practical exercises and mini-projects",
+                        "description": "Apply your knowledge through structured exercises. Practical experience is what separates candidates at interview.",
+                        "resources": [
+                            {"title": "Animator / Motion Designer practical projects for your portfolio", "type": "project"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-3", "phase_number": 3,
+                "title": "Advanced Skills & Specialism",
+                "description": "Develop deeper expertise and begin to specialise within the Animator / Motion Designer field.",
+                "base_weeks": 5,
+                "skills_covered": ["Photoshop", "Illustrator", "Animation"],
+                "steps": [
+                    {
+                        "id": "p3-s1", "level": "all",
+                        "title": "Advanced techniques",
+                        "description": "Move beyond the basics and tackle more complex, realistic problems faced by mid-level Animator / Motion Designers.",
+                        "resources": [{"title": "Advanced Photoshop for Animator / Motion Designers", "type": "course"}, {"title": "Advanced Illustrator for Animator / Motion Designers", "type": "course"}],
+                    },
+                    {
+                        "id": "p3-s2", "level": "advanced_only",
+                        "title": "Specialism and leadership",
+                        "description": "Explore specialist areas within the Animator / Motion Designer field and develop the strategic thinking needed for senior roles.",
+                        "resources": [
+                            {"title": "Creative Director — how to reach the senior level", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-4", "phase_number": 4,
+                "title": "Portfolio & Job Preparation",
+                "description": "Build a portfolio, prepare your applications, and land your first Animator / Motion Designer role.",
+                "base_weeks": 3,
+                "skills_covered": ["Portfolio", "Job Applications", "Interview Preparation"],
+                "steps": [
+                    {
+                        "id": "p4-s1", "level": "all",
+                        "title": "Build a portfolio project",
+                        "description": "Create at least one substantial project that demonstrates your Animator / Motion Designer skills. This is the single most important thing you can do before applying.",
+                        "resources": [
+                            {"title": "Animator / Motion Designer portfolio — what to include and how to present it", "type": "video"},
+                            {"title": "GitHub — Host your project portfolio", "type": "project"},
+                        ],
+                    },
+                    {
+                        "id": "p4-s2", "level": "all",
+                        "title": "Job search and interview preparation",
+                        "description": "Polish your CV, practise common Animator / Motion Designer interview questions, and start applying. Networking accounts for over 70% of hires.",
+                        "resources": [{"title": "How to become a Animator / Motion Designer — career roadmap", "type": "video"}, {"title": "LinkedIn — Animator / Motion Designer job search and networking", "type": "practice"}],
+                    },
+                ],
+            },
+        ],
+    },
+    # ──────────────────────────────────────────────────────────────────────
+    "photographer": {
+        "career_title": "Photographer",
+        "phases": [
+            {
+                "id": "phase-1", "phase_number": 1,
+                "title": "Foundations",
+                "description": "Build the essential knowledge base required to work as a Photographer.",
+                "base_weeks": 4,
+                "skills_covered": ["Photography", "Photoshop", "Lightroom"],
+                "steps": [
+                    {
+                        "id": "p1-s1", "level": "starter_only",
+                        "title": "Core theory and fundamentals",
+                        "description": "Capture compelling images for commercial clients, editorial publications, events, and fine art. Start with the foundational concepts that every Photographer must understand.",
+                        "resources": [{"title": "Photography fundamentals full course", "type": "video"}, {"title": "Photoshop fundamentals full course", "type": "video"}],
+                    },
+                    {
+                        "id": "p1-s2", "level": "all",
+                        "title": "Industry overview and career landscape",
+                        "description": "Understand the day-to-day reality of working as a Photographer, including typical roles such as Assistant Photographer and Studio Manager.",
+                        "resources": [
+                            {"title": "A day in the life of a Photographer", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-2", "phase_number": 2,
+                "title": "Core Tools & Practical Skills",
+                "description": "Learn the tools and hands-on skills used in the Photographer profession.",
+                "base_weeks": 5,
+                "skills_covered": ["Camera gear", "Adobe Lightroom", "Adobe Photoshop"],
+                "steps": [
+                    {
+                        "id": "p2-s1", "level": "all",
+                        "title": "Key tools and software",
+                        "description": "Get hands-on with the tools used daily: Camera gear, Adobe Lightroom, Adobe Photoshop.",
+                        "resources": [{"title": "Camera gear tutorial for beginners", "type": "video"}, {"title": "Adobe Lightroom tutorial for beginners", "type": "video"}],
+                    },
+                    {
+                        "id": "p2-s2", "level": "builder_plus",
+                        "title": "Practical exercises and mini-projects",
+                        "description": "Apply your knowledge through structured exercises. Practical experience is what separates candidates at interview.",
+                        "resources": [
+                            {"title": "Photographer practical projects for your portfolio", "type": "project"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-3", "phase_number": 3,
+                "title": "Advanced Skills & Specialism",
+                "description": "Develop deeper expertise and begin to specialise within the Photographer field.",
+                "base_weeks": 5,
+                "skills_covered": ["Writing & Copywriting", "Photography", "Photoshop"],
+                "steps": [
+                    {
+                        "id": "p3-s1", "level": "all",
+                        "title": "Advanced techniques",
+                        "description": "Move beyond the basics and tackle more complex, realistic problems faced by mid-level Photographers.",
+                        "resources": [{"title": "Advanced Writing & Copywriting for Photographers", "type": "course"}],
+                    },
+                    {
+                        "id": "p3-s2", "level": "advanced_only",
+                        "title": "Specialism and leadership",
+                        "description": "Explore specialist areas within the Photographer field and develop the strategic thinking needed for senior roles.",
+                        "resources": [
+                            {"title": "Studio Manager — how to reach the senior level", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-4", "phase_number": 4,
+                "title": "Portfolio & Job Preparation",
+                "description": "Build a portfolio, prepare your applications, and land your first Photographer role.",
+                "base_weeks": 3,
+                "skills_covered": ["Portfolio", "Job Applications", "Interview Preparation"],
+                "steps": [
+                    {
+                        "id": "p4-s1", "level": "all",
+                        "title": "Build a portfolio project",
+                        "description": "Create at least one substantial project that demonstrates your Photographer skills. This is the single most important thing you can do before applying.",
+                        "resources": [
+                            {"title": "Photographer portfolio — what to include and how to present it", "type": "video"},
+                            {"title": "GitHub — Host your project portfolio", "type": "project"},
+                        ],
+                    },
+                    {
+                        "id": "p4-s2", "level": "all",
+                        "title": "Job search and interview preparation",
+                        "description": "Polish your CV, practise common Photographer interview questions, and start applying. Networking accounts for over 70% of hires.",
+                        "resources": [{"title": "How to become a Photographer — career roadmap", "type": "video"}, {"title": "LinkedIn — Photographer job search and networking", "type": "practice"}],
+                    },
+                ],
+            },
+        ],
+    },
+    # ──────────────────────────────────────────────────────────────────────
+    "music-producer": {
+        "career_title": "Music Producer",
+        "phases": [
+            {
+                "id": "phase-1", "phase_number": 1,
+                "title": "Foundations",
+                "description": "Build the essential knowledge base required to work as a Music Producer.",
+                "base_weeks": 4,
+                "skills_covered": ["Music & Audio", "Video Editing", "Writing & Copywriting"],
+                "steps": [
+                    {
+                        "id": "p1-s1", "level": "starter_only",
+                        "title": "Core theory and fundamentals",
+                        "description": "Create, arrange, and produce recorded music for artists, labels, film, TV, and advertising. Start with the foundational concepts that every Music Producer must understand.",
+                        "resources": [{"title": "Music & Audio fundamentals full course", "type": "video"}, {"title": "Video Editing fundamentals full course", "type": "video"}],
+                    },
+                    {
+                        "id": "p1-s2", "level": "all",
+                        "title": "Industry overview and career landscape",
+                        "description": "Understand the day-to-day reality of working as a Music Producer, including typical roles such as Beat Maker and Audio Engineer.",
+                        "resources": [
+                            {"title": "A day in the life of a Music Producer", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-2", "phase_number": 2,
+                "title": "Core Tools & Practical Skills",
+                "description": "Learn the tools and hands-on skills used in the Music Producer profession.",
+                "base_weeks": 5,
+                "skills_covered": ["Ableton Live", "Logic Pro", "FL Studio"],
+                "steps": [
+                    {
+                        "id": "p2-s1", "level": "all",
+                        "title": "Key tools and software",
+                        "description": "Get hands-on with the tools used daily: Ableton Live, Logic Pro, FL Studio.",
+                        "resources": [{"title": "Ableton Live tutorial for beginners", "type": "video"}, {"title": "Logic Pro tutorial for beginners", "type": "video"}],
+                    },
+                    {
+                        "id": "p2-s2", "level": "builder_plus",
+                        "title": "Practical exercises and mini-projects",
+                        "description": "Apply your knowledge through structured exercises. Practical experience is what separates candidates at interview.",
+                        "resources": [
+                            {"title": "Music Producer practical projects for your portfolio", "type": "project"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-3", "phase_number": 3,
+                "title": "Advanced Skills & Specialism",
+                "description": "Develop deeper expertise and begin to specialise within the Music Producer field.",
+                "base_weeks": 5,
+                "skills_covered": ["Music & Audio", "Video Editing", "Writing & Copywriting"],
+                "steps": [
+                    {
+                        "id": "p3-s1", "level": "all",
+                        "title": "Advanced techniques",
+                        "description": "Move beyond the basics and tackle more complex, realistic problems faced by mid-level Music Producers.",
+                        "resources": [{"title": "Advanced Music & Audio for Music Producers", "type": "course"}, {"title": "Advanced Video Editing for Music Producers", "type": "course"}],
+                    },
+                    {
+                        "id": "p3-s2", "level": "advanced_only",
+                        "title": "Specialism and leadership",
+                        "description": "Explore specialist areas within the Music Producer field and develop the strategic thinking needed for senior roles.",
+                        "resources": [
+                            {"title": "Audio Engineer — how to reach the senior level", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-4", "phase_number": 4,
+                "title": "Portfolio & Job Preparation",
+                "description": "Build a portfolio, prepare your applications, and land your first Music Producer role.",
+                "base_weeks": 3,
+                "skills_covered": ["Portfolio", "Job Applications", "Interview Preparation"],
+                "steps": [
+                    {
+                        "id": "p4-s1", "level": "all",
+                        "title": "Build a portfolio project",
+                        "description": "Create at least one substantial project that demonstrates your Music Producer skills. This is the single most important thing you can do before applying.",
+                        "resources": [
+                            {"title": "Music Producer portfolio — what to include and how to present it", "type": "video"},
+                            {"title": "GitHub — Host your project portfolio", "type": "project"},
+                        ],
+                    },
+                    {
+                        "id": "p4-s2", "level": "all",
+                        "title": "Job search and interview preparation",
+                        "description": "Polish your CV, practise common Music Producer interview questions, and start applying. Networking accounts for over 70% of hires.",
+                        "resources": [{"title": "How to become a Music Producer — career roadmap", "type": "video"}, {"title": "LinkedIn — Music Producer job search and networking", "type": "practice"}],
+                    },
+                ],
+            },
+        ],
+    },
+    # ──────────────────────────────────────────────────────────────────────
+    "interior-designer": {
+        "career_title": "Interior Designer",
+        "phases": [
+            {
+                "id": "phase-1", "phase_number": 1,
+                "title": "Foundations",
+                "description": "Build the essential knowledge base required to work as a Interior Designer.",
+                "base_weeks": 4,
+                "skills_covered": ["Figma", "Illustrator", "Photoshop"],
+                "steps": [
+                    {
+                        "id": "p1-s1", "level": "starter_only",
+                        "title": "Core theory and fundamentals",
+                        "description": "Plan and design functional, aesthetic interiors for residential, commercial, and hospitality spaces. Start with the foundational concepts that every Interior Designer must understand.",
+                        "resources": [{"title": "Figma fundamentals full course", "type": "video"}, {"title": "Illustrator fundamentals full course", "type": "video"}],
+                    },
+                    {
+                        "id": "p1-s2", "level": "all",
+                        "title": "Industry overview and career landscape",
+                        "description": "Understand the day-to-day reality of working as a Interior Designer, including typical roles such as Junior Designer and Freelance Interior Designer.",
+                        "resources": [
+                            {"title": "A day in the life of a Interior Designer", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-2", "phase_number": 2,
+                "title": "Core Tools & Practical Skills",
+                "description": "Learn the tools and hands-on skills used in the Interior Designer profession.",
+                "base_weeks": 5,
+                "skills_covered": ["AutoCAD", "SketchUp", "3ds Max"],
+                "steps": [
+                    {
+                        "id": "p2-s1", "level": "all",
+                        "title": "Key tools and software",
+                        "description": "Get hands-on with the tools used daily: AutoCAD, SketchUp, 3ds Max.",
+                        "resources": [{"title": "AutoCAD tutorial for beginners", "type": "video"}, {"title": "SketchUp tutorial for beginners", "type": "video"}],
+                    },
+                    {
+                        "id": "p2-s2", "level": "builder_plus",
+                        "title": "Practical exercises and mini-projects",
+                        "description": "Apply your knowledge through structured exercises. Practical experience is what separates candidates at interview.",
+                        "resources": [
+                            {"title": "Interior Designer practical projects for your portfolio", "type": "project"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-3", "phase_number": 3,
+                "title": "Advanced Skills & Specialism",
+                "description": "Develop deeper expertise and begin to specialise within the Interior Designer field.",
+                "base_weeks": 5,
+                "skills_covered": ["Project Management", "Writing & Copywriting", "Negotiation"],
+                "steps": [
+                    {
+                        "id": "p3-s1", "level": "all",
+                        "title": "Advanced techniques",
+                        "description": "Move beyond the basics and tackle more complex, realistic problems faced by mid-level Interior Designers.",
+                        "resources": [{"title": "Advanced Project Management for Interior Designers", "type": "course"}, {"title": "Advanced Writing & Copywriting for Interior Designers", "type": "course"}],
+                    },
+                    {
+                        "id": "p3-s2", "level": "advanced_only",
+                        "title": "Specialism and leadership",
+                        "description": "Explore specialist areas within the Interior Designer field and develop the strategic thinking needed for senior roles.",
+                        "resources": [
+                            {"title": "Freelance Interior Designer — how to reach the senior level", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-4", "phase_number": 4,
+                "title": "Portfolio & Job Preparation",
+                "description": "Build a portfolio, prepare your applications, and land your first Interior Designer role.",
+                "base_weeks": 3,
+                "skills_covered": ["Portfolio", "Job Applications", "Interview Preparation"],
+                "steps": [
+                    {
+                        "id": "p4-s1", "level": "all",
+                        "title": "Build a portfolio project",
+                        "description": "Create at least one substantial project that demonstrates your Interior Designer skills. This is the single most important thing you can do before applying.",
+                        "resources": [
+                            {"title": "Interior Designer portfolio — what to include and how to present it", "type": "video"},
+                            {"title": "GitHub — Host your project portfolio", "type": "project"},
+                        ],
+                    },
+                    {
+                        "id": "p4-s2", "level": "all",
+                        "title": "Job search and interview preparation",
+                        "description": "Polish your CV, practise common Interior Designer interview questions, and start applying. Networking accounts for over 70% of hires.",
+                        "resources": [{"title": "How to become a Interior Designer — career roadmap", "type": "video"}, {"title": "LinkedIn — Interior Designer job search and networking", "type": "practice"}],
+                    },
+                ],
+            },
+        ],
+    },
+    # ──────────────────────────────────────────────────────────────────────
+    "fashion-designer": {
+        "career_title": "Fashion Designer",
+        "phases": [
+            {
+                "id": "phase-1", "phase_number": 1,
+                "title": "Foundations",
+                "description": "Build the essential knowledge base required to work as a Fashion Designer.",
+                "base_weeks": 4,
+                "skills_covered": ["Illustrator", "Photoshop", "Research"],
+                "steps": [
+                    {
+                        "id": "p1-s1", "level": "starter_only",
+                        "title": "Core theory and fundamentals",
+                        "description": "Create clothing, accessories, and footwear collections by blending creativity with technical pattern-cutting skills. Start with the foundational concepts that every Fashion Designer must understand.",
+                        "resources": [{"title": "Illustrator fundamentals full course", "type": "video"}, {"title": "Photoshop fundamentals full course", "type": "video"}],
+                    },
+                    {
+                        "id": "p1-s2", "level": "all",
+                        "title": "Industry overview and career landscape",
+                        "description": "Understand the day-to-day reality of working as a Fashion Designer, including typical roles such as Design Assistant and Freelance Designer.",
+                        "resources": [
+                            {"title": "A day in the life of a Fashion Designer", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-2", "phase_number": 2,
+                "title": "Core Tools & Practical Skills",
+                "description": "Learn the tools and hands-on skills used in the Fashion Designer profession.",
+                "base_weeks": 5,
+                "skills_covered": ["Adobe Illustrator", "CLO 3D", "Browzwear"],
+                "steps": [
+                    {
+                        "id": "p2-s1", "level": "all",
+                        "title": "Key tools and software",
+                        "description": "Get hands-on with the tools used daily: Adobe Illustrator, CLO 3D, Browzwear.",
+                        "resources": [{"title": "Adobe Illustrator tutorial for beginners", "type": "video"}, {"title": "CLO 3D tutorial for beginners", "type": "video"}],
+                    },
+                    {
+                        "id": "p2-s2", "level": "builder_plus",
+                        "title": "Practical exercises and mini-projects",
+                        "description": "Apply your knowledge through structured exercises. Practical experience is what separates candidates at interview.",
+                        "resources": [
+                            {"title": "Fashion Designer practical projects for your portfolio", "type": "project"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-3", "phase_number": 3,
+                "title": "Advanced Skills & Specialism",
+                "description": "Develop deeper expertise and begin to specialise within the Fashion Designer field.",
+                "base_weeks": 5,
+                "skills_covered": ["Writing & Copywriting", "Illustrator", "Photoshop"],
+                "steps": [
+                    {
+                        "id": "p3-s1", "level": "all",
+                        "title": "Advanced techniques",
+                        "description": "Move beyond the basics and tackle more complex, realistic problems faced by mid-level Fashion Designers.",
+                        "resources": [{"title": "Advanced Writing & Copywriting for Fashion Designers", "type": "course"}],
+                    },
+                    {
+                        "id": "p3-s2", "level": "advanced_only",
+                        "title": "Specialism and leadership",
+                        "description": "Explore specialist areas within the Fashion Designer field and develop the strategic thinking needed for senior roles.",
+                        "resources": [
+                            {"title": "Freelance Designer — how to reach the senior level", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-4", "phase_number": 4,
+                "title": "Portfolio & Job Preparation",
+                "description": "Build a portfolio, prepare your applications, and land your first Fashion Designer role.",
+                "base_weeks": 3,
+                "skills_covered": ["Portfolio", "Job Applications", "Interview Preparation"],
+                "steps": [
+                    {
+                        "id": "p4-s1", "level": "all",
+                        "title": "Build a portfolio project",
+                        "description": "Create at least one substantial project that demonstrates your Fashion Designer skills. This is the single most important thing you can do before applying.",
+                        "resources": [
+                            {"title": "Fashion Designer portfolio — what to include and how to present it", "type": "video"},
+                            {"title": "GitHub — Host your project portfolio", "type": "project"},
+                        ],
+                    },
+                    {
+                        "id": "p4-s2", "level": "all",
+                        "title": "Job search and interview preparation",
+                        "description": "Polish your CV, practise common Fashion Designer interview questions, and start applying. Networking accounts for over 70% of hires.",
+                        "resources": [{"title": "How to become a Fashion Designer — career roadmap", "type": "video"}, {"title": "LinkedIn — Fashion Designer job search and networking", "type": "practice"}],
+                    },
+                ],
+            },
+        ],
+    },
+    # ──────────────────────────────────────────────────────────────────────
+    "podcast-producer": {
+        "career_title": "Podcast Producer",
+        "phases": [
+            {
+                "id": "phase-1", "phase_number": 1,
+                "title": "Foundations",
+                "description": "Build the essential knowledge base required to work as a Podcast Producer.",
+                "base_weeks": 4,
+                "skills_covered": ["Writing & Copywriting", "Video Editing", "Social Media Management"],
+                "steps": [
+                    {
+                        "id": "p1-s1", "level": "starter_only",
+                        "title": "Core theory and fundamentals",
+                        "description": "Plan, record, edit, and distribute podcast content for media brands, businesses, and independent creators. Start with the foundational concepts that every Podcast Producer must understand.",
+                        "resources": [{"title": "Writing & Copywriting fundamentals full course", "type": "video"}, {"title": "Video Editing fundamentals full course", "type": "video"}],
+                    },
+                    {
+                        "id": "p1-s2", "level": "all",
+                        "title": "Industry overview and career landscape",
+                        "description": "Understand the day-to-day reality of working as a Podcast Producer, including typical roles such as Podcast Editor and Head of Podcasting.",
+                        "resources": [
+                            {"title": "A day in the life of a Podcast Producer", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-2", "phase_number": 2,
+                "title": "Core Tools & Practical Skills",
+                "description": "Learn the tools and hands-on skills used in the Podcast Producer profession.",
+                "base_weeks": 5,
+                "skills_covered": ["Adobe Audition", "GarageBand", "Descript"],
+                "steps": [
+                    {
+                        "id": "p2-s1", "level": "all",
+                        "title": "Key tools and software",
+                        "description": "Get hands-on with the tools used daily: Adobe Audition, GarageBand, Descript.",
+                        "resources": [{"title": "Adobe Audition tutorial for beginners", "type": "video"}, {"title": "GarageBand tutorial for beginners", "type": "video"}],
+                    },
+                    {
+                        "id": "p2-s2", "level": "builder_plus",
+                        "title": "Practical exercises and mini-projects",
+                        "description": "Apply your knowledge through structured exercises. Practical experience is what separates candidates at interview.",
+                        "resources": [
+                            {"title": "Podcast Producer practical projects for your portfolio", "type": "project"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-3", "phase_number": 3,
+                "title": "Advanced Skills & Specialism",
+                "description": "Develop deeper expertise and begin to specialise within the Podcast Producer field.",
+                "base_weeks": 5,
+                "skills_covered": ["Research", "Public Speaking", "Writing & Copywriting"],
+                "steps": [
+                    {
+                        "id": "p3-s1", "level": "all",
+                        "title": "Advanced techniques",
+                        "description": "Move beyond the basics and tackle more complex, realistic problems faced by mid-level Podcast Producers.",
+                        "resources": [{"title": "Advanced Research for Podcast Producers", "type": "course"}, {"title": "Advanced Public Speaking for Podcast Producers", "type": "course"}],
+                    },
+                    {
+                        "id": "p3-s2", "level": "advanced_only",
+                        "title": "Specialism and leadership",
+                        "description": "Explore specialist areas within the Podcast Producer field and develop the strategic thinking needed for senior roles.",
+                        "resources": [
+                            {"title": "Head of Podcasting — how to reach the senior level", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-4", "phase_number": 4,
+                "title": "Portfolio & Job Preparation",
+                "description": "Build a portfolio, prepare your applications, and land your first Podcast Producer role.",
+                "base_weeks": 3,
+                "skills_covered": ["Portfolio", "Job Applications", "Interview Preparation"],
+                "steps": [
+                    {
+                        "id": "p4-s1", "level": "all",
+                        "title": "Build a portfolio project",
+                        "description": "Create at least one substantial project that demonstrates your Podcast Producer skills. This is the single most important thing you can do before applying.",
+                        "resources": [
+                            {"title": "Podcast Producer portfolio — what to include and how to present it", "type": "video"},
+                            {"title": "GitHub — Host your project portfolio", "type": "project"},
+                        ],
+                    },
+                    {
+                        "id": "p4-s2", "level": "all",
+                        "title": "Job search and interview preparation",
+                        "description": "Polish your CV, practise common Podcast Producer interview questions, and start applying. Networking accounts for over 70% of hires.",
+                        "resources": [{"title": "How to become a Podcast Producer — career roadmap", "type": "video"}, {"title": "LinkedIn — Podcast Producer job search and networking", "type": "practice"}],
+                    },
+                ],
+            },
+        ],
+    },
+    # ──────────────────────────────────────────────────────────────────────
+    "journalist": {
+        "career_title": "Journalist",
+        "phases": [
+            {
+                "id": "phase-1", "phase_number": 1,
+                "title": "Foundations",
+                "description": "Build the essential knowledge base required to work as a Journalist.",
+                "base_weeks": 4,
+                "skills_covered": ["Writing & Copywriting", "Research", "Public Speaking"],
+                "steps": [
+                    {
+                        "id": "p1-s1", "level": "starter_only",
+                        "title": "Core theory and fundamentals",
+                        "description": "Research, investigate, and report stories for newspapers, online publications, broadcast, and digital media. Start with the foundational concepts that every Journalist must understand.",
+                        "resources": [{"title": "Writing & Copywriting fundamentals full course", "type": "video"}, {"title": "Research fundamentals full course", "type": "video"}],
+                    },
+                    {
+                        "id": "p1-s2", "level": "all",
+                        "title": "Industry overview and career landscape",
+                        "description": "Understand the day-to-day reality of working as a Journalist, including typical roles such as Junior Reporter and Editor.",
+                        "resources": [
+                            {"title": "A day in the life of a Journalist", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-2", "phase_number": 2,
+                "title": "Core Tools & Practical Skills",
+                "description": "Learn the tools and hands-on skills used in the Journalist profession.",
+                "base_weeks": 5,
+                "skills_covered": ["CMS platforms", "Google Docs", "Twitter"],
+                "steps": [
+                    {
+                        "id": "p2-s1", "level": "all",
+                        "title": "Key tools and software",
+                        "description": "Get hands-on with the tools used daily: CMS platforms, Google Docs, Twitter/X.",
+                        "resources": [{"title": "CMS platforms tutorial for beginners", "type": "video"}, {"title": "Google Docs tutorial for beginners", "type": "video"}],
+                    },
+                    {
+                        "id": "p2-s2", "level": "builder_plus",
+                        "title": "Practical exercises and mini-projects",
+                        "description": "Apply your knowledge through structured exercises. Practical experience is what separates candidates at interview.",
+                        "resources": [
+                            {"title": "Journalist practical projects for your portfolio", "type": "project"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-3", "phase_number": 3,
+                "title": "Advanced Skills & Specialism",
+                "description": "Develop deeper expertise and begin to specialise within the Journalist field.",
+                "base_weeks": 5,
+                "skills_covered": ["SEO", "Social Media Management", "Writing & Copywriting"],
+                "steps": [
+                    {
+                        "id": "p3-s1", "level": "all",
+                        "title": "Advanced techniques",
+                        "description": "Move beyond the basics and tackle more complex, realistic problems faced by mid-level Journalists.",
+                        "resources": [{"title": "Advanced SEO for Journalists", "type": "course"}, {"title": "Advanced Social Media Management for Journalists", "type": "course"}],
+                    },
+                    {
+                        "id": "p3-s2", "level": "advanced_only",
+                        "title": "Specialism and leadership",
+                        "description": "Explore specialist areas within the Journalist field and develop the strategic thinking needed for senior roles.",
+                        "resources": [
+                            {"title": "Editor — how to reach the senior level", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-4", "phase_number": 4,
+                "title": "Portfolio & Job Preparation",
+                "description": "Build a portfolio, prepare your applications, and land your first Journalist role.",
+                "base_weeks": 3,
+                "skills_covered": ["Portfolio", "Job Applications", "Interview Preparation"],
+                "steps": [
+                    {
+                        "id": "p4-s1", "level": "all",
+                        "title": "Build a portfolio project",
+                        "description": "Create at least one substantial project that demonstrates your Journalist skills. This is the single most important thing you can do before applying.",
+                        "resources": [
+                            {"title": "Journalist portfolio — what to include and how to present it", "type": "video"},
+                            {"title": "GitHub — Host your project portfolio", "type": "project"},
+                        ],
+                    },
+                    {
+                        "id": "p4-s2", "level": "all",
+                        "title": "Job search and interview preparation",
+                        "description": "Polish your CV, practise common Journalist interview questions, and start applying. Networking accounts for over 70% of hires.",
+                        "resources": [{"title": "How to become a Journalist — career roadmap", "type": "video"}, {"title": "LinkedIn — Journalist job search and networking", "type": "practice"}],
+                    },
+                ],
+            },
+        ],
+    },
+    # ──────────────────────────────────────────────────────────────────────
+    "public-relations": {
+        "career_title": "PR Specialist",
+        "phases": [
+            {
+                "id": "phase-1", "phase_number": 1,
+                "title": "Foundations",
+                "description": "Build the essential knowledge base required to work as a PR Specialist.",
+                "base_weeks": 4,
+                "skills_covered": ["Writing & Copywriting", "Public Speaking", "Research"],
+                "steps": [
+                    {
+                        "id": "p1-s1", "level": "starter_only",
+                        "title": "Core theory and fundamentals",
+                        "description": "Shape and protect the public image of organisations through media relations, communications, and reputation management. Start with the foundational concepts that every PR Specialist must understand.",
+                        "resources": [{"title": "Writing & Copywriting fundamentals full course", "type": "video"}, {"title": "Public Speaking fundamentals full course", "type": "video"}],
+                    },
+                    {
+                        "id": "p1-s2", "level": "all",
+                        "title": "Industry overview and career landscape",
+                        "description": "Understand the day-to-day reality of working as a PR Specialist, including typical roles such as PR Assistant and Communications Director.",
+                        "resources": [
+                            {"title": "A day in the life of a PR Specialist", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-2", "phase_number": 2,
+                "title": "Core Tools & Practical Skills",
+                "description": "Learn the tools and hands-on skills used in the PR Specialist profession.",
+                "base_weeks": 5,
+                "skills_covered": ["Cision", "Meltwater", "Slack"],
+                "steps": [
+                    {
+                        "id": "p2-s1", "level": "all",
+                        "title": "Key tools and software",
+                        "description": "Get hands-on with the tools used daily: Cision, Meltwater, Slack.",
+                        "resources": [{"title": "Cision tutorial for beginners", "type": "video"}, {"title": "Meltwater tutorial for beginners", "type": "video"}],
+                    },
+                    {
+                        "id": "p2-s2", "level": "builder_plus",
+                        "title": "Practical exercises and mini-projects",
+                        "description": "Apply your knowledge through structured exercises. Practical experience is what separates candidates at interview.",
+                        "resources": [
+                            {"title": "PR Specialist practical projects for your portfolio", "type": "project"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-3", "phase_number": 3,
+                "title": "Advanced Skills & Specialism",
+                "description": "Develop deeper expertise and begin to specialise within the PR Specialist field.",
+                "base_weeks": 5,
+                "skills_covered": ["Social Media Management", "Negotiation", "Writing & Copywriting"],
+                "steps": [
+                    {
+                        "id": "p3-s1", "level": "all",
+                        "title": "Advanced techniques",
+                        "description": "Move beyond the basics and tackle more complex, realistic problems faced by mid-level PR Specialists.",
+                        "resources": [{"title": "Advanced Social Media Management for PR Specialists", "type": "course"}, {"title": "Advanced Negotiation for PR Specialists", "type": "course"}],
+                    },
+                    {
+                        "id": "p3-s2", "level": "advanced_only",
+                        "title": "Specialism and leadership",
+                        "description": "Explore specialist areas within the PR Specialist field and develop the strategic thinking needed for senior roles.",
+                        "resources": [
+                            {"title": "Communications Director — how to reach the senior level", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-4", "phase_number": 4,
+                "title": "Portfolio & Job Preparation",
+                "description": "Build a portfolio, prepare your applications, and land your first PR Specialist role.",
+                "base_weeks": 3,
+                "skills_covered": ["Portfolio", "Job Applications", "Interview Preparation"],
+                "steps": [
+                    {
+                        "id": "p4-s1", "level": "all",
+                        "title": "Build a portfolio project",
+                        "description": "Create at least one substantial project that demonstrates your PR Specialist skills. This is the single most important thing you can do before applying.",
+                        "resources": [
+                            {"title": "PR Specialist portfolio — what to include and how to present it", "type": "video"},
+                            {"title": "GitHub — Host your project portfolio", "type": "project"},
+                        ],
+                    },
+                    {
+                        "id": "p4-s2", "level": "all",
+                        "title": "Job search and interview preparation",
+                        "description": "Polish your CV, practise common PR Specialist interview questions, and start applying. Networking accounts for over 70% of hires.",
+                        "resources": [{"title": "How to become a PR Specialist — career roadmap", "type": "video"}, {"title": "LinkedIn — PR Specialist job search and networking", "type": "practice"}],
+                    },
+                ],
+            },
+        ],
+    },
+    # ──────────────────────────────────────────────────────────────────────
+    "social-worker": {
+        "career_title": "Social Worker",
+        "phases": [
+            {
+                "id": "phase-1", "phase_number": 1,
+                "title": "Foundations",
+                "description": "Build the essential knowledge base required to work as a Social Worker.",
+                "base_weeks": 4,
+                "skills_covered": ["Customer Service", "Public Speaking", "Research"],
+                "steps": [
+                    {
+                        "id": "p1-s1", "level": "starter_only",
+                        "title": "Core theory and fundamentals",
+                        "description": "Support individuals and families through difficult circumstances including poverty, abuse, mental illness, and disability. Start with the foundational concepts that every Social Worker must understand.",
+                        "resources": [{"title": "Customer Service fundamentals full course", "type": "video"}, {"title": "Public Speaking fundamentals full course", "type": "video"}],
+                    },
+                    {
+                        "id": "p1-s2", "level": "all",
+                        "title": "Industry overview and career landscape",
+                        "description": "Understand the day-to-day reality of working as a Social Worker, including typical roles such as Newly Qualified Social Worker (NQSW) and Principal Social Worker.",
+                        "resources": [
+                            {"title": "A day in the life of a Social Worker", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-2", "phase_number": 2,
+                "title": "Core Tools & Practical Skills",
+                "description": "Learn the tools and hands-on skills used in the Social Worker profession.",
+                "base_weeks": 5,
+                "skills_covered": ["Case management software", "Microsoft 365", "MOSAIC"],
+                "steps": [
+                    {
+                        "id": "p2-s1", "level": "all",
+                        "title": "Key tools and software",
+                        "description": "Get hands-on with the tools used daily: Case management software, Microsoft 365, MOSAIC / Liquid Logic.",
+                        "resources": [{"title": "Case management software tutorial for beginners", "type": "video"}, {"title": "Microsoft 365 tutorial for beginners", "type": "video"}],
+                    },
+                    {
+                        "id": "p2-s2", "level": "builder_plus",
+                        "title": "Practical exercises and mini-projects",
+                        "description": "Apply your knowledge through structured exercises. Practical experience is what separates candidates at interview.",
+                        "resources": [
+                            {"title": "Social Worker practical projects for your portfolio", "type": "project"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-3", "phase_number": 3,
+                "title": "Advanced Skills & Specialism",
+                "description": "Develop deeper expertise and begin to specialise within the Social Worker field.",
+                "base_weeks": 5,
+                "skills_covered": ["Writing & Copywriting", "Negotiation", "Customer Service"],
+                "steps": [
+                    {
+                        "id": "p3-s1", "level": "all",
+                        "title": "Advanced techniques",
+                        "description": "Move beyond the basics and tackle more complex, realistic problems faced by mid-level Social Workers.",
+                        "resources": [{"title": "Advanced Writing & Copywriting for Social Workers", "type": "course"}, {"title": "Advanced Negotiation for Social Workers", "type": "course"}],
+                    },
+                    {
+                        "id": "p3-s2", "level": "advanced_only",
+                        "title": "Specialism and leadership",
+                        "description": "Explore specialist areas within the Social Worker field and develop the strategic thinking needed for senior roles.",
+                        "resources": [
+                            {"title": "Principal Social Worker — how to reach the senior level", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-4", "phase_number": 4,
+                "title": "Portfolio & Job Preparation",
+                "description": "Build a portfolio, prepare your applications, and land your first Social Worker role.",
+                "base_weeks": 3,
+                "skills_covered": ["Portfolio", "Job Applications", "Interview Preparation"],
+                "steps": [
+                    {
+                        "id": "p4-s1", "level": "all",
+                        "title": "Build a portfolio project",
+                        "description": "Create at least one substantial project that demonstrates your Social Worker skills. This is the single most important thing you can do before applying.",
+                        "resources": [
+                            {"title": "Social Worker portfolio — what to include and how to present it", "type": "video"},
+                            {"title": "GitHub — Host your project portfolio", "type": "project"},
+                        ],
+                    },
+                    {
+                        "id": "p4-s2", "level": "all",
+                        "title": "Job search and interview preparation",
+                        "description": "Polish your CV, practise common Social Worker interview questions, and start applying. Networking accounts for over 70% of hires.",
+                        "resources": [{"title": "How to become a Social Worker — career roadmap", "type": "video"}, {"title": "LinkedIn — Social Worker job search and networking", "type": "practice"}],
+                    },
+                ],
+            },
+        ],
+    },
+    # ──────────────────────────────────────────────────────────────────────
+    "counsellor-therapist": {
+        "career_title": "Counsellor / Therapist",
+        "phases": [
+            {
+                "id": "phase-1", "phase_number": 1,
+                "title": "Foundations",
+                "description": "Build the essential knowledge base required to work as a Counsellor / Therapist.",
+                "base_weeks": 4,
+                "skills_covered": ["Customer Service", "Public Speaking", "Research"],
+                "steps": [
+                    {
+                        "id": "p1-s1", "level": "starter_only",
+                        "title": "Core theory and fundamentals",
+                        "description": "Support people with mental health, emotional, and relationship challenges through therapeutic conversations. Start with the foundational concepts that every Counsellor / Therapist must understand.",
+                        "resources": [{"title": "Customer Service fundamentals full course", "type": "video"}, {"title": "Public Speaking fundamentals full course", "type": "video"}],
+                    },
+                    {
+                        "id": "p1-s2", "level": "all",
+                        "title": "Industry overview and career landscape",
+                        "description": "Understand the day-to-day reality of working as a Counsellor / Therapist, including typical roles such as Counsellor and Specialist Therapist.",
+                        "resources": [
+                            {"title": "A day in the life of a Counsellor / Therapist", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-2", "phase_number": 2,
+                "title": "Core Tools & Practical Skills",
+                "description": "Learn the tools and hands-on skills used in the Counsellor / Therapist profession.",
+                "base_weeks": 5,
+                "skills_covered": ["Practice management software", "Zoom (online therapy)", "CORE outcome measures"],
+                "steps": [
+                    {
+                        "id": "p2-s1", "level": "all",
+                        "title": "Key tools and software",
+                        "description": "Get hands-on with the tools used daily: Practice management software, Zoom (online therapy), CORE outcome measures.",
+                        "resources": [{"title": "Practice management software tutorial for beginners", "type": "video"}, {"title": "Zoom (online therapy) tutorial for beginners", "type": "video"}],
+                    },
+                    {
+                        "id": "p2-s2", "level": "builder_plus",
+                        "title": "Practical exercises and mini-projects",
+                        "description": "Apply your knowledge through structured exercises. Practical experience is what separates candidates at interview.",
+                        "resources": [
+                            {"title": "Counsellor / Therapist practical projects for your portfolio", "type": "project"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-3", "phase_number": 3,
+                "title": "Advanced Skills & Specialism",
+                "description": "Develop deeper expertise and begin to specialise within the Counsellor / Therapist field.",
+                "base_weeks": 5,
+                "skills_covered": ["Writing & Copywriting", "Customer Service", "Public Speaking"],
+                "steps": [
+                    {
+                        "id": "p3-s1", "level": "all",
+                        "title": "Advanced techniques",
+                        "description": "Move beyond the basics and tackle more complex, realistic problems faced by mid-level Counsellor / Therapists.",
+                        "resources": [{"title": "Advanced Writing & Copywriting for Counsellor / Therapists", "type": "course"}],
+                    },
+                    {
+                        "id": "p3-s2", "level": "advanced_only",
+                        "title": "Specialism and leadership",
+                        "description": "Explore specialist areas within the Counsellor / Therapist field and develop the strategic thinking needed for senior roles.",
+                        "resources": [
+                            {"title": "Specialist Therapist — how to reach the senior level", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-4", "phase_number": 4,
+                "title": "Portfolio & Job Preparation",
+                "description": "Build a portfolio, prepare your applications, and land your first Counsellor / Therapist role.",
+                "base_weeks": 3,
+                "skills_covered": ["Portfolio", "Job Applications", "Interview Preparation"],
+                "steps": [
+                    {
+                        "id": "p4-s1", "level": "all",
+                        "title": "Build a portfolio project",
+                        "description": "Create at least one substantial project that demonstrates your Counsellor / Therapist skills. This is the single most important thing you can do before applying.",
+                        "resources": [
+                            {"title": "Counsellor / Therapist portfolio — what to include and how to present it", "type": "video"},
+                            {"title": "GitHub — Host your project portfolio", "type": "project"},
+                        ],
+                    },
+                    {
+                        "id": "p4-s2", "level": "all",
+                        "title": "Job search and interview preparation",
+                        "description": "Polish your CV, practise common Counsellor / Therapist interview questions, and start applying. Networking accounts for over 70% of hires.",
+                        "resources": [{"title": "How to become a Counsellor / Therapist — career roadmap", "type": "video"}, {"title": "LinkedIn — Counsellor / Therapist job search and networking", "type": "practice"}],
+                    },
+                ],
+            },
+        ],
+    },
+    # ──────────────────────────────────────────────────────────────────────
+    "careers-advisor": {
+        "career_title": "Careers Advisor",
+        "phases": [
+            {
+                "id": "phase-1", "phase_number": 1,
+                "title": "Foundations",
+                "description": "Build the essential knowledge base required to work as a Careers Advisor.",
+                "base_weeks": 4,
+                "skills_covered": ["Public Speaking", "Customer Service", "Research"],
+                "steps": [
+                    {
+                        "id": "p1-s1", "level": "starter_only",
+                        "title": "Core theory and fundamentals",
+                        "description": "Guide individuals in making informed decisions about education, training, and career choices. Start with the foundational concepts that every Careers Advisor must understand.",
+                        "resources": [{"title": "Public Speaking fundamentals full course", "type": "video"}, {"title": "Customer Service fundamentals full course", "type": "video"}],
+                    },
+                    {
+                        "id": "p1-s2", "level": "all",
+                        "title": "Industry overview and career landscape",
+                        "description": "Understand the day-to-day reality of working as a Careers Advisor, including typical roles such as Careers Advisor and CEIAG Coordinator.",
+                        "resources": [
+                            {"title": "A day in the life of a Careers Advisor", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-2", "phase_number": 2,
+                "title": "Core Tools & Practical Skills",
+                "description": "Learn the tools and hands-on skills used in the Careers Advisor profession.",
+                "base_weeks": 5,
+                "skills_covered": ["Compass+", "Unifrog", "Startprofile"],
+                "steps": [
+                    {
+                        "id": "p2-s1", "level": "all",
+                        "title": "Key tools and software",
+                        "description": "Get hands-on with the tools used daily: Compass+, Unifrog, Startprofile.",
+                        "resources": [{"title": "Compass+ tutorial for beginners", "type": "video"}, {"title": "Unifrog tutorial for beginners", "type": "video"}],
+                    },
+                    {
+                        "id": "p2-s2", "level": "builder_plus",
+                        "title": "Practical exercises and mini-projects",
+                        "description": "Apply your knowledge through structured exercises. Practical experience is what separates candidates at interview.",
+                        "resources": [
+                            {"title": "Careers Advisor practical projects for your portfolio", "type": "project"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-3", "phase_number": 3,
+                "title": "Advanced Skills & Specialism",
+                "description": "Develop deeper expertise and begin to specialise within the Careers Advisor field.",
+                "base_weeks": 5,
+                "skills_covered": ["Writing & Copywriting", "Public Speaking", "Customer Service"],
+                "steps": [
+                    {
+                        "id": "p3-s1", "level": "all",
+                        "title": "Advanced techniques",
+                        "description": "Move beyond the basics and tackle more complex, realistic problems faced by mid-level Careers Advisors.",
+                        "resources": [{"title": "Advanced Writing & Copywriting for Careers Advisors", "type": "course"}],
+                    },
+                    {
+                        "id": "p3-s2", "level": "advanced_only",
+                        "title": "Specialism and leadership",
+                        "description": "Explore specialist areas within the Careers Advisor field and develop the strategic thinking needed for senior roles.",
+                        "resources": [
+                            {"title": "CEIAG Coordinator — how to reach the senior level", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-4", "phase_number": 4,
+                "title": "Portfolio & Job Preparation",
+                "description": "Build a portfolio, prepare your applications, and land your first Careers Advisor role.",
+                "base_weeks": 3,
+                "skills_covered": ["Portfolio", "Job Applications", "Interview Preparation"],
+                "steps": [
+                    {
+                        "id": "p4-s1", "level": "all",
+                        "title": "Build a portfolio project",
+                        "description": "Create at least one substantial project that demonstrates your Careers Advisor skills. This is the single most important thing you can do before applying.",
+                        "resources": [
+                            {"title": "Careers Advisor portfolio — what to include and how to present it", "type": "video"},
+                            {"title": "GitHub — Host your project portfolio", "type": "project"},
+                        ],
+                    },
+                    {
+                        "id": "p4-s2", "level": "all",
+                        "title": "Job search and interview preparation",
+                        "description": "Polish your CV, practise common Careers Advisor interview questions, and start applying. Networking accounts for over 70% of hires.",
+                        "resources": [{"title": "How to become a Careers Advisor — career roadmap", "type": "video"}, {"title": "LinkedIn — Careers Advisor job search and networking", "type": "practice"}],
+                    },
+                ],
+            },
+        ],
+    },
+    # ──────────────────────────────────────────────────────────────────────
+    "sport-coach": {
+        "career_title": "Sports Coach / Performance Analyst",
+        "phases": [
+            {
+                "id": "phase-1", "phase_number": 1,
+                "title": "Foundations",
+                "description": "Build the essential knowledge base required to work as a Sports Coach / Performance Analyst.",
+                "base_weeks": 4,
+                "skills_covered": ["Public Speaking", "Customer Service", "Research"],
+                "steps": [
+                    {
+                        "id": "p1-s1", "level": "starter_only",
+                        "title": "Core theory and fundamentals",
+                        "description": "Develop athletes\' skills, fitness, and tactical understanding to maximise sporting performance. Start with the foundational concepts that every Sports Coach / Performance Analyst must understand.",
+                        "resources": [{"title": "Public Speaking fundamentals full course", "type": "video"}, {"title": "Customer Service fundamentals full course", "type": "video"}],
+                    },
+                    {
+                        "id": "p1-s2", "level": "all",
+                        "title": "Industry overview and career landscape",
+                        "description": "Understand the day-to-day reality of working as a Sports Coach / Performance Analyst, including typical roles such as Sports Coach and Head Coach.",
+                        "resources": [
+                            {"title": "A day in the life of a Sports Coach / Performance Analyst", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-2", "phase_number": 2,
+                "title": "Core Tools & Practical Skills",
+                "description": "Learn the tools and hands-on skills used in the Sports Coach / Performance Analyst profession.",
+                "base_weeks": 5,
+                "skills_covered": ["Hudl", "Opta", "StatsBomb"],
+                "steps": [
+                    {
+                        "id": "p2-s1", "level": "all",
+                        "title": "Key tools and software",
+                        "description": "Get hands-on with the tools used daily: Hudl, Opta, StatsBomb.",
+                        "resources": [{"title": "Hudl tutorial for beginners", "type": "video"}, {"title": "Opta tutorial for beginners", "type": "video"}],
+                    },
+                    {
+                        "id": "p2-s2", "level": "builder_plus",
+                        "title": "Practical exercises and mini-projects",
+                        "description": "Apply your knowledge through structured exercises. Practical experience is what separates candidates at interview.",
+                        "resources": [
+                            {"title": "Sports Coach / Performance Analyst practical projects for your portfolio", "type": "project"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-3", "phase_number": 3,
+                "title": "Advanced Skills & Specialism",
+                "description": "Develop deeper expertise and begin to specialise within the Sports Coach / Performance Analyst field.",
+                "base_weeks": 5,
+                "skills_covered": ["Statistics", "Data Analysis", "Public Speaking"],
+                "steps": [
+                    {
+                        "id": "p3-s1", "level": "all",
+                        "title": "Advanced techniques",
+                        "description": "Move beyond the basics and tackle more complex, realistic problems faced by mid-level Sports Coach / Performance Analysts.",
+                        "resources": [{"title": "Advanced Statistics for Sports Coach / Performance Analysts", "type": "course"}, {"title": "Advanced Data Analysis for Sports Coach / Performance Analysts", "type": "course"}],
+                    },
+                    {
+                        "id": "p3-s2", "level": "advanced_only",
+                        "title": "Specialism and leadership",
+                        "description": "Explore specialist areas within the Sports Coach / Performance Analyst field and develop the strategic thinking needed for senior roles.",
+                        "resources": [
+                            {"title": "Head Coach — how to reach the senior level", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-4", "phase_number": 4,
+                "title": "Portfolio & Job Preparation",
+                "description": "Build a portfolio, prepare your applications, and land your first Sports Coach / Performance Analyst role.",
+                "base_weeks": 3,
+                "skills_covered": ["Portfolio", "Job Applications", "Interview Preparation"],
+                "steps": [
+                    {
+                        "id": "p4-s1", "level": "all",
+                        "title": "Build a portfolio project",
+                        "description": "Create at least one substantial project that demonstrates your Sports Coach / Performance Analyst skills. This is the single most important thing you can do before applying.",
+                        "resources": [
+                            {"title": "Sports Coach / Performance Analyst portfolio — what to include and how to present it", "type": "video"},
+                            {"title": "GitHub — Host your project portfolio", "type": "project"},
+                        ],
+                    },
+                    {
+                        "id": "p4-s2", "level": "all",
+                        "title": "Job search and interview preparation",
+                        "description": "Polish your CV, practise common Sports Coach / Performance Analyst interview questions, and start applying. Networking accounts for over 70% of hires.",
+                        "resources": [{"title": "How to become a Sports Coach / Performance Analyst — career roadmap", "type": "video"}, {"title": "LinkedIn — Sports Coach / Performance Analyst job search and networking", "type": "practice"}],
+                    },
+                ],
+            },
+        ],
+    },
+    # ──────────────────────────────────────────────────────────────────────
+    "hotel-manager": {
+        "career_title": "Hotel Manager",
+        "phases": [
+            {
+                "id": "phase-1", "phase_number": 1,
+                "title": "Foundations",
+                "description": "Build the essential knowledge base required to work as a Hotel Manager.",
+                "base_weeks": 4,
+                "skills_covered": ["Customer Service", "Team Leadership", "Budgeting"],
+                "steps": [
+                    {
+                        "id": "p1-s1", "level": "starter_only",
+                        "title": "Core theory and fundamentals",
+                        "description": "Oversee all aspects of hotel operations to deliver exceptional guest experiences and commercial results. Start with the foundational concepts that every Hotel Manager must understand.",
+                        "resources": [{"title": "Customer Service fundamentals full course", "type": "video"}, {"title": "Team Leadership fundamentals full course", "type": "video"}],
+                    },
+                    {
+                        "id": "p1-s2", "level": "all",
+                        "title": "Industry overview and career landscape",
+                        "description": "Understand the day-to-day reality of working as a Hotel Manager, including typical roles such as Guest Services Manager and General Manager.",
+                        "resources": [
+                            {"title": "A day in the life of a Hotel Manager", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-2", "phase_number": 2,
+                "title": "Core Tools & Practical Skills",
+                "description": "Learn the tools and hands-on skills used in the Hotel Manager profession.",
+                "base_weeks": 5,
+                "skills_covered": ["Opera PMS", "RoomKey", "Mews"],
+                "steps": [
+                    {
+                        "id": "p2-s1", "level": "all",
+                        "title": "Key tools and software",
+                        "description": "Get hands-on with the tools used daily: Opera PMS, RoomKey, Mews.",
+                        "resources": [{"title": "Opera PMS tutorial for beginners", "type": "video"}, {"title": "RoomKey tutorial for beginners", "type": "video"}],
+                    },
+                    {
+                        "id": "p2-s2", "level": "builder_plus",
+                        "title": "Practical exercises and mini-projects",
+                        "description": "Apply your knowledge through structured exercises. Practical experience is what separates candidates at interview.",
+                        "resources": [
+                            {"title": "Hotel Manager practical projects for your portfolio", "type": "project"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-3", "phase_number": 3,
+                "title": "Advanced Skills & Specialism",
+                "description": "Develop deeper expertise and begin to specialise within the Hotel Manager field.",
+                "base_weeks": 5,
+                "skills_covered": ["Public Speaking", "Negotiation", "Customer Service"],
+                "steps": [
+                    {
+                        "id": "p3-s1", "level": "all",
+                        "title": "Advanced techniques",
+                        "description": "Move beyond the basics and tackle more complex, realistic problems faced by mid-level Hotel Managers.",
+                        "resources": [{"title": "Advanced Public Speaking for Hotel Managers", "type": "course"}, {"title": "Advanced Negotiation for Hotel Managers", "type": "course"}],
+                    },
+                    {
+                        "id": "p3-s2", "level": "advanced_only",
+                        "title": "Specialism and leadership",
+                        "description": "Explore specialist areas within the Hotel Manager field and develop the strategic thinking needed for senior roles.",
+                        "resources": [
+                            {"title": "General Manager — how to reach the senior level", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-4", "phase_number": 4,
+                "title": "Portfolio & Job Preparation",
+                "description": "Build a portfolio, prepare your applications, and land your first Hotel Manager role.",
+                "base_weeks": 3,
+                "skills_covered": ["Portfolio", "Job Applications", "Interview Preparation"],
+                "steps": [
+                    {
+                        "id": "p4-s1", "level": "all",
+                        "title": "Build a portfolio project",
+                        "description": "Create at least one substantial project that demonstrates your Hotel Manager skills. This is the single most important thing you can do before applying.",
+                        "resources": [
+                            {"title": "Hotel Manager portfolio — what to include and how to present it", "type": "video"},
+                            {"title": "GitHub — Host your project portfolio", "type": "project"},
+                        ],
+                    },
+                    {
+                        "id": "p4-s2", "level": "all",
+                        "title": "Job search and interview preparation",
+                        "description": "Polish your CV, practise common Hotel Manager interview questions, and start applying. Networking accounts for over 70% of hires.",
+                        "resources": [{"title": "How to become a Hotel Manager — career roadmap", "type": "video"}, {"title": "LinkedIn — Hotel Manager job search and networking", "type": "practice"}],
+                    },
+                ],
+            },
+        ],
+    },
+    # ──────────────────────────────────────────────────────────────────────
+    "chef": {
+        "career_title": "Chef",
+        "phases": [
+            {
+                "id": "phase-1", "phase_number": 1,
+                "title": "Foundations",
+                "description": "Build the essential knowledge base required to work as a Chef.",
+                "base_weeks": 4,
+                "skills_covered": ["Team Leadership", "Budgeting", "Customer Service"],
+                "steps": [
+                    {
+                        "id": "p1-s1", "level": "starter_only",
+                        "title": "Core theory and fundamentals",
+                        "description": "Create, prepare, and present food in professional kitchen environments from restaurants to hotels to private dining. Start with the foundational concepts that every Chef must understand.",
+                        "resources": [{"title": "Team Leadership fundamentals full course", "type": "video"}, {"title": "Budgeting fundamentals full course", "type": "video"}],
+                    },
+                    {
+                        "id": "p1-s2", "level": "all",
+                        "title": "Industry overview and career landscape",
+                        "description": "Understand the day-to-day reality of working as a Chef, including typical roles such as Commis Chef and Executive Chef.",
+                        "resources": [
+                            {"title": "A day in the life of a Chef", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-2", "phase_number": 2,
+                "title": "Core Tools & Practical Skills",
+                "description": "Learn the tools and hands-on skills used in the Chef profession.",
+                "base_weeks": 5,
+                "skills_covered": ["Commercial kitchen equipment", "Inventory management software", "Point of sale systems"],
+                "steps": [
+                    {
+                        "id": "p2-s1", "level": "all",
+                        "title": "Key tools and software",
+                        "description": "Get hands-on with the tools used daily: Commercial kitchen equipment, Inventory management software, Point of sale systems.",
+                        "resources": [{"title": "Commercial kitchen equipment tutorial for beginners", "type": "video"}, {"title": "Inventory management software tutorial for beginners", "type": "video"}],
+                    },
+                    {
+                        "id": "p2-s2", "level": "builder_plus",
+                        "title": "Practical exercises and mini-projects",
+                        "description": "Apply your knowledge through structured exercises. Practical experience is what separates candidates at interview.",
+                        "resources": [
+                            {"title": "Chef practical projects for your portfolio", "type": "project"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-3", "phase_number": 3,
+                "title": "Advanced Skills & Specialism",
+                "description": "Develop deeper expertise and begin to specialise within the Chef field.",
+                "base_weeks": 5,
+                "skills_covered": ["Team Leadership", "Budgeting", "Customer Service"],
+                "steps": [
+                    {
+                        "id": "p3-s1", "level": "all",
+                        "title": "Advanced techniques",
+                        "description": "Move beyond the basics and tackle more complex, realistic problems faced by mid-level Chefs.",
+                        "resources": [{"title": "Advanced Team Leadership for Chefs", "type": "course"}, {"title": "Advanced Budgeting for Chefs", "type": "course"}],
+                    },
+                    {
+                        "id": "p3-s2", "level": "advanced_only",
+                        "title": "Specialism and leadership",
+                        "description": "Explore specialist areas within the Chef field and develop the strategic thinking needed for senior roles.",
+                        "resources": [
+                            {"title": "Executive Chef — how to reach the senior level", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-4", "phase_number": 4,
+                "title": "Portfolio & Job Preparation",
+                "description": "Build a portfolio, prepare your applications, and land your first Chef role.",
+                "base_weeks": 3,
+                "skills_covered": ["Portfolio", "Job Applications", "Interview Preparation"],
+                "steps": [
+                    {
+                        "id": "p4-s1", "level": "all",
+                        "title": "Build a portfolio project",
+                        "description": "Create at least one substantial project that demonstrates your Chef skills. This is the single most important thing you can do before applying.",
+                        "resources": [
+                            {"title": "Chef portfolio — what to include and how to present it", "type": "video"},
+                            {"title": "GitHub — Host your project portfolio", "type": "project"},
+                        ],
+                    },
+                    {
+                        "id": "p4-s2", "level": "all",
+                        "title": "Job search and interview preparation",
+                        "description": "Polish your CV, practise common Chef interview questions, and start applying. Networking accounts for over 70% of hires.",
+                        "resources": [{"title": "How to become a Chef — career roadmap", "type": "video"}, {"title": "LinkedIn — Chef job search and networking", "type": "practice"}],
+                    },
+                ],
+            },
+        ],
+    },
+    # ──────────────────────────────────────────────────────────────────────
+    "travel-consultant": {
+        "career_title": "Travel Consultant",
+        "phases": [
+            {
+                "id": "phase-1", "phase_number": 1,
+                "title": "Foundations",
+                "description": "Build the essential knowledge base required to work as a Travel Consultant.",
+                "base_weeks": 4,
+                "skills_covered": ["Customer Service", "Sales", "Negotiation"],
+                "steps": [
+                    {
+                        "id": "p1-s1", "level": "starter_only",
+                        "title": "Core theory and fundamentals",
+                        "description": "Plan and book tailored travel experiences for individuals, families, and corporate clients. Start with the foundational concepts that every Travel Consultant must understand.",
+                        "resources": [{"title": "Customer Service fundamentals full course", "type": "video"}, {"title": "Sales fundamentals full course", "type": "video"}],
+                    },
+                    {
+                        "id": "p1-s2", "level": "all",
+                        "title": "Industry overview and career landscape",
+                        "description": "Understand the day-to-day reality of working as a Travel Consultant, including typical roles such as Travel Agent and Travel Operations Manager.",
+                        "resources": [
+                            {"title": "A day in the life of a Travel Consultant", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-2", "phase_number": 2,
+                "title": "Core Tools & Practical Skills",
+                "description": "Learn the tools and hands-on skills used in the Travel Consultant profession.",
+                "base_weeks": 5,
+                "skills_covered": ["Amadeus", "Sabre", "Galileo"],
+                "steps": [
+                    {
+                        "id": "p2-s1", "level": "all",
+                        "title": "Key tools and software",
+                        "description": "Get hands-on with the tools used daily: Amadeus, Sabre, Galileo.",
+                        "resources": [{"title": "Amadeus tutorial for beginners", "type": "video"}, {"title": "Sabre tutorial for beginners", "type": "video"}],
+                    },
+                    {
+                        "id": "p2-s2", "level": "builder_plus",
+                        "title": "Practical exercises and mini-projects",
+                        "description": "Apply your knowledge through structured exercises. Practical experience is what separates candidates at interview.",
+                        "resources": [
+                            {"title": "Travel Consultant practical projects for your portfolio", "type": "project"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-3", "phase_number": 3,
+                "title": "Advanced Skills & Specialism",
+                "description": "Develop deeper expertise and begin to specialise within the Travel Consultant field.",
+                "base_weeks": 5,
+                "skills_covered": ["Writing & Copywriting", "Research", "Customer Service"],
+                "steps": [
+                    {
+                        "id": "p3-s1", "level": "all",
+                        "title": "Advanced techniques",
+                        "description": "Move beyond the basics and tackle more complex, realistic problems faced by mid-level Travel Consultants.",
+                        "resources": [{"title": "Advanced Writing & Copywriting for Travel Consultants", "type": "course"}, {"title": "Advanced Research for Travel Consultants", "type": "course"}],
+                    },
+                    {
+                        "id": "p3-s2", "level": "advanced_only",
+                        "title": "Specialism and leadership",
+                        "description": "Explore specialist areas within the Travel Consultant field and develop the strategic thinking needed for senior roles.",
+                        "resources": [
+                            {"title": "Travel Operations Manager — how to reach the senior level", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-4", "phase_number": 4,
+                "title": "Portfolio & Job Preparation",
+                "description": "Build a portfolio, prepare your applications, and land your first Travel Consultant role.",
+                "base_weeks": 3,
+                "skills_covered": ["Portfolio", "Job Applications", "Interview Preparation"],
+                "steps": [
+                    {
+                        "id": "p4-s1", "level": "all",
+                        "title": "Build a portfolio project",
+                        "description": "Create at least one substantial project that demonstrates your Travel Consultant skills. This is the single most important thing you can do before applying.",
+                        "resources": [
+                            {"title": "Travel Consultant portfolio — what to include and how to present it", "type": "video"},
+                            {"title": "GitHub — Host your project portfolio", "type": "project"},
+                        ],
+                    },
+                    {
+                        "id": "p4-s2", "level": "all",
+                        "title": "Job search and interview preparation",
+                        "description": "Polish your CV, practise common Travel Consultant interview questions, and start applying. Networking accounts for over 70% of hires.",
+                        "resources": [{"title": "How to become a Travel Consultant — career roadmap", "type": "video"}, {"title": "LinkedIn — Travel Consultant job search and networking", "type": "practice"}],
+                    },
+                ],
+            },
+        ],
+    },
+    # ──────────────────────────────────────────────────────────────────────
+    "retail-manager": {
+        "career_title": "Retail Manager",
+        "phases": [
+            {
+                "id": "phase-1", "phase_number": 1,
+                "title": "Foundations",
+                "description": "Build the essential knowledge base required to work as a Retail Manager.",
+                "base_weeks": 4,
+                "skills_covered": ["Team Leadership", "Customer Service", "Budgeting"],
+                "steps": [
+                    {
+                        "id": "p1-s1", "level": "starter_only",
+                        "title": "Core theory and fundamentals",
+                        "description": "Lead a retail team to deliver outstanding customer experiences, hit sales targets, and run efficient store operations. Start with the foundational concepts that every Retail Manager must understand.",
+                        "resources": [{"title": "Team Leadership fundamentals full course", "type": "video"}, {"title": "Customer Service fundamentals full course", "type": "video"}],
+                    },
+                    {
+                        "id": "p1-s2", "level": "all",
+                        "title": "Industry overview and career landscape",
+                        "description": "Understand the day-to-day reality of working as a Retail Manager, including typical roles such as Team Leader and Head of Retail.",
+                        "resources": [
+                            {"title": "A day in the life of a Retail Manager", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-2", "phase_number": 2,
+                "title": "Core Tools & Practical Skills",
+                "description": "Learn the tools and hands-on skills used in the Retail Manager profession.",
+                "base_weeks": 5,
+                "skills_covered": ["EPOS systems", "Workforce management tools", "Excel"],
+                "steps": [
+                    {
+                        "id": "p2-s1", "level": "all",
+                        "title": "Key tools and software",
+                        "description": "Get hands-on with the tools used daily: EPOS systems, Workforce management tools, Excel.",
+                        "resources": [{"title": "EPOS systems tutorial for beginners", "type": "video"}, {"title": "Workforce management tools tutorial for beginners", "type": "video"}],
+                    },
+                    {
+                        "id": "p2-s2", "level": "builder_plus",
+                        "title": "Practical exercises and mini-projects",
+                        "description": "Apply your knowledge through structured exercises. Practical experience is what separates candidates at interview.",
+                        "resources": [
+                            {"title": "Retail Manager practical projects for your portfolio", "type": "project"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-3", "phase_number": 3,
+                "title": "Advanced Skills & Specialism",
+                "description": "Develop deeper expertise and begin to specialise within the Retail Manager field.",
+                "base_weeks": 5,
+                "skills_covered": ["Sales", "Negotiation", "Data Analysis"],
+                "steps": [
+                    {
+                        "id": "p3-s1", "level": "all",
+                        "title": "Advanced techniques",
+                        "description": "Move beyond the basics and tackle more complex, realistic problems faced by mid-level Retail Managers.",
+                        "resources": [{"title": "Advanced Sales for Retail Managers", "type": "course"}, {"title": "Advanced Negotiation for Retail Managers", "type": "course"}],
+                    },
+                    {
+                        "id": "p3-s2", "level": "advanced_only",
+                        "title": "Specialism and leadership",
+                        "description": "Explore specialist areas within the Retail Manager field and develop the strategic thinking needed for senior roles.",
+                        "resources": [
+                            {"title": "Head of Retail — how to reach the senior level", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-4", "phase_number": 4,
+                "title": "Portfolio & Job Preparation",
+                "description": "Build a portfolio, prepare your applications, and land your first Retail Manager role.",
+                "base_weeks": 3,
+                "skills_covered": ["Portfolio", "Job Applications", "Interview Preparation"],
+                "steps": [
+                    {
+                        "id": "p4-s1", "level": "all",
+                        "title": "Build a portfolio project",
+                        "description": "Create at least one substantial project that demonstrates your Retail Manager skills. This is the single most important thing you can do before applying.",
+                        "resources": [
+                            {"title": "Retail Manager portfolio — what to include and how to present it", "type": "video"},
+                            {"title": "GitHub — Host your project portfolio", "type": "project"},
+                        ],
+                    },
+                    {
+                        "id": "p4-s2", "level": "all",
+                        "title": "Job search and interview preparation",
+                        "description": "Polish your CV, practise common Retail Manager interview questions, and start applying. Networking accounts for over 70% of hires.",
+                        "resources": [{"title": "How to become a Retail Manager — career roadmap", "type": "video"}, {"title": "LinkedIn — Retail Manager job search and networking", "type": "practice"}],
+                    },
+                ],
+            },
+        ],
+    },
+    # ──────────────────────────────────────────────────────────────────────
+    "policy-analyst": {
+        "career_title": "Policy Analyst",
+        "phases": [
+            {
+                "id": "phase-1", "phase_number": 1,
+                "title": "Foundations",
+                "description": "Build the essential knowledge base required to work as a Policy Analyst.",
+                "base_weeks": 4,
+                "skills_covered": ["Research", "Writing & Copywriting", "Statistics"],
+                "steps": [
+                    {
+                        "id": "p1-s1", "level": "starter_only",
+                        "title": "Core theory and fundamentals",
+                        "description": "Research, analyse, and develop policy recommendations to support government and public sector decision-making. Start with the foundational concepts that every Policy Analyst must understand.",
+                        "resources": [{"title": "Research fundamentals full course", "type": "video"}, {"title": "Writing & Copywriting fundamentals full course", "type": "video"}],
+                    },
+                    {
+                        "id": "p1-s2", "level": "all",
+                        "title": "Industry overview and career landscape",
+                        "description": "Understand the day-to-day reality of working as a Policy Analyst, including typical roles such as Policy Analyst and Civil Servant (Fast Stream).",
+                        "resources": [
+                            {"title": "A day in the life of a Policy Analyst", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-2", "phase_number": 2,
+                "title": "Core Tools & Practical Skills",
+                "description": "Learn the tools and hands-on skills used in the Policy Analyst profession.",
+                "base_weeks": 5,
+                "skills_covered": ["R", "Stata", "Excel"],
+                "steps": [
+                    {
+                        "id": "p2-s1", "level": "all",
+                        "title": "Key tools and software",
+                        "description": "Get hands-on with the tools used daily: R, Stata, Excel.",
+                        "resources": [{"title": "R tutorial for beginners", "type": "video"}, {"title": "Stata tutorial for beginners", "type": "video"}],
+                    },
+                    {
+                        "id": "p2-s2", "level": "builder_plus",
+                        "title": "Practical exercises and mini-projects",
+                        "description": "Apply your knowledge through structured exercises. Practical experience is what separates candidates at interview.",
+                        "resources": [
+                            {"title": "Policy Analyst practical projects for your portfolio", "type": "project"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-3", "phase_number": 3,
+                "title": "Advanced Skills & Specialism",
+                "description": "Develop deeper expertise and begin to specialise within the Policy Analyst field.",
+                "base_weeks": 5,
+                "skills_covered": ["Data Analysis", "Public Speaking", "Research"],
+                "steps": [
+                    {
+                        "id": "p3-s1", "level": "all",
+                        "title": "Advanced techniques",
+                        "description": "Move beyond the basics and tackle more complex, realistic problems faced by mid-level Policy Analysts.",
+                        "resources": [{"title": "Advanced Data Analysis for Policy Analysts", "type": "course"}, {"title": "Advanced Public Speaking for Policy Analysts", "type": "course"}],
+                    },
+                    {
+                        "id": "p3-s2", "level": "advanced_only",
+                        "title": "Specialism and leadership",
+                        "description": "Explore specialist areas within the Policy Analyst field and develop the strategic thinking needed for senior roles.",
+                        "resources": [
+                            {"title": "Civil Servant (Fast Stream) — how to reach the senior level", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-4", "phase_number": 4,
+                "title": "Portfolio & Job Preparation",
+                "description": "Build a portfolio, prepare your applications, and land your first Policy Analyst role.",
+                "base_weeks": 3,
+                "skills_covered": ["Portfolio", "Job Applications", "Interview Preparation"],
+                "steps": [
+                    {
+                        "id": "p4-s1", "level": "all",
+                        "title": "Build a portfolio project",
+                        "description": "Create at least one substantial project that demonstrates your Policy Analyst skills. This is the single most important thing you can do before applying.",
+                        "resources": [
+                            {"title": "Policy Analyst portfolio — what to include and how to present it", "type": "video"},
+                            {"title": "GitHub — Host your project portfolio", "type": "project"},
+                        ],
+                    },
+                    {
+                        "id": "p4-s2", "level": "all",
+                        "title": "Job search and interview preparation",
+                        "description": "Polish your CV, practise common Policy Analyst interview questions, and start applying. Networking accounts for over 70% of hires.",
+                        "resources": [{"title": "How to become a Policy Analyst — career roadmap", "type": "video"}, {"title": "LinkedIn — Policy Analyst job search and networking", "type": "practice"}],
+                    },
+                ],
+            },
+        ],
+    },
+    # ──────────────────────────────────────────────────────────────────────
+    "research-scientist": {
+        "career_title": "Research Scientist",
+        "phases": [
+            {
+                "id": "phase-1", "phase_number": 1,
+                "title": "Foundations",
+                "description": "Build the essential knowledge base required to work as a Research Scientist.",
+                "base_weeks": 4,
+                "skills_covered": ["Research", "Statistics", "Technical Writing"],
+                "steps": [
+                    {
+                        "id": "p1-s1", "level": "starter_only",
+                        "title": "Core theory and fundamentals",
+                        "description": "Conduct original research to advance knowledge in fields like biology, chemistry, physics, or social sciences. Start with the foundational concepts that every Research Scientist must understand.",
+                        "resources": [{"title": "Research fundamentals full course", "type": "video"}, {"title": "Statistics fundamentals full course", "type": "video"}],
+                    },
+                    {
+                        "id": "p1-s2", "level": "all",
+                        "title": "Industry overview and career landscape",
+                        "description": "Understand the day-to-day reality of working as a Research Scientist, including typical roles such as Research Assistant and Research Director.",
+                        "resources": [
+                            {"title": "A day in the life of a Research Scientist", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-2", "phase_number": 2,
+                "title": "Core Tools & Practical Skills",
+                "description": "Learn the tools and hands-on skills used in the Research Scientist profession.",
+                "base_weeks": 5,
+                "skills_covered": ["R", "Python", "SPSS"],
+                "steps": [
+                    {
+                        "id": "p2-s1", "level": "all",
+                        "title": "Key tools and software",
+                        "description": "Get hands-on with the tools used daily: R, Python, SPSS.",
+                        "resources": [{"title": "R tutorial for beginners", "type": "video"}, {"title": "Python tutorial for beginners", "type": "video"}],
+                    },
+                    {
+                        "id": "p2-s2", "level": "builder_plus",
+                        "title": "Practical exercises and mini-projects",
+                        "description": "Apply your knowledge through structured exercises. Practical experience is what separates candidates at interview.",
+                        "resources": [
+                            {"title": "Research Scientist practical projects for your portfolio", "type": "project"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-3", "phase_number": 3,
+                "title": "Advanced Skills & Specialism",
+                "description": "Develop deeper expertise and begin to specialise within the Research Scientist field.",
+                "base_weeks": 5,
+                "skills_covered": ["Data Analysis", "R", "Research"],
+                "steps": [
+                    {
+                        "id": "p3-s1", "level": "all",
+                        "title": "Advanced techniques",
+                        "description": "Move beyond the basics and tackle more complex, realistic problems faced by mid-level Research Scientists.",
+                        "resources": [{"title": "Advanced Data Analysis for Research Scientists", "type": "course"}, {"title": "Advanced R for Research Scientists", "type": "course"}],
+                    },
+                    {
+                        "id": "p3-s2", "level": "advanced_only",
+                        "title": "Specialism and leadership",
+                        "description": "Explore specialist areas within the Research Scientist field and develop the strategic thinking needed for senior roles.",
+                        "resources": [
+                            {"title": "Research Director — how to reach the senior level", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-4", "phase_number": 4,
+                "title": "Portfolio & Job Preparation",
+                "description": "Build a portfolio, prepare your applications, and land your first Research Scientist role.",
+                "base_weeks": 3,
+                "skills_covered": ["Portfolio", "Job Applications", "Interview Preparation"],
+                "steps": [
+                    {
+                        "id": "p4-s1", "level": "all",
+                        "title": "Build a portfolio project",
+                        "description": "Create at least one substantial project that demonstrates your Research Scientist skills. This is the single most important thing you can do before applying.",
+                        "resources": [
+                            {"title": "Research Scientist portfolio — what to include and how to present it", "type": "video"},
+                            {"title": "GitHub — Host your project portfolio", "type": "project"},
+                        ],
+                    },
+                    {
+                        "id": "p4-s2", "level": "all",
+                        "title": "Job search and interview preparation",
+                        "description": "Polish your CV, practise common Research Scientist interview questions, and start applying. Networking accounts for over 70% of hires.",
+                        "resources": [{"title": "How to become a Research Scientist — career roadmap", "type": "video"}, {"title": "LinkedIn — Research Scientist job search and networking", "type": "practice"}],
+                    },
+                ],
+            },
+        ],
+    },
+    # ──────────────────────────────────────────────────────────────────────
+    "urban-planner": {
+        "career_title": "Urban Planner",
+        "phases": [
+            {
+                "id": "phase-1", "phase_number": 1,
+                "title": "Foundations",
+                "description": "Build the essential knowledge base required to work as a Urban Planner.",
+                "base_weeks": 4,
+                "skills_covered": ["Research", "Writing & Copywriting", "Statistics"],
+                "steps": [
+                    {
+                        "id": "p1-s1", "level": "starter_only",
+                        "title": "Core theory and fundamentals",
+                        "description": "Design and guide the development of land use, infrastructure, housing, and communities in towns and cities. Start with the foundational concepts that every Urban Planner must understand.",
+                        "resources": [{"title": "Research fundamentals full course", "type": "video"}, {"title": "Writing & Copywriting fundamentals full course", "type": "video"}],
+                    },
+                    {
+                        "id": "p1-s2", "level": "all",
+                        "title": "Industry overview and career landscape",
+                        "description": "Understand the day-to-day reality of working as a Urban Planner, including typical roles such as Planning Officer and Head of Planning.",
+                        "resources": [
+                            {"title": "A day in the life of a Urban Planner", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-2", "phase_number": 2,
+                "title": "Core Tools & Practical Skills",
+                "description": "Learn the tools and hands-on skills used in the Urban Planner profession.",
+                "base_weeks": 5,
+                "skills_covered": ["ArcGIS", "AutoCAD", "SketchUp"],
+                "steps": [
+                    {
+                        "id": "p2-s1", "level": "all",
+                        "title": "Key tools and software",
+                        "description": "Get hands-on with the tools used daily: ArcGIS, AutoCAD, SketchUp.",
+                        "resources": [{"title": "ArcGIS tutorial for beginners", "type": "video"}, {"title": "AutoCAD tutorial for beginners", "type": "video"}],
+                    },
+                    {
+                        "id": "p2-s2", "level": "builder_plus",
+                        "title": "Practical exercises and mini-projects",
+                        "description": "Apply your knowledge through structured exercises. Practical experience is what separates candidates at interview.",
+                        "resources": [
+                            {"title": "Urban Planner practical projects for your portfolio", "type": "project"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-3", "phase_number": 3,
+                "title": "Advanced Skills & Specialism",
+                "description": "Develop deeper expertise and begin to specialise within the Urban Planner field.",
+                "base_weeks": 5,
+                "skills_covered": ["GIS", "Public Speaking", "Research"],
+                "steps": [
+                    {
+                        "id": "p3-s1", "level": "all",
+                        "title": "Advanced techniques",
+                        "description": "Move beyond the basics and tackle more complex, realistic problems faced by mid-level Urban Planners.",
+                        "resources": [{"title": "Advanced GIS for Urban Planners", "type": "course"}, {"title": "Advanced Public Speaking for Urban Planners", "type": "course"}],
+                    },
+                    {
+                        "id": "p3-s2", "level": "advanced_only",
+                        "title": "Specialism and leadership",
+                        "description": "Explore specialist areas within the Urban Planner field and develop the strategic thinking needed for senior roles.",
+                        "resources": [
+                            {"title": "Head of Planning — how to reach the senior level", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-4", "phase_number": 4,
+                "title": "Portfolio & Job Preparation",
+                "description": "Build a portfolio, prepare your applications, and land your first Urban Planner role.",
+                "base_weeks": 3,
+                "skills_covered": ["Portfolio", "Job Applications", "Interview Preparation"],
+                "steps": [
+                    {
+                        "id": "p4-s1", "level": "all",
+                        "title": "Build a portfolio project",
+                        "description": "Create at least one substantial project that demonstrates your Urban Planner skills. This is the single most important thing you can do before applying.",
+                        "resources": [
+                            {"title": "Urban Planner portfolio — what to include and how to present it", "type": "video"},
+                            {"title": "GitHub — Host your project portfolio", "type": "project"},
+                        ],
+                    },
+                    {
+                        "id": "p4-s2", "level": "all",
+                        "title": "Job search and interview preparation",
+                        "description": "Polish your CV, practise common Urban Planner interview questions, and start applying. Networking accounts for over 70% of hires.",
+                        "resources": [{"title": "How to become a Urban Planner — career roadmap", "type": "video"}, {"title": "LinkedIn — Urban Planner job search and networking", "type": "practice"}],
+                    },
+                ],
+            },
+        ],
+    },
+    # ──────────────────────────────────────────────────────────────────────
+    "estate-agent": {
+        "career_title": "Estate Agent",
+        "phases": [
+            {
+                "id": "phase-1", "phase_number": 1,
+                "title": "Foundations",
+                "description": "Build the essential knowledge base required to work as a Estate Agent.",
+                "base_weeks": 4,
+                "skills_covered": ["Sales", "Customer Service", "Negotiation"],
+                "steps": [
+                    {
+                        "id": "p1-s1", "level": "starter_only",
+                        "title": "Core theory and fundamentals",
+                        "description": "Help clients buy, sell, and let residential or commercial properties, managing the full transaction process. Start with the foundational concepts that every Estate Agent must understand.",
+                        "resources": [{"title": "Sales fundamentals full course", "type": "video"}, {"title": "Customer Service fundamentals full course", "type": "video"}],
+                    },
+                    {
+                        "id": "p1-s2", "level": "all",
+                        "title": "Industry overview and career landscape",
+                        "description": "Understand the day-to-day reality of working as a Estate Agent, including typical roles such as Negotiator and Property Director.",
+                        "resources": [
+                            {"title": "A day in the life of a Estate Agent", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-2", "phase_number": 2,
+                "title": "Core Tools & Practical Skills",
+                "description": "Learn the tools and hands-on skills used in the Estate Agent profession.",
+                "base_weeks": 5,
+                "skills_covered": ["Zoopla", "Rightmove", "Alto"],
+                "steps": [
+                    {
+                        "id": "p2-s1", "level": "all",
+                        "title": "Key tools and software",
+                        "description": "Get hands-on with the tools used daily: Zoopla, Rightmove, Alto.",
+                        "resources": [{"title": "Zoopla tutorial for beginners", "type": "video"}, {"title": "Rightmove tutorial for beginners", "type": "video"}],
+                    },
+                    {
+                        "id": "p2-s2", "level": "builder_plus",
+                        "title": "Practical exercises and mini-projects",
+                        "description": "Apply your knowledge through structured exercises. Practical experience is what separates candidates at interview.",
+                        "resources": [
+                            {"title": "Estate Agent practical projects for your portfolio", "type": "project"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-3", "phase_number": 3,
+                "title": "Advanced Skills & Specialism",
+                "description": "Develop deeper expertise and begin to specialise within the Estate Agent field.",
+                "base_weeks": 5,
+                "skills_covered": ["Writing & Copywriting", "Research", "Sales"],
+                "steps": [
+                    {
+                        "id": "p3-s1", "level": "all",
+                        "title": "Advanced techniques",
+                        "description": "Move beyond the basics and tackle more complex, realistic problems faced by mid-level Estate Agents.",
+                        "resources": [{"title": "Advanced Writing & Copywriting for Estate Agents", "type": "course"}, {"title": "Advanced Research for Estate Agents", "type": "course"}],
+                    },
+                    {
+                        "id": "p3-s2", "level": "advanced_only",
+                        "title": "Specialism and leadership",
+                        "description": "Explore specialist areas within the Estate Agent field and develop the strategic thinking needed for senior roles.",
+                        "resources": [
+                            {"title": "Property Director — how to reach the senior level", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-4", "phase_number": 4,
+                "title": "Portfolio & Job Preparation",
+                "description": "Build a portfolio, prepare your applications, and land your first Estate Agent role.",
+                "base_weeks": 3,
+                "skills_covered": ["Portfolio", "Job Applications", "Interview Preparation"],
+                "steps": [
+                    {
+                        "id": "p4-s1", "level": "all",
+                        "title": "Build a portfolio project",
+                        "description": "Create at least one substantial project that demonstrates your Estate Agent skills. This is the single most important thing you can do before applying.",
+                        "resources": [
+                            {"title": "Estate Agent portfolio — what to include and how to present it", "type": "video"},
+                            {"title": "GitHub — Host your project portfolio", "type": "project"},
+                        ],
+                    },
+                    {
+                        "id": "p4-s2", "level": "all",
+                        "title": "Job search and interview preparation",
+                        "description": "Polish your CV, practise common Estate Agent interview questions, and start applying. Networking accounts for over 70% of hires.",
+                        "resources": [{"title": "How to become a Estate Agent — career roadmap", "type": "video"}, {"title": "LinkedIn — Estate Agent job search and networking", "type": "practice"}],
+                    },
+                ],
+            },
+        ],
+    },
+    # ──────────────────────────────────────────────────────────────────────
+    "quantity-surveyor": {
+        "career_title": "Quantity Surveyor",
+        "phases": [
+            {
+                "id": "phase-1", "phase_number": 1,
+                "title": "Foundations",
+                "description": "Build the essential knowledge base required to work as a Quantity Surveyor.",
+                "base_weeks": 4,
+                "skills_covered": ["Budgeting", "Negotiation", "Research"],
+                "steps": [
+                    {
+                        "id": "p1-s1", "level": "starter_only",
+                        "title": "Core theory and fundamentals",
+                        "description": "Manage the financial and contractual aspects of construction projects, from cost planning to final accounts. Start with the foundational concepts that every Quantity Surveyor must understand.",
+                        "resources": [{"title": "Budgeting fundamentals full course", "type": "video"}, {"title": "Negotiation fundamentals full course", "type": "video"}],
+                    },
+                    {
+                        "id": "p1-s2", "level": "all",
+                        "title": "Industry overview and career landscape",
+                        "description": "Understand the day-to-day reality of working as a Quantity Surveyor, including typical roles such as Trainee QS and Chartered QS (MRICS).",
+                        "resources": [
+                            {"title": "A day in the life of a Quantity Surveyor", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-2", "phase_number": 2,
+                "title": "Core Tools & Practical Skills",
+                "description": "Learn the tools and hands-on skills used in the Quantity Surveyor profession.",
+                "base_weeks": 5,
+                "skills_covered": ["CostX", "Causeway", "Bluebeam"],
+                "steps": [
+                    {
+                        "id": "p2-s1", "level": "all",
+                        "title": "Key tools and software",
+                        "description": "Get hands-on with the tools used daily: CostX, Causeway, Bluebeam.",
+                        "resources": [{"title": "CostX tutorial for beginners", "type": "video"}, {"title": "Causeway tutorial for beginners", "type": "video"}],
+                    },
+                    {
+                        "id": "p2-s2", "level": "builder_plus",
+                        "title": "Practical exercises and mini-projects",
+                        "description": "Apply your knowledge through structured exercises. Practical experience is what separates candidates at interview.",
+                        "resources": [
+                            {"title": "Quantity Surveyor practical projects for your portfolio", "type": "project"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-3", "phase_number": 3,
+                "title": "Advanced Skills & Specialism",
+                "description": "Develop deeper expertise and begin to specialise within the Quantity Surveyor field.",
+                "base_weeks": 5,
+                "skills_covered": ["Technical Writing", "Excel / Spreadsheets", "Budgeting"],
+                "steps": [
+                    {
+                        "id": "p3-s1", "level": "all",
+                        "title": "Advanced techniques",
+                        "description": "Move beyond the basics and tackle more complex, realistic problems faced by mid-level Quantity Surveyors.",
+                        "resources": [{"title": "Advanced Technical Writing for Quantity Surveyors", "type": "course"}, {"title": "Advanced Excel / Spreadsheets for Quantity Surveyors", "type": "course"}],
+                    },
+                    {
+                        "id": "p3-s2", "level": "advanced_only",
+                        "title": "Specialism and leadership",
+                        "description": "Explore specialist areas within the Quantity Surveyor field and develop the strategic thinking needed for senior roles.",
+                        "resources": [
+                            {"title": "Chartered QS (MRICS) — how to reach the senior level", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-4", "phase_number": 4,
+                "title": "Portfolio & Job Preparation",
+                "description": "Build a portfolio, prepare your applications, and land your first Quantity Surveyor role.",
+                "base_weeks": 3,
+                "skills_covered": ["Portfolio", "Job Applications", "Interview Preparation"],
+                "steps": [
+                    {
+                        "id": "p4-s1", "level": "all",
+                        "title": "Build a portfolio project",
+                        "description": "Create at least one substantial project that demonstrates your Quantity Surveyor skills. This is the single most important thing you can do before applying.",
+                        "resources": [
+                            {"title": "Quantity Surveyor portfolio — what to include and how to present it", "type": "video"},
+                            {"title": "GitHub — Host your project portfolio", "type": "project"},
+                        ],
+                    },
+                    {
+                        "id": "p4-s2", "level": "all",
+                        "title": "Job search and interview preparation",
+                        "description": "Polish your CV, practise common Quantity Surveyor interview questions, and start applying. Networking accounts for over 70% of hires.",
+                        "resources": [{"title": "How to become a Quantity Surveyor — career roadmap", "type": "video"}, {"title": "LinkedIn — Quantity Surveyor job search and networking", "type": "practice"}],
+                    },
+                ],
+            },
+        ],
+    },
+    # ──────────────────────────────────────────────────────────────────────
+    "architect": {
+        "career_title": "Architect",
+        "phases": [
+            {
+                "id": "phase-1", "phase_number": 1,
+                "title": "Foundations",
+                "description": "Build the essential knowledge base required to work as a Architect.",
+                "base_weeks": 4,
+                "skills_covered": ["3D Modelling", "Technical Writing", "Project Management"],
+                "steps": [
+                    {
+                        "id": "p1-s1", "level": "starter_only",
+                        "title": "Core theory and fundamentals",
+                        "description": "Design buildings and spaces that are functional, beautiful, safe, and sustainable. Start with the foundational concepts that every Architect must understand.",
+                        "resources": [{"title": "3D Modelling fundamentals full course", "type": "video"}, {"title": "Technical Writing fundamentals full course", "type": "video"}],
+                    },
+                    {
+                        "id": "p1-s2", "level": "all",
+                        "title": "Industry overview and career landscape",
+                        "description": "Understand the day-to-day reality of working as a Architect, including typical roles such as Part I Architectural Assistant and Director.",
+                        "resources": [
+                            {"title": "A day in the life of a Architect", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-2", "phase_number": 2,
+                "title": "Core Tools & Practical Skills",
+                "description": "Learn the tools and hands-on skills used in the Architect profession.",
+                "base_weeks": 5,
+                "skills_covered": ["Revit", "AutoCAD", "ArchiCAD"],
+                "steps": [
+                    {
+                        "id": "p2-s1", "level": "all",
+                        "title": "Key tools and software",
+                        "description": "Get hands-on with the tools used daily: Revit, AutoCAD, ArchiCAD.",
+                        "resources": [{"title": "Revit tutorial for beginners", "type": "video"}, {"title": "AutoCAD tutorial for beginners", "type": "video"}],
+                    },
+                    {
+                        "id": "p2-s2", "level": "builder_plus",
+                        "title": "Practical exercises and mini-projects",
+                        "description": "Apply your knowledge through structured exercises. Practical experience is what separates candidates at interview.",
+                        "resources": [
+                            {"title": "Architect practical projects for your portfolio", "type": "project"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-3", "phase_number": 3,
+                "title": "Advanced Skills & Specialism",
+                "description": "Develop deeper expertise and begin to specialise within the Architect field.",
+                "base_weeks": 5,
+                "skills_covered": ["Research", "Illustrator", "3D Modelling"],
+                "steps": [
+                    {
+                        "id": "p3-s1", "level": "all",
+                        "title": "Advanced techniques",
+                        "description": "Move beyond the basics and tackle more complex, realistic problems faced by mid-level Architects.",
+                        "resources": [{"title": "Advanced Research for Architects", "type": "course"}, {"title": "Advanced Illustrator for Architects", "type": "course"}],
+                    },
+                    {
+                        "id": "p3-s2", "level": "advanced_only",
+                        "title": "Specialism and leadership",
+                        "description": "Explore specialist areas within the Architect field and develop the strategic thinking needed for senior roles.",
+                        "resources": [
+                            {"title": "Director — how to reach the senior level", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-4", "phase_number": 4,
+                "title": "Portfolio & Job Preparation",
+                "description": "Build a portfolio, prepare your applications, and land your first Architect role.",
+                "base_weeks": 3,
+                "skills_covered": ["Portfolio", "Job Applications", "Interview Preparation"],
+                "steps": [
+                    {
+                        "id": "p4-s1", "level": "all",
+                        "title": "Build a portfolio project",
+                        "description": "Create at least one substantial project that demonstrates your Architect skills. This is the single most important thing you can do before applying.",
+                        "resources": [
+                            {"title": "Architect portfolio — what to include and how to present it", "type": "video"},
+                            {"title": "GitHub — Host your project portfolio", "type": "project"},
+                        ],
+                    },
+                    {
+                        "id": "p4-s2", "level": "all",
+                        "title": "Job search and interview preparation",
+                        "description": "Polish your CV, practise common Architect interview questions, and start applying. Networking accounts for over 70% of hires.",
+                        "resources": [{"title": "How to become a Architect — career roadmap", "type": "video"}, {"title": "LinkedIn — Architect job search and networking", "type": "practice"}],
+                    },
+                ],
+            },
+        ],
+    },
+    # ──────────────────────────────────────────────────────────────────────
+    "construction-manager": {
+        "career_title": "Construction Manager / Site Manager",
+        "phases": [
+            {
+                "id": "phase-1", "phase_number": 1,
+                "title": "Foundations",
+                "description": "Build the essential knowledge base required to work as a Construction Manager / Site Manager.",
+                "base_weeks": 4,
+                "skills_covered": ["Project Management", "Risk Assessment", "Budgeting"],
+                "steps": [
+                    {
+                        "id": "p1-s1", "level": "starter_only",
+                        "title": "Core theory and fundamentals",
+                        "description": "Plan and oversee the safe, efficient delivery of construction projects on site. Start with the foundational concepts that every Construction Manager / Site Manager must understand.",
+                        "resources": [{"title": "Project Management fundamentals full course", "type": "video"}, {"title": "Risk Assessment fundamentals full course", "type": "video"}],
+                    },
+                    {
+                        "id": "p1-s2", "level": "all",
+                        "title": "Industry overview and career landscape",
+                        "description": "Understand the day-to-day reality of working as a Construction Manager / Site Manager, including typical roles such as Site Manager and Director.",
+                        "resources": [
+                            {"title": "A day in the life of a Construction Manager / Site Manager", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-2", "phase_number": 2,
+                "title": "Core Tools & Practical Skills",
+                "description": "Learn the tools and hands-on skills used in the Construction Manager / Site Manager profession.",
+                "base_weeks": 5,
+                "skills_covered": ["MS Project", "Procore", "Asta Powerproject"],
+                "steps": [
+                    {
+                        "id": "p2-s1", "level": "all",
+                        "title": "Key tools and software",
+                        "description": "Get hands-on with the tools used daily: MS Project, Procore, Asta Powerproject.",
+                        "resources": [{"title": "MS Project tutorial for beginners", "type": "video"}, {"title": "Procore tutorial for beginners", "type": "video"}],
+                    },
+                    {
+                        "id": "p2-s2", "level": "builder_plus",
+                        "title": "Practical exercises and mini-projects",
+                        "description": "Apply your knowledge through structured exercises. Practical experience is what separates candidates at interview.",
+                        "resources": [
+                            {"title": "Construction Manager / Site Manager practical projects for your portfolio", "type": "project"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-3", "phase_number": 3,
+                "title": "Advanced Skills & Specialism",
+                "description": "Develop deeper expertise and begin to specialise within the Construction Manager / Site Manager field.",
+                "base_weeks": 5,
+                "skills_covered": ["Negotiation", "Team Leadership", "Project Management"],
+                "steps": [
+                    {
+                        "id": "p3-s1", "level": "all",
+                        "title": "Advanced techniques",
+                        "description": "Move beyond the basics and tackle more complex, realistic problems faced by mid-level Construction Manager / Site Managers.",
+                        "resources": [{"title": "Advanced Negotiation for Construction Manager / Site Managers", "type": "course"}, {"title": "Advanced Team Leadership for Construction Manager / Site Managers", "type": "course"}],
+                    },
+                    {
+                        "id": "p3-s2", "level": "advanced_only",
+                        "title": "Specialism and leadership",
+                        "description": "Explore specialist areas within the Construction Manager / Site Manager field and develop the strategic thinking needed for senior roles.",
+                        "resources": [
+                            {"title": "Director — how to reach the senior level", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-4", "phase_number": 4,
+                "title": "Portfolio & Job Preparation",
+                "description": "Build a portfolio, prepare your applications, and land your first Construction Manager / Site Manager role.",
+                "base_weeks": 3,
+                "skills_covered": ["Portfolio", "Job Applications", "Interview Preparation"],
+                "steps": [
+                    {
+                        "id": "p4-s1", "level": "all",
+                        "title": "Build a portfolio project",
+                        "description": "Create at least one substantial project that demonstrates your Construction Manager / Site Manager skills. This is the single most important thing you can do before applying.",
+                        "resources": [
+                            {"title": "Construction Manager / Site Manager portfolio — what to include and how to present it", "type": "video"},
+                            {"title": "GitHub — Host your project portfolio", "type": "project"},
+                        ],
+                    },
+                    {
+                        "id": "p4-s2", "level": "all",
+                        "title": "Job search and interview preparation",
+                        "description": "Polish your CV, practise common Construction Manager / Site Manager interview questions, and start applying. Networking accounts for over 70% of hires.",
+                        "resources": [{"title": "How to become a Construction Manager / Site Manager — career roadmap", "type": "video"}, {"title": "LinkedIn — Construction Manager / Site Manager job search and networking", "type": "practice"}],
+                    },
+                ],
+            },
+        ],
+    },
+    # ──────────────────────────────────────────────────────────────────────
+    "sustainability-manager": {
+        "career_title": "Sustainability Manager",
+        "phases": [
+            {
+                "id": "phase-1", "phase_number": 1,
+                "title": "Foundations",
+                "description": "Build the essential knowledge base required to work as a Sustainability Manager.",
+                "base_weeks": 4,
+                "skills_covered": ["Research", "Writing & Copywriting", "Data Analysis"],
+                "steps": [
+                    {
+                        "id": "p1-s1", "level": "starter_only",
+                        "title": "Core theory and fundamentals",
+                        "description": "Drive environmental and social responsibility strategies across organisations to reduce impact and meet ESG targets. Start with the foundational concepts that every Sustainability Manager must understand.",
+                        "resources": [{"title": "Research fundamentals full course", "type": "video"}, {"title": "Writing & Copywriting fundamentals full course", "type": "video"}],
+                    },
+                    {
+                        "id": "p1-s2", "level": "all",
+                        "title": "Industry overview and career landscape",
+                        "description": "Understand the day-to-day reality of working as a Sustainability Manager, including typical roles such as Sustainability Analyst and Chief Sustainability Officer.",
+                        "resources": [
+                            {"title": "A day in the life of a Sustainability Manager", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-2", "phase_number": 2,
+                "title": "Core Tools & Practical Skills",
+                "description": "Learn the tools and hands-on skills used in the Sustainability Manager profession.",
+                "base_weeks": 5,
+                "skills_covered": ["MSCI ESG Tools", "Salesforce Net Zero Cloud", "Excel"],
+                "steps": [
+                    {
+                        "id": "p2-s1", "level": "all",
+                        "title": "Key tools and software",
+                        "description": "Get hands-on with the tools used daily: MSCI ESG Tools, Salesforce Net Zero Cloud, Excel.",
+                        "resources": [{"title": "MSCI ESG Tools tutorial for beginners", "type": "video"}, {"title": "Salesforce Net Zero Cloud tutorial for beginners", "type": "video"}],
+                    },
+                    {
+                        "id": "p2-s2", "level": "builder_plus",
+                        "title": "Practical exercises and mini-projects",
+                        "description": "Apply your knowledge through structured exercises. Practical experience is what separates candidates at interview.",
+                        "resources": [
+                            {"title": "Sustainability Manager practical projects for your portfolio", "type": "project"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-3", "phase_number": 3,
+                "title": "Advanced Skills & Specialism",
+                "description": "Develop deeper expertise and begin to specialise within the Sustainability Manager field.",
+                "base_weeks": 5,
+                "skills_covered": ["Project Management", "Public Speaking", "Research"],
+                "steps": [
+                    {
+                        "id": "p3-s1", "level": "all",
+                        "title": "Advanced techniques",
+                        "description": "Move beyond the basics and tackle more complex, realistic problems faced by mid-level Sustainability Managers.",
+                        "resources": [{"title": "Advanced Project Management for Sustainability Managers", "type": "course"}, {"title": "Advanced Public Speaking for Sustainability Managers", "type": "course"}],
+                    },
+                    {
+                        "id": "p3-s2", "level": "advanced_only",
+                        "title": "Specialism and leadership",
+                        "description": "Explore specialist areas within the Sustainability Manager field and develop the strategic thinking needed for senior roles.",
+                        "resources": [
+                            {"title": "Chief Sustainability Officer — how to reach the senior level", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-4", "phase_number": 4,
+                "title": "Portfolio & Job Preparation",
+                "description": "Build a portfolio, prepare your applications, and land your first Sustainability Manager role.",
+                "base_weeks": 3,
+                "skills_covered": ["Portfolio", "Job Applications", "Interview Preparation"],
+                "steps": [
+                    {
+                        "id": "p4-s1", "level": "all",
+                        "title": "Build a portfolio project",
+                        "description": "Create at least one substantial project that demonstrates your Sustainability Manager skills. This is the single most important thing you can do before applying.",
+                        "resources": [
+                            {"title": "Sustainability Manager portfolio — what to include and how to present it", "type": "video"},
+                            {"title": "GitHub — Host your project portfolio", "type": "project"},
+                        ],
+                    },
+                    {
+                        "id": "p4-s2", "level": "all",
+                        "title": "Job search and interview preparation",
+                        "description": "Polish your CV, practise common Sustainability Manager interview questions, and start applying. Networking accounts for over 70% of hires.",
+                        "resources": [{"title": "How to become a Sustainability Manager — career roadmap", "type": "video"}, {"title": "LinkedIn — Sustainability Manager job search and networking", "type": "practice"}],
+                    },
+                ],
+            },
+        ],
+    },
+    # ──────────────────────────────────────────────────────────────────────
+    "renewable-energy-engineer": {
+        "career_title": "Renewable Energy Engineer",
+        "phases": [
+            {
+                "id": "phase-1", "phase_number": 1,
+                "title": "Foundations",
+                "description": "Build the essential knowledge base required to work as a Renewable Energy Engineer.",
+                "base_weeks": 4,
+                "skills_covered": ["Engineering", "Statistics", "Technical Writing"],
+                "steps": [
+                    {
+                        "id": "p1-s1", "level": "starter_only",
+                        "title": "Core theory and fundamentals",
+                        "description": "Design and develop clean energy systems including solar, wind, and storage to accelerate the energy transition. Start with the foundational concepts that every Renewable Energy Engineer must understand.",
+                        "resources": [{"title": "Engineering fundamentals full course", "type": "video"}, {"title": "Statistics fundamentals full course", "type": "video"}],
+                    },
+                    {
+                        "id": "p1-s2", "level": "all",
+                        "title": "Industry overview and career landscape",
+                        "description": "Understand the day-to-day reality of working as a Renewable Energy Engineer, including typical roles such as Graduate Engineer and Project Manager.",
+                        "resources": [
+                            {"title": "A day in the life of a Renewable Energy Engineer", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-2", "phase_number": 2,
+                "title": "Core Tools & Practical Skills",
+                "description": "Learn the tools and hands-on skills used in the Renewable Energy Engineer profession.",
+                "base_weeks": 5,
+                "skills_covered": ["MATLAB", "AutoCAD", "PVsyst"],
+                "steps": [
+                    {
+                        "id": "p2-s1", "level": "all",
+                        "title": "Key tools and software",
+                        "description": "Get hands-on with the tools used daily: MATLAB, AutoCAD, PVsyst.",
+                        "resources": [{"title": "MATLAB tutorial for beginners", "type": "video"}, {"title": "AutoCAD tutorial for beginners", "type": "video"}],
+                    },
+                    {
+                        "id": "p2-s2", "level": "builder_plus",
+                        "title": "Practical exercises and mini-projects",
+                        "description": "Apply your knowledge through structured exercises. Practical experience is what separates candidates at interview.",
+                        "resources": [
+                            {"title": "Renewable Energy Engineer practical projects for your portfolio", "type": "project"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-3", "phase_number": 3,
+                "title": "Advanced Skills & Specialism",
+                "description": "Develop deeper expertise and begin to specialise within the Renewable Energy Engineer field.",
+                "base_weeks": 5,
+                "skills_covered": ["Research", "Risk Assessment", "Engineering"],
+                "steps": [
+                    {
+                        "id": "p3-s1", "level": "all",
+                        "title": "Advanced techniques",
+                        "description": "Move beyond the basics and tackle more complex, realistic problems faced by mid-level Renewable Energy Engineers.",
+                        "resources": [{"title": "Advanced Research for Renewable Energy Engineers", "type": "course"}, {"title": "Advanced Risk Assessment for Renewable Energy Engineers", "type": "course"}],
+                    },
+                    {
+                        "id": "p3-s2", "level": "advanced_only",
+                        "title": "Specialism and leadership",
+                        "description": "Explore specialist areas within the Renewable Energy Engineer field and develop the strategic thinking needed for senior roles.",
+                        "resources": [
+                            {"title": "Project Manager — how to reach the senior level", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-4", "phase_number": 4,
+                "title": "Portfolio & Job Preparation",
+                "description": "Build a portfolio, prepare your applications, and land your first Renewable Energy Engineer role.",
+                "base_weeks": 3,
+                "skills_covered": ["Portfolio", "Job Applications", "Interview Preparation"],
+                "steps": [
+                    {
+                        "id": "p4-s1", "level": "all",
+                        "title": "Build a portfolio project",
+                        "description": "Create at least one substantial project that demonstrates your Renewable Energy Engineer skills. This is the single most important thing you can do before applying.",
+                        "resources": [
+                            {"title": "Renewable Energy Engineer portfolio — what to include and how to present it", "type": "video"},
+                            {"title": "GitHub — Host your project portfolio", "type": "project"},
+                        ],
+                    },
+                    {
+                        "id": "p4-s2", "level": "all",
+                        "title": "Job search and interview preparation",
+                        "description": "Polish your CV, practise common Renewable Energy Engineer interview questions, and start applying. Networking accounts for over 70% of hires.",
+                        "resources": [{"title": "How to become a Renewable Energy Engineer — career roadmap", "type": "video"}, {"title": "LinkedIn — Renewable Energy Engineer job search and networking", "type": "practice"}],
+                    },
+                ],
+            },
+        ],
+    },
+    # ──────────────────────────────────────────────────────────────────────
+    "agronomist": {
+        "career_title": "Agronomist",
+        "phases": [
+            {
+                "id": "phase-1", "phase_number": 1,
+                "title": "Foundations",
+                "description": "Build the essential knowledge base required to work as a Agronomist.",
+                "base_weeks": 4,
+                "skills_covered": ["Research", "Statistics", "Writing & Copywriting"],
+                "steps": [
+                    {
+                        "id": "p1-s1", "level": "starter_only",
+                        "title": "Core theory and fundamentals",
+                        "description": "Advise farmers and agribusinesses on crop production, soil health, and sustainable farming practices. Start with the foundational concepts that every Agronomist must understand.",
+                        "resources": [{"title": "Research fundamentals full course", "type": "video"}, {"title": "Statistics fundamentals full course", "type": "video"}],
+                    },
+                    {
+                        "id": "p1-s2", "level": "all",
+                        "title": "Industry overview and career landscape",
+                        "description": "Understand the day-to-day reality of working as a Agronomist, including typical roles such as Agronomist and Precision Agriculture Specialist.",
+                        "resources": [
+                            {"title": "A day in the life of a Agronomist", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-2", "phase_number": 2,
+                "title": "Core Tools & Practical Skills",
+                "description": "Learn the tools and hands-on skills used in the Agronomist profession.",
+                "base_weeks": 5,
+                "skills_covered": ["ArcGIS", "John Deere Operations Center", "AgriWebb"],
+                "steps": [
+                    {
+                        "id": "p2-s1", "level": "all",
+                        "title": "Key tools and software",
+                        "description": "Get hands-on with the tools used daily: ArcGIS, John Deere Operations Center, AgriWebb.",
+                        "resources": [{"title": "ArcGIS tutorial for beginners", "type": "video"}, {"title": "John Deere Operations Center tutorial for beginners", "type": "video"}],
+                    },
+                    {
+                        "id": "p2-s2", "level": "builder_plus",
+                        "title": "Practical exercises and mini-projects",
+                        "description": "Apply your knowledge through structured exercises. Practical experience is what separates candidates at interview.",
+                        "resources": [
+                            {"title": "Agronomist practical projects for your portfolio", "type": "project"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-3", "phase_number": 3,
+                "title": "Advanced Skills & Specialism",
+                "description": "Develop deeper expertise and begin to specialise within the Agronomist field.",
+                "base_weeks": 5,
+                "skills_covered": ["Technical Writing", "Data Analysis", "Research"],
+                "steps": [
+                    {
+                        "id": "p3-s1", "level": "all",
+                        "title": "Advanced techniques",
+                        "description": "Move beyond the basics and tackle more complex, realistic problems faced by mid-level Agronomists.",
+                        "resources": [{"title": "Advanced Technical Writing for Agronomists", "type": "course"}, {"title": "Advanced Data Analysis for Agronomists", "type": "course"}],
+                    },
+                    {
+                        "id": "p3-s2", "level": "advanced_only",
+                        "title": "Specialism and leadership",
+                        "description": "Explore specialist areas within the Agronomist field and develop the strategic thinking needed for senior roles.",
+                        "resources": [
+                            {"title": "Precision Agriculture Specialist — how to reach the senior level", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-4", "phase_number": 4,
+                "title": "Portfolio & Job Preparation",
+                "description": "Build a portfolio, prepare your applications, and land your first Agronomist role.",
+                "base_weeks": 3,
+                "skills_covered": ["Portfolio", "Job Applications", "Interview Preparation"],
+                "steps": [
+                    {
+                        "id": "p4-s1", "level": "all",
+                        "title": "Build a portfolio project",
+                        "description": "Create at least one substantial project that demonstrates your Agronomist skills. This is the single most important thing you can do before applying.",
+                        "resources": [
+                            {"title": "Agronomist portfolio — what to include and how to present it", "type": "video"},
+                            {"title": "GitHub — Host your project portfolio", "type": "project"},
+                        ],
+                    },
+                    {
+                        "id": "p4-s2", "level": "all",
+                        "title": "Job search and interview preparation",
+                        "description": "Polish your CV, practise common Agronomist interview questions, and start applying. Networking accounts for over 70% of hires.",
+                        "resources": [{"title": "How to become a Agronomist — career roadmap", "type": "video"}, {"title": "LinkedIn — Agronomist job search and networking", "type": "practice"}],
+                    },
+                ],
+            },
+        ],
+    },
+    # ──────────────────────────────────────────────────────────────────────
+    "logistics-coordinator": {
+        "career_title": "Logistics Coordinator",
+        "phases": [
+            {
+                "id": "phase-1", "phase_number": 1,
+                "title": "Foundations",
+                "description": "Build the essential knowledge base required to work as a Logistics Coordinator.",
+                "base_weeks": 4,
+                "skills_covered": ["Project Management", "Customer Service", "Negotiation"],
+                "steps": [
+                    {
+                        "id": "p1-s1", "level": "starter_only",
+                        "title": "Core theory and fundamentals",
+                        "description": "Coordinate the movement of goods from suppliers to customers efficiently, on time, and within budget. Start with the foundational concepts that every Logistics Coordinator must understand.",
+                        "resources": [{"title": "Project Management fundamentals full course", "type": "video"}, {"title": "Customer Service fundamentals full course", "type": "video"}],
+                    },
+                    {
+                        "id": "p1-s2", "level": "all",
+                        "title": "Industry overview and career landscape",
+                        "description": "Understand the day-to-day reality of working as a Logistics Coordinator, including typical roles such as Logistics Coordinator and Head of Logistics.",
+                        "resources": [
+                            {"title": "A day in the life of a Logistics Coordinator", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-2", "phase_number": 2,
+                "title": "Core Tools & Practical Skills",
+                "description": "Learn the tools and hands-on skills used in the Logistics Coordinator profession.",
+                "base_weeks": 5,
+                "skills_covered": ["SAP", "Oracle TMS", "Freightos"],
+                "steps": [
+                    {
+                        "id": "p2-s1", "level": "all",
+                        "title": "Key tools and software",
+                        "description": "Get hands-on with the tools used daily: SAP, Oracle TMS, Freightos.",
+                        "resources": [{"title": "SAP tutorial for beginners", "type": "video"}, {"title": "Oracle TMS tutorial for beginners", "type": "video"}],
+                    },
+                    {
+                        "id": "p2-s2", "level": "builder_plus",
+                        "title": "Practical exercises and mini-projects",
+                        "description": "Apply your knowledge through structured exercises. Practical experience is what separates candidates at interview.",
+                        "resources": [
+                            {"title": "Logistics Coordinator practical projects for your portfolio", "type": "project"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-3", "phase_number": 3,
+                "title": "Advanced Skills & Specialism",
+                "description": "Develop deeper expertise and begin to specialise within the Logistics Coordinator field.",
+                "base_weeks": 5,
+                "skills_covered": ["Data Analysis", "Excel / Spreadsheets", "Project Management"],
+                "steps": [
+                    {
+                        "id": "p3-s1", "level": "all",
+                        "title": "Advanced techniques",
+                        "description": "Move beyond the basics and tackle more complex, realistic problems faced by mid-level Logistics Coordinators.",
+                        "resources": [{"title": "Advanced Data Analysis for Logistics Coordinators", "type": "course"}, {"title": "Advanced Excel / Spreadsheets for Logistics Coordinators", "type": "course"}],
+                    },
+                    {
+                        "id": "p3-s2", "level": "advanced_only",
+                        "title": "Specialism and leadership",
+                        "description": "Explore specialist areas within the Logistics Coordinator field and develop the strategic thinking needed for senior roles.",
+                        "resources": [
+                            {"title": "Head of Logistics — how to reach the senior level", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-4", "phase_number": 4,
+                "title": "Portfolio & Job Preparation",
+                "description": "Build a portfolio, prepare your applications, and land your first Logistics Coordinator role.",
+                "base_weeks": 3,
+                "skills_covered": ["Portfolio", "Job Applications", "Interview Preparation"],
+                "steps": [
+                    {
+                        "id": "p4-s1", "level": "all",
+                        "title": "Build a portfolio project",
+                        "description": "Create at least one substantial project that demonstrates your Logistics Coordinator skills. This is the single most important thing you can do before applying.",
+                        "resources": [
+                            {"title": "Logistics Coordinator portfolio — what to include and how to present it", "type": "video"},
+                            {"title": "GitHub — Host your project portfolio", "type": "project"},
+                        ],
+                    },
+                    {
+                        "id": "p4-s2", "level": "all",
+                        "title": "Job search and interview preparation",
+                        "description": "Polish your CV, practise common Logistics Coordinator interview questions, and start applying. Networking accounts for over 70% of hires.",
+                        "resources": [{"title": "How to become a Logistics Coordinator — career roadmap", "type": "video"}, {"title": "LinkedIn — Logistics Coordinator job search and networking", "type": "practice"}],
+                    },
+                ],
+            },
+        ],
+    },
+    # ──────────────────────────────────────────────────────────────────────
+    "pilot": {
+        "career_title": "Commercial Pilot",
+        "phases": [
+            {
+                "id": "phase-1", "phase_number": 1,
+                "title": "Foundations",
+                "description": "Build the essential knowledge base required to work as a Commercial Pilot.",
+                "base_weeks": 4,
+                "skills_covered": ["Public Speaking", "Customer Service", "Risk Assessment"],
+                "steps": [
+                    {
+                        "id": "p1-s1", "level": "starter_only",
+                        "title": "Core theory and fundamentals",
+                        "description": "Fly commercial aircraft safely, transporting passengers and cargo across domestic and international routes. Start with the foundational concepts that every Commercial Pilot must understand.",
+                        "resources": [{"title": "Public Speaking fundamentals full course", "type": "video"}, {"title": "Customer Service fundamentals full course", "type": "video"}],
+                    },
+                    {
+                        "id": "p1-s2", "level": "all",
+                        "title": "Industry overview and career landscape",
+                        "description": "Understand the day-to-day reality of working as a Commercial Pilot, including typical roles such as Student Pilot and Chief Pilot.",
+                        "resources": [
+                            {"title": "A day in the life of a Commercial Pilot", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-2", "phase_number": 2,
+                "title": "Core Tools & Practical Skills",
+                "description": "Learn the tools and hands-on skills used in the Commercial Pilot profession.",
+                "base_weeks": 5,
+                "skills_covered": ["Flight management systems", "Navigation software", "Avionics"],
+                "steps": [
+                    {
+                        "id": "p2-s1", "level": "all",
+                        "title": "Key tools and software",
+                        "description": "Get hands-on with the tools used daily: Flight management systems, Navigation software, Avionics.",
+                        "resources": [{"title": "Flight management systems tutorial for beginners", "type": "video"}, {"title": "Navigation software tutorial for beginners", "type": "video"}],
+                    },
+                    {
+                        "id": "p2-s2", "level": "builder_plus",
+                        "title": "Practical exercises and mini-projects",
+                        "description": "Apply your knowledge through structured exercises. Practical experience is what separates candidates at interview.",
+                        "resources": [
+                            {"title": "Commercial Pilot practical projects for your portfolio", "type": "project"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-3", "phase_number": 3,
+                "title": "Advanced Skills & Specialism",
+                "description": "Develop deeper expertise and begin to specialise within the Commercial Pilot field.",
+                "base_weeks": 5,
+                "skills_covered": ["Research", "Statistics", "Public Speaking"],
+                "steps": [
+                    {
+                        "id": "p3-s1", "level": "all",
+                        "title": "Advanced techniques",
+                        "description": "Move beyond the basics and tackle more complex, realistic problems faced by mid-level Commercial Pilots.",
+                        "resources": [{"title": "Advanced Research for Commercial Pilots", "type": "course"}, {"title": "Advanced Statistics for Commercial Pilots", "type": "course"}],
+                    },
+                    {
+                        "id": "p3-s2", "level": "advanced_only",
+                        "title": "Specialism and leadership",
+                        "description": "Explore specialist areas within the Commercial Pilot field and develop the strategic thinking needed for senior roles.",
+                        "resources": [
+                            {"title": "Chief Pilot — how to reach the senior level", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-4", "phase_number": 4,
+                "title": "Portfolio & Job Preparation",
+                "description": "Build a portfolio, prepare your applications, and land your first Commercial Pilot role.",
+                "base_weeks": 3,
+                "skills_covered": ["Portfolio", "Job Applications", "Interview Preparation"],
+                "steps": [
+                    {
+                        "id": "p4-s1", "level": "all",
+                        "title": "Build a portfolio project",
+                        "description": "Create at least one substantial project that demonstrates your Commercial Pilot skills. This is the single most important thing you can do before applying.",
+                        "resources": [
+                            {"title": "Commercial Pilot portfolio — what to include and how to present it", "type": "video"},
+                            {"title": "GitHub — Host your project portfolio", "type": "project"},
+                        ],
+                    },
+                    {
+                        "id": "p4-s2", "level": "all",
+                        "title": "Job search and interview preparation",
+                        "description": "Polish your CV, practise common Commercial Pilot interview questions, and start applying. Networking accounts for over 70% of hires.",
+                        "resources": [{"title": "How to become a Commercial Pilot — career roadmap", "type": "video"}, {"title": "LinkedIn — Commercial Pilot job search and networking", "type": "practice"}],
+                    },
+                ],
+            },
+        ],
+    },
+    # ──────────────────────────────────────────────────────────────────────
+    "dentist": {
+        "career_title": "Dentist",
+        "phases": [
+            {
+                "id": "phase-1", "phase_number": 1,
+                "title": "Foundations",
+                "description": "Build the essential knowledge base required to work as a Dentist.",
+                "base_weeks": 4,
+                "skills_covered": ["Patient Care", "Manual Dexterity", "Communication"],
+                "steps": [
+                    {
+                        "id": "p1-s1", "level": "starter_only",
+                        "title": "Core theory and fundamentals",
+                        "description": "Diagnose and treat oral health conditions, perform procedures, and educate patients on preventive dental care. Start with the foundational concepts that every Dentist must understand.",
+                        "resources": [{"title": "Patient Care fundamentals full course", "type": "video"}, {"title": "Manual Dexterity fundamentals full course", "type": "video"}],
+                    },
+                    {
+                        "id": "p1-s2", "level": "all",
+                        "title": "Industry overview and career landscape",
+                        "description": "Understand the day-to-day reality of working as a Dentist, including typical roles such as Foundation Dentist and Clinical Director.",
+                        "resources": [
+                            {"title": "A day in the life of a Dentist", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-2", "phase_number": 2,
+                "title": "Core Tools & Practical Skills",
+                "description": "Learn the tools and hands-on skills used in the Dentist profession.",
+                "base_weeks": 5,
+                "skills_covered": ["Dental imaging software", "Intraoral scanners", "CAD"],
+                "steps": [
+                    {
+                        "id": "p2-s1", "level": "all",
+                        "title": "Key tools and software",
+                        "description": "Get hands-on with the tools used daily: Dental imaging software, Intraoral scanners, CAD/CAM systems.",
+                        "resources": [{"title": "Dental imaging software tutorial for beginners", "type": "video"}, {"title": "Intraoral scanners tutorial for beginners", "type": "video"}],
+                    },
+                    {
+                        "id": "p2-s2", "level": "builder_plus",
+                        "title": "Practical exercises and mini-projects",
+                        "description": "Apply your knowledge through structured exercises. Practical experience is what separates candidates at interview.",
+                        "resources": [
+                            {"title": "Dentist practical projects for your portfolio", "type": "project"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-3", "phase_number": 3,
+                "title": "Advanced Skills & Specialism",
+                "description": "Develop deeper expertise and begin to specialise within the Dentist field.",
+                "base_weeks": 5,
+                "skills_covered": ["Attention to Detail", "Clinical Diagnosis", "Patient Care"],
+                "steps": [
+                    {
+                        "id": "p3-s1", "level": "all",
+                        "title": "Advanced techniques",
+                        "description": "Move beyond the basics and tackle more complex, realistic problems faced by mid-level Dentists.",
+                        "resources": [{"title": "Advanced Attention to Detail for Dentists", "type": "course"}, {"title": "Advanced Clinical Diagnosis for Dentists", "type": "course"}],
+                    },
+                    {
+                        "id": "p3-s2", "level": "advanced_only",
+                        "title": "Specialism and leadership",
+                        "description": "Explore specialist areas within the Dentist field and develop the strategic thinking needed for senior roles.",
+                        "resources": [
+                            {"title": "Clinical Director — how to reach the senior level", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-4", "phase_number": 4,
+                "title": "Portfolio & Job Preparation",
+                "description": "Build a portfolio, prepare your applications, and land your first Dentist role.",
+                "base_weeks": 3,
+                "skills_covered": ["Portfolio", "Job Applications", "Interview Preparation"],
+                "steps": [
+                    {
+                        "id": "p4-s1", "level": "all",
+                        "title": "Build a portfolio project",
+                        "description": "Create at least one substantial project that demonstrates your Dentist skills. This is the single most important thing you can do before applying.",
+                        "resources": [
+                            {"title": "Dentist portfolio — what to include and how to present it", "type": "video"},
+                            {"title": "GitHub — Host your project portfolio", "type": "project"},
+                        ],
+                    },
+                    {
+                        "id": "p4-s2", "level": "all",
+                        "title": "Job search and interview preparation",
+                        "description": "Polish your CV, practise common Dentist interview questions, and start applying. Networking accounts for over 70% of hires.",
+                        "resources": [{"title": "How to become a Dentist — career roadmap", "type": "video"}, {"title": "LinkedIn — Dentist job search and networking", "type": "practice"}],
+                    },
+                ],
+            },
+        ],
+    },
+    # ──────────────────────────────────────────────────────────────────────
+    "veterinarian": {
+        "career_title": "Veterinarian",
+        "phases": [
+            {
+                "id": "phase-1", "phase_number": 1,
+                "title": "Foundations",
+                "description": "Build the essential knowledge base required to work as a Veterinarian.",
+                "base_weeks": 4,
+                "skills_covered": ["Animal Handling", "Clinical Diagnosis", "Surgery"],
+                "steps": [
+                    {
+                        "id": "p1-s1", "level": "starter_only",
+                        "title": "Core theory and fundamentals",
+                        "description": "Diagnose, treat, and prevent illnesses and injuries in animals across companion, farm, and exotic species. Start with the foundational concepts that every Veterinarian must understand.",
+                        "resources": [{"title": "Animal Handling fundamentals full course", "type": "video"}, {"title": "Clinical Diagnosis fundamentals full course", "type": "video"}],
+                    },
+                    {
+                        "id": "p1-s2", "level": "all",
+                        "title": "Industry overview and career landscape",
+                        "description": "Understand the day-to-day reality of working as a Veterinarian, including typical roles such as Veterinary Graduate and Practice Owner.",
+                        "resources": [
+                            {"title": "A day in the life of a Veterinarian", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-2", "phase_number": 2,
+                "title": "Core Tools & Practical Skills",
+                "description": "Learn the tools and hands-on skills used in the Veterinarian profession.",
+                "base_weeks": 5,
+                "skills_covered": ["Diagnostic imaging (X-ray", "Lab analysers", "Surgical equipment"],
+                "steps": [
+                    {
+                        "id": "p2-s1", "level": "all",
+                        "title": "Key tools and software",
+                        "description": "Get hands-on with the tools used daily: Diagnostic imaging (X-ray/ultrasound), Lab analysers, Surgical equipment.",
+                        "resources": [{"title": "Diagnostic imaging (X-ray/ultrasound) tutorial for beginners", "type": "video"}, {"title": "Lab analysers tutorial for beginners", "type": "video"}],
+                    },
+                    {
+                        "id": "p2-s2", "level": "builder_plus",
+                        "title": "Practical exercises and mini-projects",
+                        "description": "Apply your knowledge through structured exercises. Practical experience is what separates candidates at interview.",
+                        "resources": [
+                            {"title": "Veterinarian practical projects for your portfolio", "type": "project"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-3", "phase_number": 3,
+                "title": "Advanced Skills & Specialism",
+                "description": "Develop deeper expertise and begin to specialise within the Veterinarian field.",
+                "base_weeks": 5,
+                "skills_covered": ["Client Communication", "Record Keeping", "Animal Handling"],
+                "steps": [
+                    {
+                        "id": "p3-s1", "level": "all",
+                        "title": "Advanced techniques",
+                        "description": "Move beyond the basics and tackle more complex, realistic problems faced by mid-level Veterinarians.",
+                        "resources": [{"title": "Advanced Client Communication for Veterinarians", "type": "course"}, {"title": "Advanced Record Keeping for Veterinarians", "type": "course"}],
+                    },
+                    {
+                        "id": "p3-s2", "level": "advanced_only",
+                        "title": "Specialism and leadership",
+                        "description": "Explore specialist areas within the Veterinarian field and develop the strategic thinking needed for senior roles.",
+                        "resources": [
+                            {"title": "Practice Owner — how to reach the senior level", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-4", "phase_number": 4,
+                "title": "Portfolio & Job Preparation",
+                "description": "Build a portfolio, prepare your applications, and land your first Veterinarian role.",
+                "base_weeks": 3,
+                "skills_covered": ["Portfolio", "Job Applications", "Interview Preparation"],
+                "steps": [
+                    {
+                        "id": "p4-s1", "level": "all",
+                        "title": "Build a portfolio project",
+                        "description": "Create at least one substantial project that demonstrates your Veterinarian skills. This is the single most important thing you can do before applying.",
+                        "resources": [
+                            {"title": "Veterinarian portfolio — what to include and how to present it", "type": "video"},
+                            {"title": "GitHub — Host your project portfolio", "type": "project"},
+                        ],
+                    },
+                    {
+                        "id": "p4-s2", "level": "all",
+                        "title": "Job search and interview preparation",
+                        "description": "Polish your CV, practise common Veterinarian interview questions, and start applying. Networking accounts for over 70% of hires.",
+                        "resources": [{"title": "How to become a Veterinarian — career roadmap", "type": "video"}, {"title": "LinkedIn — Veterinarian job search and networking", "type": "practice"}],
+                    },
+                ],
+            },
+        ],
+    },
+    # ──────────────────────────────────────────────────────────────────────
+    "optometrist": {
+        "career_title": "Optometrist",
+        "phases": [
+            {
+                "id": "phase-1", "phase_number": 1,
+                "title": "Foundations",
+                "description": "Build the essential knowledge base required to work as a Optometrist.",
+                "base_weeks": 4,
+                "skills_covered": ["Clinical Assessment", "Patient Communication", "Attention to Detail"],
+                "steps": [
+                    {
+                        "id": "p1-s1", "level": "starter_only",
+                        "title": "Core theory and fundamentals",
+                        "description": "Examine eyes, diagnose vision problems, prescribe corrective lenses, and detect ocular disease. Start with the foundational concepts that every Optometrist must understand.",
+                        "resources": [{"title": "Clinical Assessment fundamentals full course", "type": "video"}, {"title": "Patient Communication fundamentals full course", "type": "video"}],
+                    },
+                    {
+                        "id": "p1-s2", "level": "all",
+                        "title": "Industry overview and career landscape",
+                        "description": "Understand the day-to-day reality of working as a Optometrist, including typical roles such as Pre-reg Optometrist and Practice Owner.",
+                        "resources": [
+                            {"title": "A day in the life of a Optometrist", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-2", "phase_number": 2,
+                "title": "Core Tools & Practical Skills",
+                "description": "Learn the tools and hands-on skills used in the Optometrist profession.",
+                "base_weeks": 5,
+                "skills_covered": ["Slit lamp", "OCT scanner", "Autorefractor"],
+                "steps": [
+                    {
+                        "id": "p2-s1", "level": "all",
+                        "title": "Key tools and software",
+                        "description": "Get hands-on with the tools used daily: Slit lamp, OCT scanner, Autorefractor.",
+                        "resources": [{"title": "Slit lamp tutorial for beginners", "type": "video"}, {"title": "OCT scanner tutorial for beginners", "type": "video"}],
+                    },
+                    {
+                        "id": "p2-s2", "level": "builder_plus",
+                        "title": "Practical exercises and mini-projects",
+                        "description": "Apply your knowledge through structured exercises. Practical experience is what separates candidates at interview.",
+                        "resources": [
+                            {"title": "Optometrist practical projects for your portfolio", "type": "project"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-3", "phase_number": 3,
+                "title": "Advanced Skills & Specialism",
+                "description": "Develop deeper expertise and begin to specialise within the Optometrist field.",
+                "base_weeks": 5,
+                "skills_covered": ["Anatomy Knowledge", "Record Keeping", "Clinical Assessment"],
+                "steps": [
+                    {
+                        "id": "p3-s1", "level": "all",
+                        "title": "Advanced techniques",
+                        "description": "Move beyond the basics and tackle more complex, realistic problems faced by mid-level Optometrists.",
+                        "resources": [{"title": "Advanced Anatomy Knowledge for Optometrists", "type": "course"}, {"title": "Advanced Record Keeping for Optometrists", "type": "course"}],
+                    },
+                    {
+                        "id": "p3-s2", "level": "advanced_only",
+                        "title": "Specialism and leadership",
+                        "description": "Explore specialist areas within the Optometrist field and develop the strategic thinking needed for senior roles.",
+                        "resources": [
+                            {"title": "Practice Owner — how to reach the senior level", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-4", "phase_number": 4,
+                "title": "Portfolio & Job Preparation",
+                "description": "Build a portfolio, prepare your applications, and land your first Optometrist role.",
+                "base_weeks": 3,
+                "skills_covered": ["Portfolio", "Job Applications", "Interview Preparation"],
+                "steps": [
+                    {
+                        "id": "p4-s1", "level": "all",
+                        "title": "Build a portfolio project",
+                        "description": "Create at least one substantial project that demonstrates your Optometrist skills. This is the single most important thing you can do before applying.",
+                        "resources": [
+                            {"title": "Optometrist portfolio — what to include and how to present it", "type": "video"},
+                            {"title": "GitHub — Host your project portfolio", "type": "project"},
+                        ],
+                    },
+                    {
+                        "id": "p4-s2", "level": "all",
+                        "title": "Job search and interview preparation",
+                        "description": "Polish your CV, practise common Optometrist interview questions, and start applying. Networking accounts for over 70% of hires.",
+                        "resources": [{"title": "How to become a Optometrist — career roadmap", "type": "video"}, {"title": "LinkedIn — Optometrist job search and networking", "type": "practice"}],
+                    },
+                ],
+            },
+        ],
+    },
+    # ──────────────────────────────────────────────────────────────────────
+    "events-manager": {
+        "career_title": "Events Manager",
+        "phases": [
+            {
+                "id": "phase-1", "phase_number": 1,
+                "title": "Foundations",
+                "description": "Build the essential knowledge base required to work as a Events Manager.",
+                "base_weeks": 4,
+                "skills_covered": ["Project Management", "Negotiation", "Budget Management"],
+                "steps": [
+                    {
+                        "id": "p1-s1", "level": "starter_only",
+                        "title": "Core theory and fundamentals",
+                        "description": "Plan, coordinate, and deliver corporate, cultural, and private events from concept through post-event evaluation. Start with the foundational concepts that every Events Manager must understand.",
+                        "resources": [{"title": "Project Management fundamentals full course", "type": "video"}, {"title": "Negotiation fundamentals full course", "type": "video"}],
+                    },
+                    {
+                        "id": "p1-s2", "level": "all",
+                        "title": "Industry overview and career landscape",
+                        "description": "Understand the day-to-day reality of working as a Events Manager, including typical roles such as Events Coordinator and Director.",
+                        "resources": [
+                            {"title": "A day in the life of a Events Manager", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-2", "phase_number": 2,
+                "title": "Core Tools & Practical Skills",
+                "description": "Learn the tools and hands-on skills used in the Events Manager profession.",
+                "base_weeks": 5,
+                "skills_covered": ["Event management platforms (Cvent)", "CRM", "CAD floor plans"],
+                "steps": [
+                    {
+                        "id": "p2-s1", "level": "all",
+                        "title": "Key tools and software",
+                        "description": "Get hands-on with the tools used daily: Event management platforms (Cvent), CRM, CAD floor plans.",
+                        "resources": [{"title": "Event management platforms (Cvent) tutorial for beginners", "type": "video"}, {"title": "CRM tutorial for beginners", "type": "video"}],
+                    },
+                    {
+                        "id": "p2-s2", "level": "builder_plus",
+                        "title": "Practical exercises and mini-projects",
+                        "description": "Apply your knowledge through structured exercises. Practical experience is what separates candidates at interview.",
+                        "resources": [
+                            {"title": "Events Manager practical projects for your portfolio", "type": "project"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-3", "phase_number": 3,
+                "title": "Advanced Skills & Specialism",
+                "description": "Develop deeper expertise and begin to specialise within the Events Manager field.",
+                "base_weeks": 5,
+                "skills_covered": ["Vendor Management", "Communication", "Project Management"],
+                "steps": [
+                    {
+                        "id": "p3-s1", "level": "all",
+                        "title": "Advanced techniques",
+                        "description": "Move beyond the basics and tackle more complex, realistic problems faced by mid-level Events Managers.",
+                        "resources": [{"title": "Advanced Vendor Management for Events Managers", "type": "course"}, {"title": "Advanced Communication for Events Managers", "type": "course"}],
+                    },
+                    {
+                        "id": "p3-s2", "level": "advanced_only",
+                        "title": "Specialism and leadership",
+                        "description": "Explore specialist areas within the Events Manager field and develop the strategic thinking needed for senior roles.",
+                        "resources": [
+                            {"title": "Director — how to reach the senior level", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-4", "phase_number": 4,
+                "title": "Portfolio & Job Preparation",
+                "description": "Build a portfolio, prepare your applications, and land your first Events Manager role.",
+                "base_weeks": 3,
+                "skills_covered": ["Portfolio", "Job Applications", "Interview Preparation"],
+                "steps": [
+                    {
+                        "id": "p4-s1", "level": "all",
+                        "title": "Build a portfolio project",
+                        "description": "Create at least one substantial project that demonstrates your Events Manager skills. This is the single most important thing you can do before applying.",
+                        "resources": [
+                            {"title": "Events Manager portfolio — what to include and how to present it", "type": "video"},
+                            {"title": "GitHub — Host your project portfolio", "type": "project"},
+                        ],
+                    },
+                    {
+                        "id": "p4-s2", "level": "all",
+                        "title": "Job search and interview preparation",
+                        "description": "Polish your CV, practise common Events Manager interview questions, and start applying. Networking accounts for over 70% of hires.",
+                        "resources": [{"title": "How to become a Events Manager — career roadmap", "type": "video"}, {"title": "LinkedIn — Events Manager job search and networking", "type": "practice"}],
+                    },
+                ],
+            },
+        ],
+    },
+    # ──────────────────────────────────────────────────────────────────────
+    "tax-advisor": {
+        "career_title": "Tax Advisor",
+        "phases": [
+            {
+                "id": "phase-1", "phase_number": 1,
+                "title": "Foundations",
+                "description": "Build the essential knowledge base required to work as a Tax Advisor.",
+                "base_weeks": 4,
+                "skills_covered": ["Tax Law", "Financial Analysis", "Attention to Detail"],
+                "steps": [
+                    {
+                        "id": "p1-s1", "level": "starter_only",
+                        "title": "Core theory and fundamentals",
+                        "description": "Provide specialist tax planning, compliance, and advisory services to individuals and businesses. Start with the foundational concepts that every Tax Advisor must understand.",
+                        "resources": [{"title": "Tax Law fundamentals full course", "type": "video"}, {"title": "Financial Analysis fundamentals full course", "type": "video"}],
+                    },
+                    {
+                        "id": "p1-s2", "level": "all",
+                        "title": "Industry overview and career landscape",
+                        "description": "Understand the day-to-day reality of working as a Tax Advisor, including typical roles such as Tax Assistant and Tax Partner.",
+                        "resources": [
+                            {"title": "A day in the life of a Tax Advisor", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-2", "phase_number": 2,
+                "title": "Core Tools & Practical Skills",
+                "description": "Learn the tools and hands-on skills used in the Tax Advisor profession.",
+                "base_weeks": 5,
+                "skills_covered": ["Tax software (CCH, Alphatax)", "Excel", "HMRC portals"],
+                "steps": [
+                    {
+                        "id": "p2-s1", "level": "all",
+                        "title": "Key tools and software",
+                        "description": "Get hands-on with the tools used daily: Tax software (CCH, Alphatax), Excel, HMRC portals.",
+                        "resources": [{"title": "Tax software (CCH, Alphatax) tutorial for beginners", "type": "video"}, {"title": "Excel tutorial for beginners", "type": "video"}],
+                    },
+                    {
+                        "id": "p2-s2", "level": "builder_plus",
+                        "title": "Practical exercises and mini-projects",
+                        "description": "Apply your knowledge through structured exercises. Practical experience is what separates candidates at interview.",
+                        "resources": [
+                            {"title": "Tax Advisor practical projects for your portfolio", "type": "project"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-3", "phase_number": 3,
+                "title": "Advanced Skills & Specialism",
+                "description": "Develop deeper expertise and begin to specialise within the Tax Advisor field.",
+                "base_weeks": 5,
+                "skills_covered": ["Client Management", "Report Writing", "Tax Law"],
+                "steps": [
+                    {
+                        "id": "p3-s1", "level": "all",
+                        "title": "Advanced techniques",
+                        "description": "Move beyond the basics and tackle more complex, realistic problems faced by mid-level Tax Advisors.",
+                        "resources": [{"title": "Advanced Client Management for Tax Advisors", "type": "course"}, {"title": "Advanced Report Writing for Tax Advisors", "type": "course"}],
+                    },
+                    {
+                        "id": "p3-s2", "level": "advanced_only",
+                        "title": "Specialism and leadership",
+                        "description": "Explore specialist areas within the Tax Advisor field and develop the strategic thinking needed for senior roles.",
+                        "resources": [
+                            {"title": "Tax Partner — how to reach the senior level", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-4", "phase_number": 4,
+                "title": "Portfolio & Job Preparation",
+                "description": "Build a portfolio, prepare your applications, and land your first Tax Advisor role.",
+                "base_weeks": 3,
+                "skills_covered": ["Portfolio", "Job Applications", "Interview Preparation"],
+                "steps": [
+                    {
+                        "id": "p4-s1", "level": "all",
+                        "title": "Build a portfolio project",
+                        "description": "Create at least one substantial project that demonstrates your Tax Advisor skills. This is the single most important thing you can do before applying.",
+                        "resources": [
+                            {"title": "Tax Advisor portfolio — what to include and how to present it", "type": "video"},
+                            {"title": "GitHub — Host your project portfolio", "type": "project"},
+                        ],
+                    },
+                    {
+                        "id": "p4-s2", "level": "all",
+                        "title": "Job search and interview preparation",
+                        "description": "Polish your CV, practise common Tax Advisor interview questions, and start applying. Networking accounts for over 70% of hires.",
+                        "resources": [{"title": "How to become a Tax Advisor — career roadmap", "type": "video"}, {"title": "LinkedIn — Tax Advisor job search and networking", "type": "practice"}],
+                    },
+                ],
+            },
+        ],
+    },
+    # ──────────────────────────────────────────────────────────────────────
+    "forensic-scientist": {
+        "career_title": "Forensic Scientist",
+        "phases": [
+            {
+                "id": "phase-1", "phase_number": 1,
+                "title": "Foundations",
+                "description": "Build the essential knowledge base required to work as a Forensic Scientist.",
+                "base_weeks": 4,
+                "skills_covered": ["Laboratory Techniques", "Attention to Detail", "Scientific Writing"],
+                "steps": [
+                    {
+                        "id": "p1-s1", "level": "starter_only",
+                        "title": "Core theory and fundamentals",
+                        "description": "Analyse physical evidence from crime scenes using scientific techniques to support criminal investigations. Start with the foundational concepts that every Forensic Scientist must understand.",
+                        "resources": [{"title": "Laboratory Techniques fundamentals full course", "type": "video"}, {"title": "Attention to Detail fundamentals full course", "type": "video"}],
+                    },
+                    {
+                        "id": "p1-s2", "level": "all",
+                        "title": "Industry overview and career landscape",
+                        "description": "Understand the day-to-day reality of working as a Forensic Scientist, including typical roles such as Trainee Forensic Scientist and Laboratory Manager.",
+                        "resources": [
+                            {"title": "A day in the life of a Forensic Scientist", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-2", "phase_number": 2,
+                "title": "Core Tools & Practical Skills",
+                "description": "Learn the tools and hands-on skills used in the Forensic Scientist profession.",
+                "base_weeks": 5,
+                "skills_covered": ["Mass spectrometry", "PCR machines", "Microscopy"],
+                "steps": [
+                    {
+                        "id": "p2-s1", "level": "all",
+                        "title": "Key tools and software",
+                        "description": "Get hands-on with the tools used daily: Mass spectrometry, PCR machines, Microscopy.",
+                        "resources": [{"title": "Mass spectrometry tutorial for beginners", "type": "video"}, {"title": "PCR machines tutorial for beginners", "type": "video"}],
+                    },
+                    {
+                        "id": "p2-s2", "level": "builder_plus",
+                        "title": "Practical exercises and mini-projects",
+                        "description": "Apply your knowledge through structured exercises. Practical experience is what separates candidates at interview.",
+                        "resources": [
+                            {"title": "Forensic Scientist practical projects for your portfolio", "type": "project"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-3", "phase_number": 3,
+                "title": "Advanced Skills & Specialism",
+                "description": "Develop deeper expertise and begin to specialise within the Forensic Scientist field.",
+                "base_weeks": 5,
+                "skills_covered": ["Critical Thinking", "Chain of Custody", "Laboratory Techniques"],
+                "steps": [
+                    {
+                        "id": "p3-s1", "level": "all",
+                        "title": "Advanced techniques",
+                        "description": "Move beyond the basics and tackle more complex, realistic problems faced by mid-level Forensic Scientists.",
+                        "resources": [{"title": "Advanced Critical Thinking for Forensic Scientists", "type": "course"}, {"title": "Advanced Chain of Custody for Forensic Scientists", "type": "course"}],
+                    },
+                    {
+                        "id": "p3-s2", "level": "advanced_only",
+                        "title": "Specialism and leadership",
+                        "description": "Explore specialist areas within the Forensic Scientist field and develop the strategic thinking needed for senior roles.",
+                        "resources": [
+                            {"title": "Laboratory Manager — how to reach the senior level", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-4", "phase_number": 4,
+                "title": "Portfolio & Job Preparation",
+                "description": "Build a portfolio, prepare your applications, and land your first Forensic Scientist role.",
+                "base_weeks": 3,
+                "skills_covered": ["Portfolio", "Job Applications", "Interview Preparation"],
+                "steps": [
+                    {
+                        "id": "p4-s1", "level": "all",
+                        "title": "Build a portfolio project",
+                        "description": "Create at least one substantial project that demonstrates your Forensic Scientist skills. This is the single most important thing you can do before applying.",
+                        "resources": [
+                            {"title": "Forensic Scientist portfolio — what to include and how to present it", "type": "video"},
+                            {"title": "GitHub — Host your project portfolio", "type": "project"},
+                        ],
+                    },
+                    {
+                        "id": "p4-s2", "level": "all",
+                        "title": "Job search and interview preparation",
+                        "description": "Polish your CV, practise common Forensic Scientist interview questions, and start applying. Networking accounts for over 70% of hires.",
+                        "resources": [{"title": "How to become a Forensic Scientist — career roadmap", "type": "video"}, {"title": "LinkedIn — Forensic Scientist job search and networking", "type": "practice"}],
+                    },
+                ],
+            },
+        ],
+    },
+    # ──────────────────────────────────────────────────────────────────────
+    "occupational-therapist": {
+        "career_title": "Occupational Therapist",
+        "phases": [
+            {
+                "id": "phase-1", "phase_number": 1,
+                "title": "Foundations",
+                "description": "Build the essential knowledge base required to work as a Occupational Therapist.",
+                "base_weeks": 4,
+                "skills_covered": ["Patient Assessment", "Treatment Planning", "Communication"],
+                "steps": [
+                    {
+                        "id": "p1-s1", "level": "starter_only",
+                        "title": "Core theory and fundamentals",
+                        "description": "Help people of all ages overcome physical, mental, or social barriers to perform everyday activities. Start with the foundational concepts that every Occupational Therapist must understand.",
+                        "resources": [{"title": "Patient Assessment fundamentals full course", "type": "video"}, {"title": "Treatment Planning fundamentals full course", "type": "video"}],
+                    },
+                    {
+                        "id": "p1-s2", "level": "all",
+                        "title": "Industry overview and career landscape",
+                        "description": "Understand the day-to-day reality of working as a Occupational Therapist, including typical roles such as OT Assistant and Clinical Lead.",
+                        "resources": [
+                            {"title": "A day in the life of a Occupational Therapist", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-2", "phase_number": 2,
+                "title": "Core Tools & Practical Skills",
+                "description": "Learn the tools and hands-on skills used in the Occupational Therapist profession.",
+                "base_weeks": 5,
+                "skills_covered": ["Assessment frameworks (MOHO)", "Assistive technology", "Electronic care records"],
+                "steps": [
+                    {
+                        "id": "p2-s1", "level": "all",
+                        "title": "Key tools and software",
+                        "description": "Get hands-on with the tools used daily: Assessment frameworks (MOHO), Assistive technology, Electronic care records.",
+                        "resources": [{"title": "Assessment frameworks (MOHO) tutorial for beginners", "type": "video"}, {"title": "Assistive technology tutorial for beginners", "type": "video"}],
+                    },
+                    {
+                        "id": "p2-s2", "level": "builder_plus",
+                        "title": "Practical exercises and mini-projects",
+                        "description": "Apply your knowledge through structured exercises. Practical experience is what separates candidates at interview.",
+                        "resources": [
+                            {"title": "Occupational Therapist practical projects for your portfolio", "type": "project"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-3", "phase_number": 3,
+                "title": "Advanced Skills & Specialism",
+                "description": "Develop deeper expertise and begin to specialise within the Occupational Therapist field.",
+                "base_weeks": 5,
+                "skills_covered": ["Empathy", "Report Writing", "Patient Assessment"],
+                "steps": [
+                    {
+                        "id": "p3-s1", "level": "all",
+                        "title": "Advanced techniques",
+                        "description": "Move beyond the basics and tackle more complex, realistic problems faced by mid-level Occupational Therapists.",
+                        "resources": [{"title": "Advanced Empathy for Occupational Therapists", "type": "course"}, {"title": "Advanced Report Writing for Occupational Therapists", "type": "course"}],
+                    },
+                    {
+                        "id": "p3-s2", "level": "advanced_only",
+                        "title": "Specialism and leadership",
+                        "description": "Explore specialist areas within the Occupational Therapist field and develop the strategic thinking needed for senior roles.",
+                        "resources": [
+                            {"title": "Clinical Lead — how to reach the senior level", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-4", "phase_number": 4,
+                "title": "Portfolio & Job Preparation",
+                "description": "Build a portfolio, prepare your applications, and land your first Occupational Therapist role.",
+                "base_weeks": 3,
+                "skills_covered": ["Portfolio", "Job Applications", "Interview Preparation"],
+                "steps": [
+                    {
+                        "id": "p4-s1", "level": "all",
+                        "title": "Build a portfolio project",
+                        "description": "Create at least one substantial project that demonstrates your Occupational Therapist skills. This is the single most important thing you can do before applying.",
+                        "resources": [
+                            {"title": "Occupational Therapist portfolio — what to include and how to present it", "type": "video"},
+                            {"title": "GitHub — Host your project portfolio", "type": "project"},
+                        ],
+                    },
+                    {
+                        "id": "p4-s2", "level": "all",
+                        "title": "Job search and interview preparation",
+                        "description": "Polish your CV, practise common Occupational Therapist interview questions, and start applying. Networking accounts for over 70% of hires.",
+                        "resources": [{"title": "How to become a Occupational Therapist — career roadmap", "type": "video"}, {"title": "LinkedIn — Occupational Therapist job search and networking", "type": "practice"}],
+                    },
+                ],
+            },
+        ],
+    },
+    # ──────────────────────────────────────────────────────────────────────
+    "film-director": {
+        "career_title": "Film & TV Director",
+        "phases": [
+            {
+                "id": "phase-1", "phase_number": 1,
+                "title": "Foundations",
+                "description": "Build the essential knowledge base required to work as a Film & TV Director.",
+                "base_weeks": 4,
+                "skills_covered": ["Visual Storytelling", "Leadership", "Script Analysis"],
+                "steps": [
+                    {
+                        "id": "p1-s1", "level": "starter_only",
+                        "title": "Core theory and fundamentals",
+                        "description": "Lead the creative vision of film, television, or digital productions from script interpretation to final cut. Start with the foundational concepts that every Film & TV Director must understand.",
+                        "resources": [{"title": "Visual Storytelling fundamentals full course", "type": "video"}, {"title": "Leadership fundamentals full course", "type": "video"}],
+                    },
+                    {
+                        "id": "p1-s2", "level": "all",
+                        "title": "Industry overview and career landscape",
+                        "description": "Understand the day-to-day reality of working as a Film & TV Director, including typical roles such as Runner and Showrunner.",
+                        "resources": [
+                            {"title": "A day in the life of a Film & TV Director", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-2", "phase_number": 2,
+                "title": "Core Tools & Practical Skills",
+                "description": "Learn the tools and hands-on skills used in the Film & TV Director profession.",
+                "base_weeks": 5,
+                "skills_covered": ["Shot list software (StudioBinder)", "Editing software", "Script breakdowns"],
+                "steps": [
+                    {
+                        "id": "p2-s1", "level": "all",
+                        "title": "Key tools and software",
+                        "description": "Get hands-on with the tools used daily: Shot list software (StudioBinder), Editing software, Script breakdowns.",
+                        "resources": [{"title": "Shot list software (StudioBinder) tutorial for beginners", "type": "video"}, {"title": "Editing software tutorial for beginners", "type": "video"}],
+                    },
+                    {
+                        "id": "p2-s2", "level": "builder_plus",
+                        "title": "Practical exercises and mini-projects",
+                        "description": "Apply your knowledge through structured exercises. Practical experience is what separates candidates at interview.",
+                        "resources": [
+                            {"title": "Film & TV Director practical projects for your portfolio", "type": "project"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-3", "phase_number": 3,
+                "title": "Advanced Skills & Specialism",
+                "description": "Develop deeper expertise and begin to specialise within the Film & TV Director field.",
+                "base_weeks": 5,
+                "skills_covered": ["Communication", "Problem Solving", "Visual Storytelling"],
+                "steps": [
+                    {
+                        "id": "p3-s1", "level": "all",
+                        "title": "Advanced techniques",
+                        "description": "Move beyond the basics and tackle more complex, realistic problems faced by mid-level Film & TV Directors.",
+                        "resources": [{"title": "Advanced Communication for Film & TV Directors", "type": "course"}, {"title": "Advanced Problem Solving for Film & TV Directors", "type": "course"}],
+                    },
+                    {
+                        "id": "p3-s2", "level": "advanced_only",
+                        "title": "Specialism and leadership",
+                        "description": "Explore specialist areas within the Film & TV Director field and develop the strategic thinking needed for senior roles.",
+                        "resources": [
+                            {"title": "Showrunner — how to reach the senior level", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-4", "phase_number": 4,
+                "title": "Portfolio & Job Preparation",
+                "description": "Build a portfolio, prepare your applications, and land your first Film & TV Director role.",
+                "base_weeks": 3,
+                "skills_covered": ["Portfolio", "Job Applications", "Interview Preparation"],
+                "steps": [
+                    {
+                        "id": "p4-s1", "level": "all",
+                        "title": "Build a portfolio project",
+                        "description": "Create at least one substantial project that demonstrates your Film & TV Director skills. This is the single most important thing you can do before applying.",
+                        "resources": [
+                            {"title": "Film & TV Director portfolio — what to include and how to present it", "type": "video"},
+                            {"title": "GitHub — Host your project portfolio", "type": "project"},
+                        ],
+                    },
+                    {
+                        "id": "p4-s2", "level": "all",
+                        "title": "Job search and interview preparation",
+                        "description": "Polish your CV, practise common Film & TV Director interview questions, and start applying. Networking accounts for over 70% of hires.",
+                        "resources": [{"title": "How to become a Film & TV Director — career roadmap", "type": "video"}, {"title": "LinkedIn — Film & TV Director job search and networking", "type": "practice"}],
+                    },
+                ],
+            },
+        ],
+    },
+    # ──────────────────────────────────────────────────────────────────────
+    "fundraising-manager": {
+        "career_title": "Fundraising Manager",
+        "phases": [
+            {
+                "id": "phase-1", "phase_number": 1,
+                "title": "Foundations",
+                "description": "Build the essential knowledge base required to work as a Fundraising Manager.",
+                "base_weeks": 4,
+                "skills_covered": ["Relationship Management", "Copywriting", "Data Analysis"],
+                "steps": [
+                    {
+                        "id": "p1-s1", "level": "starter_only",
+                        "title": "Core theory and fundamentals",
+                        "description": "Develop and manage fundraising strategies and campaigns for charities, NGOs, and public institutions. Start with the foundational concepts that every Fundraising Manager must understand.",
+                        "resources": [{"title": "Relationship Management fundamentals full course", "type": "video"}, {"title": "Copywriting fundamentals full course", "type": "video"}],
+                    },
+                    {
+                        "id": "p1-s2", "level": "all",
+                        "title": "Industry overview and career landscape",
+                        "description": "Understand the day-to-day reality of working as a Fundraising Manager, including typical roles such as Fundraising Officer and Director of Development.",
+                        "resources": [
+                            {"title": "A day in the life of a Fundraising Manager", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-2", "phase_number": 2,
+                "title": "Core Tools & Practical Skills",
+                "description": "Learn the tools and hands-on skills used in the Fundraising Manager profession.",
+                "base_weeks": 5,
+                "skills_covered": ["CRM (Raiser's Edge, Salesforce)", "Email platforms", "Fundraising portals"],
+                "steps": [
+                    {
+                        "id": "p2-s1", "level": "all",
+                        "title": "Key tools and software",
+                        "description": "Get hands-on with the tools used daily: CRM (Raiser\'s Edge, Salesforce), Email platforms, Fundraising portals.",
+                        "resources": [{"title": "CRM (Raiser\'s Edge, Salesforce) tutorial for beginners", "type": "video"}, {"title": "Email platforms tutorial for beginners", "type": "video"}],
+                    },
+                    {
+                        "id": "p2-s2", "level": "builder_plus",
+                        "title": "Practical exercises and mini-projects",
+                        "description": "Apply your knowledge through structured exercises. Practical experience is what separates candidates at interview.",
+                        "resources": [
+                            {"title": "Fundraising Manager practical projects for your portfolio", "type": "project"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-3", "phase_number": 3,
+                "title": "Advanced Skills & Specialism",
+                "description": "Develop deeper expertise and begin to specialise within the Fundraising Manager field.",
+                "base_weeks": 5,
+                "skills_covered": ["Presenting", "Campaign Management", "Relationship Management"],
+                "steps": [
+                    {
+                        "id": "p3-s1", "level": "all",
+                        "title": "Advanced techniques",
+                        "description": "Move beyond the basics and tackle more complex, realistic problems faced by mid-level Fundraising Managers.",
+                        "resources": [{"title": "Advanced Presenting for Fundraising Managers", "type": "course"}, {"title": "Advanced Campaign Management for Fundraising Managers", "type": "course"}],
+                    },
+                    {
+                        "id": "p3-s2", "level": "advanced_only",
+                        "title": "Specialism and leadership",
+                        "description": "Explore specialist areas within the Fundraising Manager field and develop the strategic thinking needed for senior roles.",
+                        "resources": [
+                            {"title": "Director of Development — how to reach the senior level", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-4", "phase_number": 4,
+                "title": "Portfolio & Job Preparation",
+                "description": "Build a portfolio, prepare your applications, and land your first Fundraising Manager role.",
+                "base_weeks": 3,
+                "skills_covered": ["Portfolio", "Job Applications", "Interview Preparation"],
+                "steps": [
+                    {
+                        "id": "p4-s1", "level": "all",
+                        "title": "Build a portfolio project",
+                        "description": "Create at least one substantial project that demonstrates your Fundraising Manager skills. This is the single most important thing you can do before applying.",
+                        "resources": [
+                            {"title": "Fundraising Manager portfolio — what to include and how to present it", "type": "video"},
+                            {"title": "GitHub — Host your project portfolio", "type": "project"},
+                        ],
+                    },
+                    {
+                        "id": "p4-s2", "level": "all",
+                        "title": "Job search and interview preparation",
+                        "description": "Polish your CV, practise common Fundraising Manager interview questions, and start applying. Networking accounts for over 70% of hires.",
+                        "resources": [{"title": "How to become a Fundraising Manager — career roadmap", "type": "video"}, {"title": "LinkedIn — Fundraising Manager job search and networking", "type": "practice"}],
+                    },
+                ],
+            },
+        ],
+    },
+    # ──────────────────────────────────────────────────────────────────────
+    "marine-biologist": {
+        "career_title": "Marine Biologist",
+        "phases": [
+            {
+                "id": "phase-1", "phase_number": 1,
+                "title": "Foundations",
+                "description": "Build the essential knowledge base required to work as a Marine Biologist.",
+                "base_weeks": 4,
+                "skills_covered": ["Field Research", "Data Analysis", "Scientific Writing"],
+                "steps": [
+                    {
+                        "id": "p1-s1", "level": "starter_only",
+                        "title": "Core theory and fundamentals",
+                        "description": "Study marine organisms and ecosystems to advance scientific knowledge and inform conservation and management decisions. Start with the foundational concepts that every Marine Biologist must understand.",
+                        "resources": [{"title": "Field Research fundamentals full course", "type": "video"}, {"title": "Data Analysis fundamentals full course", "type": "video"}],
+                    },
+                    {
+                        "id": "p1-s2", "level": "all",
+                        "title": "Industry overview and career landscape",
+                        "description": "Understand the day-to-day reality of working as a Marine Biologist, including typical roles such as Research Assistant and Professor.",
+                        "resources": [
+                            {"title": "A day in the life of a Marine Biologist", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-2", "phase_number": 2,
+                "title": "Core Tools & Practical Skills",
+                "description": "Learn the tools and hands-on skills used in the Marine Biologist profession.",
+                "base_weeks": 5,
+                "skills_covered": ["R", "GIS (ArcGIS", "Underwater sampling equipment"],
+                "steps": [
+                    {
+                        "id": "p2-s1", "level": "all",
+                        "title": "Key tools and software",
+                        "description": "Get hands-on with the tools used daily: R/Python, GIS (ArcGIS/QGIS), Underwater sampling equipment.",
+                        "resources": [{"title": "R/Python tutorial for beginners", "type": "video"}, {"title": "GIS (ArcGIS/QGIS) tutorial for beginners", "type": "video"}],
+                    },
+                    {
+                        "id": "p2-s2", "level": "builder_plus",
+                        "title": "Practical exercises and mini-projects",
+                        "description": "Apply your knowledge through structured exercises. Practical experience is what separates candidates at interview.",
+                        "resources": [
+                            {"title": "Marine Biologist practical projects for your portfolio", "type": "project"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-3", "phase_number": 3,
+                "title": "Advanced Skills & Specialism",
+                "description": "Develop deeper expertise and begin to specialise within the Marine Biologist field.",
+                "base_weeks": 5,
+                "skills_covered": ["Statistics", "GIS Mapping", "Field Research"],
+                "steps": [
+                    {
+                        "id": "p3-s1", "level": "all",
+                        "title": "Advanced techniques",
+                        "description": "Move beyond the basics and tackle more complex, realistic problems faced by mid-level Marine Biologists.",
+                        "resources": [{"title": "Advanced Statistics for Marine Biologists", "type": "course"}, {"title": "Advanced GIS Mapping for Marine Biologists", "type": "course"}],
+                    },
+                    {
+                        "id": "p3-s2", "level": "advanced_only",
+                        "title": "Specialism and leadership",
+                        "description": "Explore specialist areas within the Marine Biologist field and develop the strategic thinking needed for senior roles.",
+                        "resources": [
+                            {"title": "Professor — how to reach the senior level", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-4", "phase_number": 4,
+                "title": "Portfolio & Job Preparation",
+                "description": "Build a portfolio, prepare your applications, and land your first Marine Biologist role.",
+                "base_weeks": 3,
+                "skills_covered": ["Portfolio", "Job Applications", "Interview Preparation"],
+                "steps": [
+                    {
+                        "id": "p4-s1", "level": "all",
+                        "title": "Build a portfolio project",
+                        "description": "Create at least one substantial project that demonstrates your Marine Biologist skills. This is the single most important thing you can do before applying.",
+                        "resources": [
+                            {"title": "Marine Biologist portfolio — what to include and how to present it", "type": "video"},
+                            {"title": "GitHub — Host your project portfolio", "type": "project"},
+                        ],
+                    },
+                    {
+                        "id": "p4-s2", "level": "all",
+                        "title": "Job search and interview preparation",
+                        "description": "Polish your CV, practise common Marine Biologist interview questions, and start applying. Networking accounts for over 70% of hires.",
+                        "resources": [{"title": "How to become a Marine Biologist — career roadmap", "type": "video"}, {"title": "LinkedIn — Marine Biologist job search and networking", "type": "practice"}],
+                    },
+                ],
+            },
+        ],
+    },
+    # ──────────────────────────────────────────────────────────────────────
+    "radiographer": {
+        "career_title": "Diagnostic Radiographer",
+        "phases": [
+            {
+                "id": "phase-1", "phase_number": 1,
+                "title": "Foundations",
+                "description": "Build the essential knowledge base required to work as a Diagnostic Radiographer.",
+                "base_weeks": 4,
+                "skills_covered": ["Anatomy Knowledge", "Technical Operation", "Patient Care"],
+                "steps": [
+                    {
+                        "id": "p1-s1", "level": "starter_only",
+                        "title": "Core theory and fundamentals",
+                        "description": "Produce and interpret medical images using X-ray, MRI, CT, and ultrasound to support clinical diagnosis. Start with the foundational concepts that every Diagnostic Radiographer must understand.",
+                        "resources": [{"title": "Anatomy Knowledge fundamentals full course", "type": "video"}, {"title": "Technical Operation fundamentals full course", "type": "video"}],
+                    },
+                    {
+                        "id": "p1-s2", "level": "all",
+                        "title": "Industry overview and career landscape",
+                        "description": "Understand the day-to-day reality of working as a Diagnostic Radiographer, including typical roles such as Student Radiographer and Head of Imaging.",
+                        "resources": [
+                            {"title": "A day in the life of a Diagnostic Radiographer", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-2", "phase_number": 2,
+                "title": "Core Tools & Practical Skills",
+                "description": "Learn the tools and hands-on skills used in the Diagnostic Radiographer profession.",
+                "base_weeks": 5,
+                "skills_covered": ["CT", "X-ray systems", "Ultrasound"],
+                "steps": [
+                    {
+                        "id": "p2-s1", "level": "all",
+                        "title": "Key tools and software",
+                        "description": "Get hands-on with the tools used daily: CT/MRI scanners, X-ray systems, Ultrasound.",
+                        "resources": [{"title": "CT/MRI scanners tutorial for beginners", "type": "video"}, {"title": "X-ray systems tutorial for beginners", "type": "video"}],
+                    },
+                    {
+                        "id": "p2-s2", "level": "builder_plus",
+                        "title": "Practical exercises and mini-projects",
+                        "description": "Apply your knowledge through structured exercises. Practical experience is what separates candidates at interview.",
+                        "resources": [
+                            {"title": "Diagnostic Radiographer practical projects for your portfolio", "type": "project"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-3", "phase_number": 3,
+                "title": "Advanced Skills & Specialism",
+                "description": "Develop deeper expertise and begin to specialise within the Diagnostic Radiographer field.",
+                "base_weeks": 5,
+                "skills_covered": ["Attention to Detail", "Communication", "Anatomy Knowledge"],
+                "steps": [
+                    {
+                        "id": "p3-s1", "level": "all",
+                        "title": "Advanced techniques",
+                        "description": "Move beyond the basics and tackle more complex, realistic problems faced by mid-level Diagnostic Radiographers.",
+                        "resources": [{"title": "Advanced Attention to Detail for Diagnostic Radiographers", "type": "course"}, {"title": "Advanced Communication for Diagnostic Radiographers", "type": "course"}],
+                    },
+                    {
+                        "id": "p3-s2", "level": "advanced_only",
+                        "title": "Specialism and leadership",
+                        "description": "Explore specialist areas within the Diagnostic Radiographer field and develop the strategic thinking needed for senior roles.",
+                        "resources": [
+                            {"title": "Head of Imaging — how to reach the senior level", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-4", "phase_number": 4,
+                "title": "Portfolio & Job Preparation",
+                "description": "Build a portfolio, prepare your applications, and land your first Diagnostic Radiographer role.",
+                "base_weeks": 3,
+                "skills_covered": ["Portfolio", "Job Applications", "Interview Preparation"],
+                "steps": [
+                    {
+                        "id": "p4-s1", "level": "all",
+                        "title": "Build a portfolio project",
+                        "description": "Create at least one substantial project that demonstrates your Diagnostic Radiographer skills. This is the single most important thing you can do before applying.",
+                        "resources": [
+                            {"title": "Diagnostic Radiographer portfolio — what to include and how to present it", "type": "video"},
+                            {"title": "GitHub — Host your project portfolio", "type": "project"},
+                        ],
+                    },
+                    {
+                        "id": "p4-s2", "level": "all",
+                        "title": "Job search and interview preparation",
+                        "description": "Polish your CV, practise common Diagnostic Radiographer interview questions, and start applying. Networking accounts for over 70% of hires.",
+                        "resources": [{"title": "How to become a Diagnostic Radiographer — career roadmap", "type": "video"}, {"title": "LinkedIn — Diagnostic Radiographer job search and networking", "type": "practice"}],
+                    },
+                ],
+            },
+        ],
+    },
+    # ──────────────────────────────────────────────────────────────────────
+    "sound-engineer": {
+        "career_title": "Sound Engineer",
+        "phases": [
+            {
+                "id": "phase-1", "phase_number": 1,
+                "title": "Foundations",
+                "description": "Build the essential knowledge base required to work as a Sound Engineer.",
+                "base_weeks": 4,
+                "skills_covered": ["Audio Mixing", "Critical Listening", "Signal Flow"],
+                "steps": [
+                    {
+                        "id": "p1-s1", "level": "starter_only",
+                        "title": "Core theory and fundamentals",
+                        "description": "Record, mix, and master audio for music, film, television, live events, and podcasts. Start with the foundational concepts that every Sound Engineer must understand.",
+                        "resources": [{"title": "Audio Mixing fundamentals full course", "type": "video"}, {"title": "Critical Listening fundamentals full course", "type": "video"}],
+                    },
+                    {
+                        "id": "p1-s2", "level": "all",
+                        "title": "Industry overview and career landscape",
+                        "description": "Understand the day-to-day reality of working as a Sound Engineer, including typical roles such as Studio Runner and Mastering Engineer.",
+                        "resources": [
+                            {"title": "A day in the life of a Sound Engineer", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-2", "phase_number": 2,
+                "title": "Core Tools & Practical Skills",
+                "description": "Learn the tools and hands-on skills used in the Sound Engineer profession.",
+                "base_weeks": 5,
+                "skills_covered": ["Pro Tools", "Logic Pro", "Ableton"],
+                "steps": [
+                    {
+                        "id": "p2-s1", "level": "all",
+                        "title": "Key tools and software",
+                        "description": "Get hands-on with the tools used daily: Pro Tools, Logic Pro, Ableton.",
+                        "resources": [{"title": "Pro Tools tutorial for beginners", "type": "video"}, {"title": "Logic Pro tutorial for beginners", "type": "video"}],
+                    },
+                    {
+                        "id": "p2-s2", "level": "builder_plus",
+                        "title": "Practical exercises and mini-projects",
+                        "description": "Apply your knowledge through structured exercises. Practical experience is what separates candidates at interview.",
+                        "resources": [
+                            {"title": "Sound Engineer practical projects for your portfolio", "type": "project"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-3", "phase_number": 3,
+                "title": "Advanced Skills & Specialism",
+                "description": "Develop deeper expertise and begin to specialise within the Sound Engineer field.",
+                "base_weeks": 5,
+                "skills_covered": ["Acoustics", "Communication", "Audio Mixing"],
+                "steps": [
+                    {
+                        "id": "p3-s1", "level": "all",
+                        "title": "Advanced techniques",
+                        "description": "Move beyond the basics and tackle more complex, realistic problems faced by mid-level Sound Engineers.",
+                        "resources": [{"title": "Advanced Acoustics for Sound Engineers", "type": "course"}, {"title": "Advanced Communication for Sound Engineers", "type": "course"}],
+                    },
+                    {
+                        "id": "p3-s2", "level": "advanced_only",
+                        "title": "Specialism and leadership",
+                        "description": "Explore specialist areas within the Sound Engineer field and develop the strategic thinking needed for senior roles.",
+                        "resources": [
+                            {"title": "Mastering Engineer — how to reach the senior level", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-4", "phase_number": 4,
+                "title": "Portfolio & Job Preparation",
+                "description": "Build a portfolio, prepare your applications, and land your first Sound Engineer role.",
+                "base_weeks": 3,
+                "skills_covered": ["Portfolio", "Job Applications", "Interview Preparation"],
+                "steps": [
+                    {
+                        "id": "p4-s1", "level": "all",
+                        "title": "Build a portfolio project",
+                        "description": "Create at least one substantial project that demonstrates your Sound Engineer skills. This is the single most important thing you can do before applying.",
+                        "resources": [
+                            {"title": "Sound Engineer portfolio — what to include and how to present it", "type": "video"},
+                            {"title": "GitHub — Host your project portfolio", "type": "project"},
+                        ],
+                    },
+                    {
+                        "id": "p4-s2", "level": "all",
+                        "title": "Job search and interview preparation",
+                        "description": "Polish your CV, practise common Sound Engineer interview questions, and start applying. Networking accounts for over 70% of hires.",
+                        "resources": [{"title": "How to become a Sound Engineer — career roadmap", "type": "video"}, {"title": "LinkedIn — Sound Engineer job search and networking", "type": "practice"}],
+                    },
+                ],
+            },
+        ],
+    },
+    # ──────────────────────────────────────────────────────────────────────
+    "immigration-officer": {
+        "career_title": "Immigration Officer",
+        "phases": [
+            {
+                "id": "phase-1", "phase_number": 1,
+                "title": "Foundations",
+                "description": "Build the essential knowledge base required to work as a Immigration Officer.",
+                "base_weeks": 4,
+                "skills_covered": ["Decision Making", "Communication", "Legal Interpretation"],
+                "steps": [
+                    {
+                        "id": "p1-s1", "level": "starter_only",
+                        "title": "Core theory and fundamentals",
+                        "description": "Enforce immigration law, process applications, and conduct investigations at borders and in-country. Start with the foundational concepts that every Immigration Officer must understand.",
+                        "resources": [{"title": "Decision Making fundamentals full course", "type": "video"}, {"title": "Communication fundamentals full course", "type": "video"}],
+                    },
+                    {
+                        "id": "p1-s2", "level": "all",
+                        "title": "Industry overview and career landscape",
+                        "description": "Understand the day-to-day reality of working as a Immigration Officer, including typical roles such as Immigration Officer and Director.",
+                        "resources": [
+                            {"title": "A day in the life of a Immigration Officer", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-2", "phase_number": 2,
+                "title": "Core Tools & Practical Skills",
+                "description": "Learn the tools and hands-on skills used in the Immigration Officer profession.",
+                "base_weeks": 5,
+                "skills_covered": ["Border control systems", "Biometric devices", "Case management software"],
+                "steps": [
+                    {
+                        "id": "p2-s1", "level": "all",
+                        "title": "Key tools and software",
+                        "description": "Get hands-on with the tools used daily: Border control systems, Biometric devices, Case management software.",
+                        "resources": [{"title": "Border control systems tutorial for beginners", "type": "video"}, {"title": "Biometric devices tutorial for beginners", "type": "video"}],
+                    },
+                    {
+                        "id": "p2-s2", "level": "builder_plus",
+                        "title": "Practical exercises and mini-projects",
+                        "description": "Apply your knowledge through structured exercises. Practical experience is what separates candidates at interview.",
+                        "resources": [
+                            {"title": "Immigration Officer practical projects for your portfolio", "type": "project"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-3", "phase_number": 3,
+                "title": "Advanced Skills & Specialism",
+                "description": "Develop deeper expertise and begin to specialise within the Immigration Officer field.",
+                "base_weeks": 5,
+                "skills_covered": ["Attention to Detail", "Cultural Awareness", "Decision Making"],
+                "steps": [
+                    {
+                        "id": "p3-s1", "level": "all",
+                        "title": "Advanced techniques",
+                        "description": "Move beyond the basics and tackle more complex, realistic problems faced by mid-level Immigration Officers.",
+                        "resources": [{"title": "Advanced Attention to Detail for Immigration Officers", "type": "course"}, {"title": "Advanced Cultural Awareness for Immigration Officers", "type": "course"}],
+                    },
+                    {
+                        "id": "p3-s2", "level": "advanced_only",
+                        "title": "Specialism and leadership",
+                        "description": "Explore specialist areas within the Immigration Officer field and develop the strategic thinking needed for senior roles.",
+                        "resources": [
+                            {"title": "Director — how to reach the senior level", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-4", "phase_number": 4,
+                "title": "Portfolio & Job Preparation",
+                "description": "Build a portfolio, prepare your applications, and land your first Immigration Officer role.",
+                "base_weeks": 3,
+                "skills_covered": ["Portfolio", "Job Applications", "Interview Preparation"],
+                "steps": [
+                    {
+                        "id": "p4-s1", "level": "all",
+                        "title": "Build a portfolio project",
+                        "description": "Create at least one substantial project that demonstrates your Immigration Officer skills. This is the single most important thing you can do before applying.",
+                        "resources": [
+                            {"title": "Immigration Officer portfolio — what to include and how to present it", "type": "video"},
+                            {"title": "GitHub — Host your project portfolio", "type": "project"},
+                        ],
+                    },
+                    {
+                        "id": "p4-s2", "level": "all",
+                        "title": "Job search and interview preparation",
+                        "description": "Polish your CV, practise common Immigration Officer interview questions, and start applying. Networking accounts for over 70% of hires.",
+                        "resources": [{"title": "How to become a Immigration Officer — career roadmap", "type": "video"}, {"title": "LinkedIn — Immigration Officer job search and networking", "type": "practice"}],
+                    },
+                ],
+            },
+        ],
+    },
+    # ──────────────────────────────────────────────────────────────────────
+    "sports-scientist": {
+        "career_title": "Sports Scientist",
+        "phases": [
+            {
+                "id": "phase-1", "phase_number": 1,
+                "title": "Foundations",
+                "description": "Build the essential knowledge base required to work as a Sports Scientist.",
+                "base_weeks": 4,
+                "skills_covered": ["Physiology", "Data Analysis", "Strength & Conditioning"],
+                "steps": [
+                    {
+                        "id": "p1-s1", "level": "starter_only",
+                        "title": "Core theory and fundamentals",
+                        "description": "Apply physiological, biomechanical, and psychological principles to optimise athletic performance and recovery. Start with the foundational concepts that every Sports Scientist must understand.",
+                        "resources": [{"title": "Physiology fundamentals full course", "type": "video"}, {"title": "Data Analysis fundamentals full course", "type": "video"}],
+                    },
+                    {
+                        "id": "p1-s2", "level": "all",
+                        "title": "Industry overview and career landscape",
+                        "description": "Understand the day-to-day reality of working as a Sports Scientist, including typical roles such as Sports Science Assistant and Performance Director.",
+                        "resources": [
+                            {"title": "A day in the life of a Sports Scientist", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-2", "phase_number": 2,
+                "title": "Core Tools & Practical Skills",
+                "description": "Learn the tools and hands-on skills used in the Sports Scientist profession.",
+                "base_weeks": 5,
+                "skills_covered": ["GPS tracking systems", "Force plates", "VO2 max testing"],
+                "steps": [
+                    {
+                        "id": "p2-s1", "level": "all",
+                        "title": "Key tools and software",
+                        "description": "Get hands-on with the tools used daily: GPS tracking systems, Force plates, VO2 max testing.",
+                        "resources": [{"title": "GPS tracking systems tutorial for beginners", "type": "video"}, {"title": "Force plates tutorial for beginners", "type": "video"}],
+                    },
+                    {
+                        "id": "p2-s2", "level": "builder_plus",
+                        "title": "Practical exercises and mini-projects",
+                        "description": "Apply your knowledge through structured exercises. Practical experience is what separates candidates at interview.",
+                        "resources": [
+                            {"title": "Sports Scientist practical projects for your portfolio", "type": "project"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-3", "phase_number": 3,
+                "title": "Advanced Skills & Specialism",
+                "description": "Develop deeper expertise and begin to specialise within the Sports Scientist field.",
+                "base_weeks": 5,
+                "skills_covered": ["Testing Protocols", "Communication", "Physiology"],
+                "steps": [
+                    {
+                        "id": "p3-s1", "level": "all",
+                        "title": "Advanced techniques",
+                        "description": "Move beyond the basics and tackle more complex, realistic problems faced by mid-level Sports Scientists.",
+                        "resources": [{"title": "Advanced Testing Protocols for Sports Scientists", "type": "course"}, {"title": "Advanced Communication for Sports Scientists", "type": "course"}],
+                    },
+                    {
+                        "id": "p3-s2", "level": "advanced_only",
+                        "title": "Specialism and leadership",
+                        "description": "Explore specialist areas within the Sports Scientist field and develop the strategic thinking needed for senior roles.",
+                        "resources": [
+                            {"title": "Performance Director — how to reach the senior level", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-4", "phase_number": 4,
+                "title": "Portfolio & Job Preparation",
+                "description": "Build a portfolio, prepare your applications, and land your first Sports Scientist role.",
+                "base_weeks": 3,
+                "skills_covered": ["Portfolio", "Job Applications", "Interview Preparation"],
+                "steps": [
+                    {
+                        "id": "p4-s1", "level": "all",
+                        "title": "Build a portfolio project",
+                        "description": "Create at least one substantial project that demonstrates your Sports Scientist skills. This is the single most important thing you can do before applying.",
+                        "resources": [
+                            {"title": "Sports Scientist portfolio — what to include and how to present it", "type": "video"},
+                            {"title": "GitHub — Host your project portfolio", "type": "project"},
+                        ],
+                    },
+                    {
+                        "id": "p4-s2", "level": "all",
+                        "title": "Job search and interview preparation",
+                        "description": "Polish your CV, practise common Sports Scientist interview questions, and start applying. Networking accounts for over 70% of hires.",
+                        "resources": [{"title": "How to become a Sports Scientist — career roadmap", "type": "video"}, {"title": "LinkedIn — Sports Scientist job search and networking", "type": "practice"}],
+                    },
+                ],
+            },
+        ],
+    },
+    # ──────────────────────────────────────────────────────────────────────
+    "geologist": {
+        "career_title": "Geologist",
+        "phases": [
+            {
+                "id": "phase-1", "phase_number": 1,
+                "title": "Foundations",
+                "description": "Build the essential knowledge base required to work as a Geologist.",
+                "base_weeks": 4,
+                "skills_covered": ["Field Mapping", "Rock & Mineral Identification", "GIS"],
+                "steps": [
+                    {
+                        "id": "p1-s1", "level": "starter_only",
+                        "title": "Core theory and fundamentals",
+                        "description": "Study the Earth\'s structure, processes, and resources to inform engineering, mining, environmental, and energy projects. Start with the foundational concepts that every Geologist must understand.",
+                        "resources": [{"title": "Field Mapping fundamentals full course", "type": "video"}, {"title": "Rock & Mineral Identification fundamentals full course", "type": "video"}],
+                    },
+                    {
+                        "id": "p1-s2", "level": "all",
+                        "title": "Industry overview and career landscape",
+                        "description": "Understand the day-to-day reality of working as a Geologist, including typical roles such as Graduate Geologist and Technical Director.",
+                        "resources": [
+                            {"title": "A day in the life of a Geologist", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-2", "phase_number": 2,
+                "title": "Core Tools & Practical Skills",
+                "description": "Learn the tools and hands-on skills used in the Geologist profession.",
+                "base_weeks": 5,
+                "skills_covered": ["ArcGIS", "Petrel (Schlumberger)", "XRD"],
+                "steps": [
+                    {
+                        "id": "p2-s1", "level": "all",
+                        "title": "Key tools and software",
+                        "description": "Get hands-on with the tools used daily: ArcGIS/QGIS, Petrel (Schlumberger), XRD/XRF lab equipment.",
+                        "resources": [{"title": "ArcGIS/QGIS tutorial for beginners", "type": "video"}, {"title": "Petrel (Schlumberger) tutorial for beginners", "type": "video"}],
+                    },
+                    {
+                        "id": "p2-s2", "level": "builder_plus",
+                        "title": "Practical exercises and mini-projects",
+                        "description": "Apply your knowledge through structured exercises. Practical experience is what separates candidates at interview.",
+                        "resources": [
+                            {"title": "Geologist practical projects for your portfolio", "type": "project"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-3", "phase_number": 3,
+                "title": "Advanced Skills & Specialism",
+                "description": "Develop deeper expertise and begin to specialise within the Geologist field.",
+                "base_weeks": 5,
+                "skills_covered": ["Data Interpretation", "Report Writing", "Field Mapping"],
+                "steps": [
+                    {
+                        "id": "p3-s1", "level": "all",
+                        "title": "Advanced techniques",
+                        "description": "Move beyond the basics and tackle more complex, realistic problems faced by mid-level Geologists.",
+                        "resources": [{"title": "Advanced Data Interpretation for Geologists", "type": "course"}, {"title": "Advanced Report Writing for Geologists", "type": "course"}],
+                    },
+                    {
+                        "id": "p3-s2", "level": "advanced_only",
+                        "title": "Specialism and leadership",
+                        "description": "Explore specialist areas within the Geologist field and develop the strategic thinking needed for senior roles.",
+                        "resources": [
+                            {"title": "Technical Director — how to reach the senior level", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-4", "phase_number": 4,
+                "title": "Portfolio & Job Preparation",
+                "description": "Build a portfolio, prepare your applications, and land your first Geologist role.",
+                "base_weeks": 3,
+                "skills_covered": ["Portfolio", "Job Applications", "Interview Preparation"],
+                "steps": [
+                    {
+                        "id": "p4-s1", "level": "all",
+                        "title": "Build a portfolio project",
+                        "description": "Create at least one substantial project that demonstrates your Geologist skills. This is the single most important thing you can do before applying.",
+                        "resources": [
+                            {"title": "Geologist portfolio — what to include and how to present it", "type": "video"},
+                            {"title": "GitHub — Host your project portfolio", "type": "project"},
+                        ],
+                    },
+                    {
+                        "id": "p4-s2", "level": "all",
+                        "title": "Job search and interview preparation",
+                        "description": "Polish your CV, practise common Geologist interview questions, and start applying. Networking accounts for over 70% of hires.",
+                        "resources": [{"title": "How to become a Geologist — career roadmap", "type": "video"}, {"title": "LinkedIn — Geologist job search and networking", "type": "practice"}],
+                    },
+                ],
+            },
+        ],
+    },
+    # ──────────────────────────────────────────────────────────────────────
+    "speech-therapist": {
+        "career_title": "Speech & Language Therapist",
+        "phases": [
+            {
+                "id": "phase-1", "phase_number": 1,
+                "title": "Foundations",
+                "description": "Build the essential knowledge base required to work as a Speech & Language Therapist.",
+                "base_weeks": 4,
+                "skills_covered": ["Clinical Assessment", "Therapy Delivery", "Report Writing"],
+                "steps": [
+                    {
+                        "id": "p1-s1", "level": "starter_only",
+                        "title": "Core theory and fundamentals",
+                        "description": "Assess and treat communication and swallowing disorders in children and adults across clinical and community settings. Start with the foundational concepts that every Speech & Language Therapist must understand.",
+                        "resources": [{"title": "Clinical Assessment fundamentals full course", "type": "video"}, {"title": "Therapy Delivery fundamentals full course", "type": "video"}],
+                    },
+                    {
+                        "id": "p1-s2", "level": "all",
+                        "title": "Industry overview and career landscape",
+                        "description": "Understand the day-to-day reality of working as a Speech & Language Therapist, including typical roles such as Newly Qualified SLT and Clinical Lead.",
+                        "resources": [
+                            {"title": "A day in the life of a Speech & Language Therapist", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-2", "phase_number": 2,
+                "title": "Core Tools & Practical Skills",
+                "description": "Learn the tools and hands-on skills used in the Speech & Language Therapist profession.",
+                "base_weeks": 5,
+                "skills_covered": ["Standardised assessments", "AAC devices", "Video laryngoscopy"],
+                "steps": [
+                    {
+                        "id": "p2-s1", "level": "all",
+                        "title": "Key tools and software",
+                        "description": "Get hands-on with the tools used daily: Standardised assessments, AAC devices, Video laryngoscopy.",
+                        "resources": [{"title": "Standardised assessments tutorial for beginners", "type": "video"}, {"title": "AAC devices tutorial for beginners", "type": "video"}],
+                    },
+                    {
+                        "id": "p2-s2", "level": "builder_plus",
+                        "title": "Practical exercises and mini-projects",
+                        "description": "Apply your knowledge through structured exercises. Practical experience is what separates candidates at interview.",
+                        "resources": [
+                            {"title": "Speech & Language Therapist practical projects for your portfolio", "type": "project"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-3", "phase_number": 3,
+                "title": "Advanced Skills & Specialism",
+                "description": "Develop deeper expertise and begin to specialise within the Speech & Language Therapist field.",
+                "base_weeks": 5,
+                "skills_covered": ["Empathy", "Multidisciplinary Working", "Clinical Assessment"],
+                "steps": [
+                    {
+                        "id": "p3-s1", "level": "all",
+                        "title": "Advanced techniques",
+                        "description": "Move beyond the basics and tackle more complex, realistic problems faced by mid-level Speech & Language Therapists.",
+                        "resources": [{"title": "Advanced Empathy for Speech & Language Therapists", "type": "course"}, {"title": "Advanced Multidisciplinary Working for Speech & Language Therapists", "type": "course"}],
+                    },
+                    {
+                        "id": "p3-s2", "level": "advanced_only",
+                        "title": "Specialism and leadership",
+                        "description": "Explore specialist areas within the Speech & Language Therapist field and develop the strategic thinking needed for senior roles.",
+                        "resources": [
+                            {"title": "Clinical Lead — how to reach the senior level", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-4", "phase_number": 4,
+                "title": "Portfolio & Job Preparation",
+                "description": "Build a portfolio, prepare your applications, and land your first Speech & Language Therapist role.",
+                "base_weeks": 3,
+                "skills_covered": ["Portfolio", "Job Applications", "Interview Preparation"],
+                "steps": [
+                    {
+                        "id": "p4-s1", "level": "all",
+                        "title": "Build a portfolio project",
+                        "description": "Create at least one substantial project that demonstrates your Speech & Language Therapist skills. This is the single most important thing you can do before applying.",
+                        "resources": [
+                            {"title": "Speech & Language Therapist portfolio — what to include and how to present it", "type": "video"},
+                            {"title": "GitHub — Host your project portfolio", "type": "project"},
+                        ],
+                    },
+                    {
+                        "id": "p4-s2", "level": "all",
+                        "title": "Job search and interview preparation",
+                        "description": "Polish your CV, practise common Speech & Language Therapist interview questions, and start applying. Networking accounts for over 70% of hires.",
+                        "resources": [{"title": "How to become a Speech & Language Therapist — career roadmap", "type": "video"}, {"title": "LinkedIn — Speech & Language Therapist job search and networking", "type": "practice"}],
+                    },
+                ],
+            },
+        ],
+    },
+    # ──────────────────────────────────────────────────────────────────────
+    "air-traffic-controller": {
+        "career_title": "Air Traffic Controller",
+        "phases": [
+            {
+                "id": "phase-1", "phase_number": 1,
+                "title": "Foundations",
+                "description": "Build the essential knowledge base required to work as a Air Traffic Controller.",
+                "base_weeks": 4,
+                "skills_covered": ["Spatial Awareness", "Decision Making Under Pressure", "Communication"],
+                "steps": [
+                    {
+                        "id": "p1-s1", "level": "starter_only",
+                        "title": "Core theory and fundamentals",
+                        "description": "Direct aircraft movements in controlled airspace and at airports to maintain safe separation and efficient flow. Start with the foundational concepts that every Air Traffic Controller must understand.",
+                        "resources": [{"title": "Spatial Awareness fundamentals full course", "type": "video"}, {"title": "Decision Making Under Pressure fundamentals full course", "type": "video"}],
+                    },
+                    {
+                        "id": "p1-s2", "level": "all",
+                        "title": "Industry overview and career landscape",
+                        "description": "Understand the day-to-day reality of working as a Air Traffic Controller, including typical roles such as Student ATCO and Watch Manager.",
+                        "resources": [
+                            {"title": "A day in the life of a Air Traffic Controller", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-2", "phase_number": 2,
+                "title": "Core Tools & Practical Skills",
+                "description": "Learn the tools and hands-on skills used in the Air Traffic Controller profession.",
+                "base_weeks": 5,
+                "skills_covered": ["Radar systems", "Flight data processing", "VHF"],
+                "steps": [
+                    {
+                        "id": "p2-s1", "level": "all",
+                        "title": "Key tools and software",
+                        "description": "Get hands-on with the tools used daily: Radar systems, Flight data processing, VHF/UHF radio.",
+                        "resources": [{"title": "Radar systems tutorial for beginners", "type": "video"}, {"title": "Flight data processing tutorial for beginners", "type": "video"}],
+                    },
+                    {
+                        "id": "p2-s2", "level": "builder_plus",
+                        "title": "Practical exercises and mini-projects",
+                        "description": "Apply your knowledge through structured exercises. Practical experience is what separates candidates at interview.",
+                        "resources": [
+                            {"title": "Air Traffic Controller practical projects for your portfolio", "type": "project"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-3", "phase_number": 3,
+                "title": "Advanced Skills & Specialism",
+                "description": "Develop deeper expertise and begin to specialise within the Air Traffic Controller field.",
+                "base_weeks": 5,
+                "skills_covered": ["Multitasking", "English Proficiency", "Spatial Awareness"],
+                "steps": [
+                    {
+                        "id": "p3-s1", "level": "all",
+                        "title": "Advanced techniques",
+                        "description": "Move beyond the basics and tackle more complex, realistic problems faced by mid-level Air Traffic Controllers.",
+                        "resources": [{"title": "Advanced Multitasking for Air Traffic Controllers", "type": "course"}, {"title": "Advanced English Proficiency for Air Traffic Controllers", "type": "course"}],
+                    },
+                    {
+                        "id": "p3-s2", "level": "advanced_only",
+                        "title": "Specialism and leadership",
+                        "description": "Explore specialist areas within the Air Traffic Controller field and develop the strategic thinking needed for senior roles.",
+                        "resources": [
+                            {"title": "Watch Manager — how to reach the senior level", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-4", "phase_number": 4,
+                "title": "Portfolio & Job Preparation",
+                "description": "Build a portfolio, prepare your applications, and land your first Air Traffic Controller role.",
+                "base_weeks": 3,
+                "skills_covered": ["Portfolio", "Job Applications", "Interview Preparation"],
+                "steps": [
+                    {
+                        "id": "p4-s1", "level": "all",
+                        "title": "Build a portfolio project",
+                        "description": "Create at least one substantial project that demonstrates your Air Traffic Controller skills. This is the single most important thing you can do before applying.",
+                        "resources": [
+                            {"title": "Air Traffic Controller portfolio — what to include and how to present it", "type": "video"},
+                            {"title": "GitHub — Host your project portfolio", "type": "project"},
+                        ],
+                    },
+                    {
+                        "id": "p4-s2", "level": "all",
+                        "title": "Job search and interview preparation",
+                        "description": "Polish your CV, practise common Air Traffic Controller interview questions, and start applying. Networking accounts for over 70% of hires.",
+                        "resources": [{"title": "How to become a Air Traffic Controller — career roadmap", "type": "video"}, {"title": "LinkedIn — Air Traffic Controller job search and networking", "type": "practice"}],
+                    },
+                ],
+            },
+        ],
+    },
+    # ──────────────────────────────────────────────────────────────────────
+    "midwife": {
+        "career_title": "Midwife",
+        "phases": [
+            {
+                "id": "phase-1", "phase_number": 1,
+                "title": "Foundations",
+                "description": "Build the essential knowledge base required to work as a Midwife.",
+                "base_weeks": 4,
+                "skills_covered": ["Clinical Assessment", "Patient Care", "Communication"],
+                "steps": [
+                    {
+                        "id": "p1-s1", "level": "starter_only",
+                        "title": "Core theory and fundamentals",
+                        "description": "Provide care and support to women before, during, and after childbirth, promoting safe outcomes for mothers and babies. Start with the foundational concepts that every Midwife must understand.",
+                        "resources": [{"title": "Clinical Assessment fundamentals full course", "type": "video"}, {"title": "Patient Care fundamentals full course", "type": "video"}],
+                    },
+                    {
+                        "id": "p1-s2", "level": "all",
+                        "title": "Industry overview and career landscape",
+                        "description": "Understand the day-to-day reality of working as a Midwife, including typical roles such as Student Midwife and Consultant Midwife.",
+                        "resources": [
+                            {"title": "A day in the life of a Midwife", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-2", "phase_number": 2,
+                "title": "Core Tools & Practical Skills",
+                "description": "Learn the tools and hands-on skills used in the Midwife profession.",
+                "base_weeks": 5,
+                "skills_covered": ["CTG monitoring", "Ultrasound", "Electronic patient records"],
+                "steps": [
+                    {
+                        "id": "p2-s1", "level": "all",
+                        "title": "Key tools and software",
+                        "description": "Get hands-on with the tools used daily: CTG monitoring, Ultrasound, Electronic patient records.",
+                        "resources": [{"title": "CTG monitoring tutorial for beginners", "type": "video"}, {"title": "Ultrasound tutorial for beginners", "type": "video"}],
+                    },
+                    {
+                        "id": "p2-s2", "level": "builder_plus",
+                        "title": "Practical exercises and mini-projects",
+                        "description": "Apply your knowledge through structured exercises. Practical experience is what separates candidates at interview.",
+                        "resources": [
+                            {"title": "Midwife practical projects for your portfolio", "type": "project"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-3", "phase_number": 3,
+                "title": "Advanced Skills & Specialism",
+                "description": "Develop deeper expertise and begin to specialise within the Midwife field.",
+                "base_weeks": 5,
+                "skills_covered": ["Decision Making", "Teamwork", "Clinical Assessment"],
+                "steps": [
+                    {
+                        "id": "p3-s1", "level": "all",
+                        "title": "Advanced techniques",
+                        "description": "Move beyond the basics and tackle more complex, realistic problems faced by mid-level Midwifes.",
+                        "resources": [{"title": "Advanced Decision Making for Midwifes", "type": "course"}, {"title": "Advanced Teamwork for Midwifes", "type": "course"}],
+                    },
+                    {
+                        "id": "p3-s2", "level": "advanced_only",
+                        "title": "Specialism and leadership",
+                        "description": "Explore specialist areas within the Midwife field and develop the strategic thinking needed for senior roles.",
+                        "resources": [
+                            {"title": "Consultant Midwife — how to reach the senior level", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-4", "phase_number": 4,
+                "title": "Portfolio & Job Preparation",
+                "description": "Build a portfolio, prepare your applications, and land your first Midwife role.",
+                "base_weeks": 3,
+                "skills_covered": ["Portfolio", "Job Applications", "Interview Preparation"],
+                "steps": [
+                    {
+                        "id": "p4-s1", "level": "all",
+                        "title": "Build a portfolio project",
+                        "description": "Create at least one substantial project that demonstrates your Midwife skills. This is the single most important thing you can do before applying.",
+                        "resources": [
+                            {"title": "Midwife portfolio — what to include and how to present it", "type": "video"},
+                            {"title": "GitHub — Host your project portfolio", "type": "project"},
+                        ],
+                    },
+                    {
+                        "id": "p4-s2", "level": "all",
+                        "title": "Job search and interview preparation",
+                        "description": "Polish your CV, practise common Midwife interview questions, and start applying. Networking accounts for over 70% of hires.",
+                        "resources": [{"title": "How to become a Midwife — career roadmap", "type": "video"}, {"title": "LinkedIn — Midwife job search and networking", "type": "practice"}],
+                    },
+                ],
+            },
+        ],
+    },
+    # ──────────────────────────────────────────────────────────────────────
+    "data-journalist": {
+        "career_title": "Data Journalist",
+        "phases": [
+            {
+                "id": "phase-1", "phase_number": 1,
+                "title": "Foundations",
+                "description": "Build the essential knowledge base required to work as a Data Journalist.",
+                "base_weeks": 4,
+                "skills_covered": ["Data Analysis", "Journalism", "Data Visualisation"],
+                "steps": [
+                    {
+                        "id": "p1-s1", "level": "starter_only",
+                        "title": "Core theory and fundamentals",
+                        "description": "Uncover and communicate stories hidden in datasets through investigative analysis, visualisation, and compelling writing. Start with the foundational concepts that every Data Journalist must understand.",
+                        "resources": [{"title": "Data Analysis fundamentals full course", "type": "video"}, {"title": "Journalism fundamentals full course", "type": "video"}],
+                    },
+                    {
+                        "id": "p1-s2", "level": "all",
+                        "title": "Industry overview and career landscape",
+                        "description": "Understand the day-to-day reality of working as a Data Journalist, including typical roles such as Reporter and Data Editor.",
+                        "resources": [
+                            {"title": "A day in the life of a Data Journalist", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-2", "phase_number": 2,
+                "title": "Core Tools & Practical Skills",
+                "description": "Learn the tools and hands-on skills used in the Data Journalist profession.",
+                "base_weeks": 5,
+                "skills_covered": ["Python", "Flourish", "Datawrapper"],
+                "steps": [
+                    {
+                        "id": "p2-s1", "level": "all",
+                        "title": "Key tools and software",
+                        "description": "Get hands-on with the tools used daily: Python/R, Flourish, Datawrapper.",
+                        "resources": [{"title": "Python/R tutorial for beginners", "type": "video"}, {"title": "Flourish tutorial for beginners", "type": "video"}],
+                    },
+                    {
+                        "id": "p2-s2", "level": "builder_plus",
+                        "title": "Practical exercises and mini-projects",
+                        "description": "Apply your knowledge through structured exercises. Practical experience is what separates candidates at interview.",
+                        "resources": [
+                            {"title": "Data Journalist practical projects for your portfolio", "type": "project"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-3", "phase_number": 3,
+                "title": "Advanced Skills & Specialism",
+                "description": "Develop deeper expertise and begin to specialise within the Data Journalist field.",
+                "base_weeks": 5,
+                "skills_covered": ["Python/R", "Storytelling", "Data Analysis"],
+                "steps": [
+                    {
+                        "id": "p3-s1", "level": "all",
+                        "title": "Advanced techniques",
+                        "description": "Move beyond the basics and tackle more complex, realistic problems faced by mid-level Data Journalists.",
+                        "resources": [{"title": "Advanced Python/R for Data Journalists", "type": "course"}, {"title": "Advanced Storytelling for Data Journalists", "type": "course"}],
+                    },
+                    {
+                        "id": "p3-s2", "level": "advanced_only",
+                        "title": "Specialism and leadership",
+                        "description": "Explore specialist areas within the Data Journalist field and develop the strategic thinking needed for senior roles.",
+                        "resources": [
+                            {"title": "Data Editor — how to reach the senior level", "type": "video"},
+                        ],
+                    },
+                ],
+            },
+            {
+                "id": "phase-4", "phase_number": 4,
+                "title": "Portfolio & Job Preparation",
+                "description": "Build a portfolio, prepare your applications, and land your first Data Journalist role.",
+                "base_weeks": 3,
+                "skills_covered": ["Portfolio", "Job Applications", "Interview Preparation"],
+                "steps": [
+                    {
+                        "id": "p4-s1", "level": "all",
+                        "title": "Build a portfolio project",
+                        "description": "Create at least one substantial project that demonstrates your Data Journalist skills. This is the single most important thing you can do before applying.",
+                        "resources": [
+                            {"title": "Data Journalist portfolio — what to include and how to present it", "type": "video"},
+                            {"title": "GitHub — Host your project portfolio", "type": "project"},
+                        ],
+                    },
+                    {
+                        "id": "p4-s2", "level": "all",
+                        "title": "Job search and interview preparation",
+                        "description": "Polish your CV, practise common Data Journalist interview questions, and start applying. Networking accounts for over 70% of hires.",
+                        "resources": [{"title": "How to become a Data Journalist — career roadmap", "type": "video"}, {"title": "LinkedIn — Data Journalist job search and networking", "type": "practice"}],
+                    },
+                ],
+            },
+        ],
+    },
+
 }

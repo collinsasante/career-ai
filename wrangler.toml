@@ -19,6 +19,7 @@ NEXT_PUBLIC_FIREBASE_APP_ID = "1:778116508406:web:e9e6db955d4916433cdad7"
 FIREBASE_PROJECT_ID = "career-ai-413d6"
 AIRTABLE_BASE_ID = "app4oXKyE7XgTrIQk"
 ML_API_URL = "https://career-ai-vljk.onrender.com"
+NEXT_PUBLIC_GOOGLE_CLIENT_ID = "778116508406-3jhuoo533uq4tm547ofvbfdnn8kqtses.apps.googleusercontent.com"
 
 [env.production]
 vars = { ENVIRONMENT = "production" }
