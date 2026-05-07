@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { Mail, X, CheckCircle2, Loader2 } from "lucide-react";
 import { sendEmailVerification, onAuthStateChanged } from "firebase/auth";
-import { auth } from "@/lib/firebase/client";
+import { getFirebase } from "@/lib/firebase/client";
 
 export function EmailVerificationBanner() {
   const [show,      setShow]      = useState(false);
@@ -12,18 +12,22 @@ export function EmailVerificationBanner() {
   const [sent,      setSent]      = useState(false);
 
   useEffect(() => {
-    const unsub = onAuthStateChanged(auth, (user) => {
-      // Show only for email/password users who haven't verified yet
-      if (user && !user.emailVerified && user.providerData[0]?.providerId === "password") {
-        setShow(true);
-      }
+    let unsub: (() => void) | undefined;
+    getFirebase().then(({ auth }) => {
+      unsub = onAuthStateChanged(auth, (user) => {
+        // Show only for email/password users who haven't verified yet
+        if (user && !user.emailVerified && user.providerData[0]?.providerId === "password") {
+          setShow(true);
+        }
+      });
     });
-    return unsub;
+    return () => unsub?.();
   }, []);
 
   if (!show || dismissed) return null;
 
   const handleResend = async () => {
+    const { auth } = await getFirebase();
     const user = auth.currentUser;
     if (!user) return;
     setSending(true);

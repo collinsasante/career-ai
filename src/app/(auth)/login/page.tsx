@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Eye, EyeOff, ArrowRight } from "lucide-react";
@@ -9,7 +9,7 @@ import {
   signInWithPopup,
   AuthError,
 } from "firebase/auth";
-import { auth, googleProvider } from "@/lib/firebase/client";
+import { getFirebase } from "@/lib/firebase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
@@ -53,6 +53,10 @@ export default function LoginPage() {
   const [googleLoading, setGoogleLoading] = useState(false);
   const [error, setError] = useState("");
   const [form, setForm] = useState({ email: "", password: "" });
+
+  // Pre-warm Firebase so the promise is cached before first interaction
+  useEffect(() => { getFirebase(); }, []);
+
   // ── Email / password sign in ──────────────────
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -60,6 +64,7 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
+      const { auth } = await getFirebase();
       const credential = await signInWithEmailAndPassword(
         auth,
         form.email.trim(),
@@ -81,6 +86,7 @@ export default function LoginPage() {
     setError("");
     setGoogleLoading(true);
     try {
+      const { auth, googleProvider } = await getFirebase();
       const result = await signInWithPopup(auth, googleProvider);
       const idToken = await result.user.getIdToken();
       await createSession(idToken);

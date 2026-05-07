@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { sendPasswordResetEmail } from "firebase/auth";
-import { auth } from "@/lib/firebase/client";
+import { getFirebase } from "@/lib/firebase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
@@ -14,12 +14,15 @@ export default function ForgotPasswordPage() {
   const [sent, setSent] = useState(false);
   const [error, setError] = useState("");
 
+  useEffect(() => { getFirebase(); }, []);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
     setLoading(true);
 
     try {
+      const { auth } = await getFirebase();
       await sendPasswordResetEmail(auth, email.trim());
       setSent(true);
     } catch {
