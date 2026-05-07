@@ -6,6 +6,7 @@ import {
   ArrowLeft, ArrowRight, CheckCircle2, Sparkles, X,
   Compass, Target, TrendingUp,
   Monitor, Users, Palette, BarChart2, Hammer, Briefcase,
+  Code2, Heart, Wrench, Cpu, MessageSquare, Leaf,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -71,6 +72,83 @@ const INDUSTRIES = [
   "Research & Academia", "Defence & Security",
   "Energy & Renewables", "Agriculture", "Real Estate",
   "Legal & Law", "Logistics & Supply Chain",
+];
+
+// ─────────────────────────────────────────────
+// Activity discovery cards (Step 3)
+// ─────────────────────────────────────────────
+interface ActivityCard {
+  id: string;
+  icon: React.ReactNode;
+  label: string;
+  description: string;
+  seeds: string[];
+}
+
+const ACTIVITY_CARDS: ActivityCard[] = [
+  {
+    id: "creative",
+    icon: <Palette size={16} className="text-rose-600" />,
+    label: "Creative & design",
+    description: "Art, design, writing, visual storytelling",
+    seeds: ["UI/UX Design", "Graphic Design", "Content Creation", "Photography", "Animation", "Brand Identity"],
+  },
+  {
+    id: "technical",
+    icon: <Code2 size={16} className="text-blue-600" />,
+    label: "Technical problem solving",
+    description: "Code, systems, logic, engineering puzzles",
+    seeds: ["Software Engineering", "Web Development", "Cybersecurity", "DevOps & Automation"],
+  },
+  {
+    id: "helping",
+    icon: <Heart size={16} className="text-pink-600" />,
+    label: "Helping people",
+    description: "Healthcare, teaching, counselling, support",
+    seeds: ["Healthcare & Medicine", "Education & Teaching", "Mental Health", "Coaching & Mentoring"],
+  },
+  {
+    id: "analytical",
+    icon: <BarChart2 size={16} className="text-amber-600" />,
+    label: "Analysis & research",
+    description: "Data, finance, law, evidence-based thinking",
+    seeds: ["Data Analysis", "Finance & Investing", "Research & Science", "Economics", "Law & Legal Tech"],
+  },
+  {
+    id: "physical",
+    icon: <Wrench size={16} className="text-orange-600" />,
+    label: "Hands-on building",
+    description: "Engineering, construction, practical trades",
+    seeds: ["Engineering", "Robotics", "Electronics", "Architecture"],
+  },
+  {
+    id: "business",
+    icon: <Briefcase size={16} className="text-violet-600" />,
+    label: "Business & leadership",
+    description: "Managing, growing, and organising teams",
+    seeds: ["Entrepreneurship", "Business Strategy", "Product Management", "Project Management"],
+  },
+  {
+    id: "technology",
+    icon: <Cpu size={16} className="text-sky-600" />,
+    label: "Technology & AI",
+    description: "Software, AI, cloud, and digital innovation",
+    seeds: ["Artificial Intelligence", "Machine Learning", "Cloud Computing", "Data Science"],
+  },
+  {
+    id: "communication",
+    icon: <MessageSquare size={16} className="text-teal-600" />,
+    label: "Communication & media",
+    description: "Marketing, journalism, social, storytelling",
+    seeds: ["Digital Marketing", "Writing & Journalism", "Social Media", "Content Creation"],
+  },
+  {
+    id: "science",
+    icon: <Leaf size={16} className="text-emerald-600" />,
+    label: "Science & environment",
+    description: "Biology, sustainability, research, discovery",
+    seeds: ["Research & Science", "Biotech", "Environment & Sustainability", "Agriculture & Food Tech"],
+  },
 ];
 
 // ─────────────────────────────────────────────
@@ -339,9 +417,24 @@ export default function OnboardingPage() {
   const [data, setData] = useState<OnboardingData>(defaultData);
   const [loading, setLoading] = useState(false);
   const [goalInput, setGoalInput] = useState("");
+  const [discoveryPicks, setDiscoveryPicks] = useState<Set<string>>(new Set());
 
   const update = (partial: Partial<OnboardingData>) =>
     setData((prev) => ({ ...prev, ...partial }));
+
+  const toggleActivity = (card: ActivityCard) => {
+    const isPicked = discoveryPicks.has(card.id);
+    const next = new Set(discoveryPicks);
+    if (isPicked) {
+      next.delete(card.id);
+      update({ interests: data.interests.filter((i) => !card.seeds.includes(i)) });
+    } else {
+      next.add(card.id);
+      const toAdd = card.seeds.filter((s) => !data.interests.includes(s));
+      update({ interests: [...data.interests, ...toAdd] });
+    }
+    setDiscoveryPicks(next);
+  };
 
   const toggleWorkPref = (val: WorkPreference) => {
     const current = data.work_preferences;
@@ -558,20 +651,62 @@ export default function OnboardingPage() {
             {step === 3 && (
               <div className="space-y-6">
                 <div>
-                  <h1 className="text-2xl font-bold text-slate-900 mb-1">What excites you?</h1>
+                  <h1 className="text-2xl font-bold text-slate-900 mb-1">What do you enjoy doing?</h1>
                   <p className="text-slate-500 text-sm">
-                    These drive your career matches — add anything that genuinely interests you, even if it seems unrelated to a career.
+                    Start by picking the activities that feel most like you — PathWise will use these to map you to real careers. Then refine below.
                   </p>
                 </div>
-                <TagInput
-                  label="Areas of interest"
-                  hint="Add at least 1 — the more you add, the better your matches"
-                  placeholder="Type an interest, e.g. Healthcare, Marketing, Engineering…"
-                  suggestions={INTEREST_SUGGESTIONS}
-                  selected={data.interests}
-                  onChange={(vals) => update({ interests: vals })}
-                  chipColor="brand"
-                />
+
+                {/* Activity discovery cards */}
+                <div>
+                  <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">
+                    Quick discovery — select everything that resonates
+                  </p>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                    {ACTIVITY_CARDS.map((card) => {
+                      const picked = discoveryPicks.has(card.id);
+                      return (
+                        <button
+                          key={card.id}
+                          type="button"
+                          onClick={() => toggleActivity(card)}
+                          className={cn(
+                            "flex flex-col gap-1.5 p-3 rounded-xl border-2 text-left transition-all duration-150",
+                            picked
+                              ? "border-brand-500 bg-brand-50"
+                              : "border-slate-200 bg-white hover:border-slate-300"
+                          )}
+                        >
+                          <div className="flex items-center justify-between">
+                            <div className="w-7 h-7 rounded-lg bg-slate-100 flex items-center justify-center flex-shrink-0">
+                              {card.icon}
+                            </div>
+                            {picked && <CheckCircle2 size={13} className="text-brand-500 flex-shrink-0" />}
+                          </div>
+                          <p className="text-xs font-semibold text-slate-800 leading-tight">{card.label}</p>
+                          <p className="text-xs text-slate-400 leading-tight">{card.description}</p>
+                        </button>
+                      );
+                    })}
+                  </div>
+                  {discoveryPicks.size > 0 && (
+                    <p className="text-xs text-brand-600 font-medium mt-2">
+                      {data.interests.length} interests added from your selections — review and add more below.
+                    </p>
+                  )}
+                </div>
+
+                <div className="border-t border-slate-100 pt-5">
+                  <TagInput
+                    label="Your interests"
+                    hint="Add at least 1 — the more specific, the better your matches"
+                    placeholder="Type an interest, e.g. Healthcare, Marketing, Engineering…"
+                    suggestions={INTEREST_SUGGESTIONS}
+                    selected={data.interests}
+                    onChange={(vals) => update({ interests: vals })}
+                    chipColor="brand"
+                  />
+                </div>
               </div>
             )}
 

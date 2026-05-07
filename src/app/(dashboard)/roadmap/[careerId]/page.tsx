@@ -17,6 +17,10 @@ import {
   FileText,
   Code2,
   FolderOpen,
+  GraduationCap,
+  Award,
+  Briefcase,
+  ChevronRight,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -30,6 +34,168 @@ const RESOURCE_ICONS: Record<string, React.ReactNode> = {
   practice: <Code2      size={12} className="text-emerald-500" />,
   project:  <FolderOpen size={12} className="text-violet-500"  />,
 };
+
+// ── Alternative Pathways ──────────────────────
+
+interface Pathway {
+  id: string;
+  icon: React.ReactNode;
+  label: string;
+  badge: string;
+  badgeColor: string;
+  duration: string;
+  intro: string;
+  steps: string[];
+}
+
+function computePathways(careerTitle: string): Pathway[] {
+  return [
+    {
+      id: "university",
+      icon: <GraduationCap size={18} className="text-violet-600" />,
+      label: "University",
+      badge: "Traditional",
+      badgeColor: "bg-violet-100 text-violet-700",
+      duration: "3–4 years",
+      intro: `Earn a degree to build deep theoretical foundations and graduate credentials for ${careerTitle}.`,
+      steps: [
+        "Research universities and courses relevant to this field",
+        "Complete required A-levels or equivalent qualifications",
+        "Apply through UCAS or your national admissions system",
+        "Supplement with internships and industry projects each year",
+        "Use careers services and alumni networks to land your first role",
+      ],
+    },
+    {
+      id: "self-taught",
+      icon: <BookOpen size={18} className="text-emerald-600" />,
+      label: "Self-Taught",
+      badge: "Flexible",
+      badgeColor: "bg-emerald-100 text-emerald-700",
+      duration: "6–18 months",
+      intro: `Break into ${careerTitle} at your own pace using free and paid online resources.`,
+      steps: [
+        "Pick 2–3 high-quality resources (YouTube, Coursera, freeCodeCamp, documentation)",
+        "Follow a structured syllabus — don't just consume content, build things",
+        "Complete 3–5 portfolio projects that demonstrate real-world ability",
+        "Join communities (Reddit, Discord, LinkedIn groups) to get feedback and network",
+        "Apply to entry-level roles or internships with your portfolio as proof",
+      ],
+    },
+    {
+      id: "certification",
+      icon: <Award size={18} className="text-amber-600" />,
+      label: "Certification / Bootcamp",
+      badge: "Fast-track",
+      badgeColor: "bg-amber-100 text-amber-700",
+      duration: "3–12 months",
+      intro: `Use industry-recognised certifications and intensive bootcamps to signal competence fast.`,
+      steps: [
+        "Identify the top 2–3 certifications that employers in this field value",
+        "Enrol in a structured course or bootcamp (online or in-person)",
+        "Combine study with hands-on practice — projects matter as much as the cert",
+        "List earned certifications prominently on your CV and LinkedIn profile",
+        "Use bootcamp career services and alumni networks to land your first role",
+      ],
+    },
+    {
+      id: "freelance",
+      icon: <Briefcase size={18} className="text-brand-600" />,
+      label: "Freelance",
+      badge: "Earn as you learn",
+      badgeColor: "bg-brand-100 text-brand-700",
+      duration: "Start in 1–3 months",
+      intro: `Build real experience and early income through freelance work in ${careerTitle}.`,
+      steps: [
+        "Create profiles on Fiverr, Upwork, or Contra with a clearly defined niche",
+        "Set competitive initial rates to attract your first 3–5 clients and reviews",
+        "Deliver excellent work — your reputation compounds quickly",
+        "Document every project as a case study for your portfolio",
+        "Raise rates steadily as reviews, testimonials, and case studies grow",
+      ],
+    },
+  ];
+}
+
+function PathwaysSection({ careerTitle }: { careerTitle: string }) {
+  const [selected, setSelected] = useState<string>("self-taught");
+  const pathways = computePathways(careerTitle);
+  const active = pathways.find((p) => p.id === selected)!;
+
+  return (
+    <div className="bg-white rounded-2xl border border-slate-100 shadow-card p-6 mb-6">
+      <div className="mb-5">
+        <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">
+          Alternative Pathways
+        </p>
+        <h2 className="text-lg font-bold text-slate-900">How to get there</h2>
+        <p className="text-sm text-slate-500 mt-0.5">
+          Every career has multiple valid routes. Pick the one that fits your situation.
+        </p>
+      </div>
+
+      {/* Pathway tabs */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-5">
+        {pathways.map((p) => (
+          <button
+            key={p.id}
+            onClick={() => setSelected(p.id)}
+            className={`flex flex-col gap-1 p-3 rounded-xl border-2 text-left transition-all duration-150 ${
+              selected === p.id
+                ? "border-brand-500 bg-brand-50"
+                : "border-slate-200 hover:border-slate-300 bg-white"
+            }`}
+          >
+            <div className="flex items-center justify-between">
+              <div className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center">
+                {p.icon}
+              </div>
+              {selected === p.id && <CheckCircle2 size={14} className="text-brand-500" />}
+            </div>
+            <p className="text-xs font-semibold text-slate-800 mt-1 leading-tight">{p.label}</p>
+            <span className={`self-start text-2xs px-1.5 py-0.5 rounded-md font-medium ${p.badgeColor}`}>
+              {p.badge}
+            </span>
+          </button>
+        ))}
+      </div>
+
+      {/* Active pathway detail */}
+      <div className="bg-slate-50 rounded-xl p-4">
+        <div className="flex items-start justify-between gap-3 mb-3">
+          <div>
+            <p className="text-sm font-semibold text-slate-800">{active.label} Path</p>
+            <p className="text-xs text-slate-500 mt-0.5">{active.intro}</p>
+          </div>
+          <span className="text-xs font-semibold text-slate-600 bg-white border border-slate-200 rounded-lg px-2 py-1 flex-shrink-0">
+            {active.duration}
+          </span>
+        </div>
+        <div className="space-y-2">
+          {active.steps.map((step, i) => (
+            <div key={i} className="flex items-start gap-2.5">
+              <div className="w-5 h-5 rounded-full bg-brand-100 text-brand-700 flex items-center justify-center flex-shrink-0 mt-0.5 text-2xs font-bold">
+                {i + 1}
+              </div>
+              <p className="text-xs text-slate-600 leading-relaxed">{step}</p>
+            </div>
+          ))}
+        </div>
+        <div className="mt-4 pt-3 border-t border-slate-200">
+          <a
+            href={`https://www.google.com/search?q=${encodeURIComponent(`how to become ${careerTitle} ${active.label.toLowerCase()} path`)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-xs text-brand-600 hover:text-brand-800 font-medium flex items-center gap-1"
+          >
+            Explore {active.label.toLowerCase()} resources for {careerTitle}
+            <ChevronRight size={12} />
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 // ── Step card ─────────────────────────────────
 function StepCard({
@@ -333,6 +499,9 @@ export default function RoadmapDetailPage() {
           </p>
         )}
       </div>
+
+      {/* Alternative Pathways */}
+      <PathwaysSection careerTitle={roadmap.careerTitle} />
 
       {/* Phases */}
       <div className="space-y-4">
