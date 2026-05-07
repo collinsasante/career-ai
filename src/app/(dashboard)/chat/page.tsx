@@ -11,13 +11,30 @@ interface Message {
   timestamp: Date;
 }
 
-const STARTER_PROMPTS = [
-  "What careers suit someone who loves working with people and solving problems?",
-  "I'm interested in healthcare but not sure which role fits me. Can you help?",
-  "What's the difference between a financial analyst and a business analyst?",
-  "How do I get into marketing with no experience?",
-  "What careers are good for creative people who also like structure?",
-  "How do I know if project management is the right path for me?",
+// Guided discovery sequence — sent automatically when user clicks "Start guided discovery"
+const GUIDED_DISCOVERY_PROMPT =
+  `I'm not sure what career I want. Can you guide me through some questions to help me figure out what might suit me? Start by asking me what kinds of activities or subjects I enjoy, then take it from there.`;
+
+// Segmented starter prompts
+const STARTER_PROMPTS_EXPLORER = [
+  "I have no idea what career to choose — where do I even start?",
+  "What careers are good for someone who enjoys helping people?",
+  "I enjoy creative work but also like structure. What careers would suit me?",
+  "Can you explain what a data analyst actually does day-to-day?",
+];
+
+const STARTER_PROMPTS_FOCUSED = [
+  "I'm interested in technology but not sure whether to go into software, data, or cybersecurity.",
+  "What's the difference between a product manager and a project manager?",
+  "How do I get into UX design with no formal experience?",
+  "Which careers in healthcare don't require a medical degree?",
+];
+
+const STARTER_PROMPTS_PROFESSIONAL = [
+  "I'm a software engineer — what are the best paths to move into leadership?",
+  "How do I pivot from marketing into product management?",
+  "What certifications would most improve my data analyst salary?",
+  "I've been in finance for 5 years. What adjacent careers could I move into?",
 ];
 
 function MessageBubble({
@@ -118,6 +135,47 @@ function TypingIndicator() {
             />
           ))}
         </div>
+      </div>
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────
+// Prompt group component
+// ─────────────────────────────────────────────
+function PromptGroup({
+  title,
+  prompts,
+  onSend,
+  color,
+}: {
+  title: string;
+  prompts: string[];
+  onSend: (p: string) => void;
+  color: "brand" | "emerald" | "violet";
+}) {
+  const dotColors = {
+    brand:   "bg-brand-400",
+    emerald: "bg-emerald-400",
+    violet:  "bg-violet-400",
+  };
+
+  return (
+    <div>
+      <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 flex items-center gap-2">
+        <span className={`w-1.5 h-1.5 rounded-full ${dotColors[color]}`} />
+        <span dangerouslySetInnerHTML={{ __html: title }} />
+      </p>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+        {prompts.map((prompt) => (
+          <button
+            key={prompt}
+            onClick={() => onSend(prompt)}
+            className="text-left text-xs text-slate-600 bg-white border border-slate-200 rounded-xl px-3.5 py-3 hover:border-brand-300 hover:text-brand-700 hover:bg-brand-50 transition-all duration-150 shadow-sm"
+          >
+            {prompt}
+          </button>
+        ))}
       </div>
     </div>
   );
@@ -295,30 +353,46 @@ export default function ChatPage() {
       <div className="flex-1 overflow-y-auto px-4 md:px-8 lg:px-16 xl:px-32 py-6">
         {isEmpty ? (
           /* Empty state */
-          <div className="flex flex-col items-center justify-center h-full text-center max-w-lg mx-auto">
+          <div className="flex flex-col items-center justify-center h-full text-center max-w-2xl mx-auto">
             <div className="w-14 h-14 rounded-2xl bg-brand-600 flex items-center justify-center mb-5 shadow-lg shadow-brand-600/25">
               <Sparkles size={24} className="text-white" />
             </div>
             <h2 className="text-xl font-semibold text-slate-900 mb-2">
               Ask me anything about your career
             </h2>
-            <p className="text-sm text-slate-500 mb-8 leading-relaxed">
-              Get personalised guidance on careers, skills, and learning paths
-              across every industry — from technology to healthcare, law to
-              creative arts.
+            <p className="text-sm text-slate-500 mb-6 leading-relaxed">
+              Get personalised guidance across every career sector — technology, healthcare, law, finance, creative arts, trades, and more.
             </p>
 
-            {/* Starter prompts */}
-            <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-2">
-              {STARTER_PROMPTS.map((prompt) => (
-                <button
-                  key={prompt}
-                  onClick={() => sendMessage(prompt)}
-                  className="text-left text-xs text-slate-600 bg-white border border-slate-200 rounded-xl px-3.5 py-3 hover:border-brand-300 hover:text-brand-700 hover:bg-brand-50 transition-all duration-150 shadow-sm"
-                >
-                  {prompt}
-                </button>
-              ))}
+            {/* Guided discovery CTA */}
+            <button
+              onClick={() => sendMessage(GUIDED_DISCOVERY_PROMPT)}
+              className="w-full max-w-sm mb-6 flex items-center gap-3 px-4 py-3.5 bg-brand-600 text-white rounded-2xl hover:bg-brand-700 transition-colors shadow-lg shadow-brand-600/20 text-sm font-medium"
+            >
+              <Sparkles size={18} className="flex-shrink-0" />
+              <span className="text-left">Not sure where to start? Try guided discovery →</span>
+            </button>
+
+            {/* Segmented starter prompts */}
+            <div className="w-full space-y-4 text-left">
+              <PromptGroup
+                title="If you&apos;re exploring"
+                prompts={STARTER_PROMPTS_EXPLORER}
+                onSend={sendMessage}
+                color="brand"
+              />
+              <PromptGroup
+                title="If you have ideas"
+                prompts={STARTER_PROMPTS_FOCUSED}
+                onSend={sendMessage}
+                color="emerald"
+              />
+              <PromptGroup
+                title="If you&apos;re already working"
+                prompts={STARTER_PROMPTS_PROFESSIONAL}
+                onSend={sendMessage}
+                color="violet"
+              />
             </div>
           </div>
         ) : (

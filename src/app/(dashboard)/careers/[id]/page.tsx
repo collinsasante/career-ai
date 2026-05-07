@@ -11,14 +11,14 @@ import {
   Users,
   ChevronRight,
   CheckCircle2,
+  ArrowUpRight,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { MatchScoreRing } from "@/components/ui/progress";
-import {
-  CAREERS_DATA,
-} from "@/lib/recommendation/careers-data";
+import { CAREERS_DATA } from "@/lib/recommendation/careers-data";
+import { CATEGORY_TO_SECTOR, SECTOR_LABELS } from "@/lib/types";
 import { CareerIcon } from "@/components/ui/career-icon";
 import { formatSalary, getJobDemandLabel, getMatchLabel } from "@/lib/utils";
 import { getSession } from "@/lib/auth/session";
@@ -46,17 +46,27 @@ export default async function CareerDetailPage({ params }: Props) {
 
   const demand = getJobDemandLabel(career.job_demand);
 
-  // Compute a simple phase overview from the career's required skills
-  // (not hardcoded — derived from live career data)
+  // Roadmap preview — derived from career skills
   const skills = career.required_skills;
   const chunk  = Math.ceil(skills.length / 4);
   const roadmapPreview = [
-    { id: "p1", phaseNumber: 1, title: "Foundations",         durationWeeks: 4,  skillsCovered: skills.slice(0, chunk) },
-    { id: "p2", phaseNumber: 2, title: "Core Skills",         durationWeeks: 6,  skillsCovered: skills.slice(chunk, chunk * 2) },
-    { id: "p3", phaseNumber: 3, title: "Advanced Practice",   durationWeeks: 6,  skillsCovered: skills.slice(chunk * 2, chunk * 3) },
+    { id: "p1", phaseNumber: 1, title: "Foundations",          durationWeeks: 4, skillsCovered: skills.slice(0, chunk) },
+    { id: "p2", phaseNumber: 2, title: "Core Skills",          durationWeeks: 6, skillsCovered: skills.slice(chunk, chunk * 2) },
+    { id: "p3", phaseNumber: 3, title: "Advanced Practice",    durationWeeks: 6, skillsCovered: skills.slice(chunk * 2, chunk * 3) },
     { id: "p4", phaseNumber: 4, title: "Portfolio & Job Prep", durationWeeks: 4, skillsCovered: skills.slice(chunk * 3) },
   ].filter((p) => p.skillsCovered.length > 0);
   const totalPreviewWeeks = roadmapPreview.reduce((a, p) => a + p.durationWeeks, 0);
+
+  // Career progression levels derived from possible_roles
+  const roles = career.possible_roles;
+  const third  = Math.max(1, Math.floor(roles.length / 3));
+  const progressionLevels = [
+    { level: "Beginner",      color: "bg-emerald-100 text-emerald-700", roles: roles.slice(0, third) },
+    { level: "Intermediate",  color: "bg-blue-100 text-blue-700",       roles: roles.slice(third, third * 2) },
+    { level: "Advanced",      color: "bg-violet-100 text-violet-700",   roles: roles.slice(third * 2) },
+  ].filter((l) => l.roles.length > 0);
+
+  const sector = CATEGORY_TO_SECTOR[career.category];
 
   // Fetch real recommendation data for this career
   let matchScore: number | null = null;
@@ -107,7 +117,8 @@ export default async function CareerDetailPage({ params }: Props) {
               <div className="w-9 h-9 rounded-xl bg-brand-50 flex items-center justify-center">
                 <CareerIcon careerId={career.id} size={18} className="text-brand-600" />
               </div>
-              <Badge variant="brand">{career.category}</Badge>
+              <Badge variant="brand">{SECTOR_LABELS[sector]}</Badge>
+              <Badge variant="slate">{career.category}</Badge>
               <Badge
                 variant={
                   career.job_demand === "very_high" || career.job_demand === "high"
@@ -256,6 +267,38 @@ export default async function CareerDetailPage({ params }: Props) {
                 <span key={tool} className="px-3 py-1.5 rounded-xl bg-slate-50 border border-slate-200 text-sm font-medium text-slate-700">
                   {tool}
                 </span>
+              ))}
+            </div>
+          </Card>
+
+          {/* Career Progression */}
+          <Card padding="md">
+            <div className="flex items-center gap-2 mb-4">
+              <ArrowUpRight size={16} className="text-violet-600" />
+              <h2 className="text-base font-semibold text-slate-900">Career Progression Path</h2>
+            </div>
+            <p className="text-xs text-slate-500 mb-4">
+              Most people move through these stages over their career. There is no fixed timeline — progress depends on experience, learning, and opportunity.
+            </p>
+            <div className="flex flex-col gap-3">
+              {progressionLevels.map((pl, i) => (
+                <div key={pl.level} className="flex items-start gap-3">
+                  <div className="flex flex-col items-center flex-shrink-0">
+                    <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${pl.color} w-28 text-center`}>
+                      {pl.level}
+                    </span>
+                    {i < progressionLevels.length - 1 && (
+                      <div className="w-px h-4 bg-slate-200 my-1" />
+                    )}
+                  </div>
+                  <div className="flex flex-wrap gap-1.5 pt-1">
+                    {pl.roles.map((role) => (
+                      <span key={role} className="text-xs px-2.5 py-1 rounded-lg bg-slate-50 border border-slate-100 text-slate-700 font-medium">
+                        {role}
+                      </span>
+                    ))}
+                  </div>
+                </div>
               ))}
             </div>
           </Card>

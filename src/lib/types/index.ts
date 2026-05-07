@@ -15,6 +15,8 @@ export interface StudentProfile {
   user_id: string;
   program: string;
   level: StudentLevel;
+  experience_level?: ExperienceLevel;
+  work_preferences?: WorkPreference[];
   interests: string[];
   skills: string[];
   weak_areas: string[];
@@ -109,6 +111,72 @@ export type CareerCategory =
   | "nonprofit"
   | "government"
   | "trades";
+
+export type CareerSector =
+  | "computing-technology"
+  | "data-ai"
+  | "engineering"
+  | "health-sciences"
+  | "business-management"
+  | "arts-design-media"
+  | "legal-compliance"
+  | "education-social"
+  | "trades-vocational"
+  | "environment";
+
+export const CATEGORY_TO_SECTOR: Record<CareerCategory, CareerSector> = {
+  software:       "computing-technology",
+  security:       "computing-technology",
+  infrastructure: "computing-technology",
+  data:           "data-ai",
+  ai:             "data-ai",
+  design:         "arts-design-media",
+  creative:       "arts-design-media",
+  media:          "arts-design-media",
+  management:     "business-management",
+  business:       "business-management",
+  finance:        "business-management",
+  logistics:      "business-management",
+  hospitality:    "business-management",
+  "real-estate":  "business-management",
+  healthcare:     "health-sciences",
+  science:        "health-sciences",
+  sports:         "health-sciences",
+  legal:          "legal-compliance",
+  law:            "legal-compliance",
+  education:      "education-social",
+  social:         "education-social",
+  nonprofit:      "education-social",
+  government:     "education-social",
+  engineering:    "engineering",
+  construction:   "trades-vocational",
+  trades:         "trades-vocational",
+  agriculture:    "environment",
+  environment:    "environment",
+};
+
+export const SECTOR_LABELS: Record<CareerSector, string> = {
+  "computing-technology": "Computing & Technology",
+  "data-ai":              "Data & AI",
+  "engineering":          "Engineering",
+  "health-sciences":      "Health Sciences",
+  "business-management":  "Business & Finance",
+  "arts-design-media":    "Arts, Design & Media",
+  "legal-compliance":     "Legal & Compliance",
+  "education-social":     "Education & Social",
+  "trades-vocational":    "Trades & Vocational",
+  "environment":          "Environment & Agriculture",
+};
+
+export type ExperienceLevel = "explorer" | "focused" | "professional";
+
+export type WorkPreference =
+  | "technology"
+  | "people"
+  | "creative"
+  | "analytical"
+  | "physical"
+  | "business";
 
 // ─────────────────────────────────────────────
 // Recommendation types
@@ -218,6 +286,8 @@ export interface RoadmapProgress {
 
 export interface OnboardingData {
   name: string;
+  experience_level: ExperienceLevel;
+  work_preferences: WorkPreference[];
   interests: string[];
   skills: string[];
   weak_areas: string[];

@@ -137,14 +137,16 @@ export interface AirtableProfile {
   userId: string;
   name: string;
   email: string;
-  interests: string;    // JSON string
-  skills: string;       // JSON string
-  weakAreas: string;    // JSON string
+  experienceLevel: string;
+  workPreferences: string; // JSON string
+  interests: string;       // JSON string
+  skills: string;          // JSON string
+  weakAreas: string;       // JSON string
   workStyle: string;
   learningMode: string;
   availability: string;
-  careerGoals: string;  // JSON string
-  industries: string;   // JSON string
+  careerGoals: string;     // JSON string
+  industries: string;      // JSON string
   createdAt: string;
   updatedAt: string;
 }
@@ -153,6 +155,8 @@ export interface ProfileData {
   userId: string;
   name: string;
   email: string;
+  experienceLevel?: string;
+  workPreferences?: string[];
   interests: string[];
   skills: string[];
   weakAreas: string[];
@@ -167,19 +171,21 @@ export interface ProfileData {
 
 function deserializeProfile(fields: AirtableProfile): ProfileData {
   return {
-    userId:      fields.userId,
-    name:        fields.name ?? "",
-    email:       fields.email ?? "",
-    interests:   JSON.parse(fields.interests   || "[]"),
-    skills:      JSON.parse(fields.skills      || "[]"),
-    weakAreas:   JSON.parse(fields.weakAreas   || "[]"),
-    workStyle:   fields.workStyle   ?? "hybrid",
-    learningMode: fields.learningMode ?? "self_paced",
-    availability: fields.availability ?? "part_time",
-    careerGoals: JSON.parse(fields.careerGoals || "[]"),
-    industries:  JSON.parse(fields.industries  || "[]"),
-    createdAt:   fields.createdAt,
-    updatedAt:   fields.updatedAt,
+    userId:          fields.userId,
+    name:            fields.name ?? "",
+    email:           fields.email ?? "",
+    experienceLevel: fields.experienceLevel ?? "explorer",
+    workPreferences: JSON.parse(fields.workPreferences || "[]"),
+    interests:       JSON.parse(fields.interests   || "[]"),
+    skills:          JSON.parse(fields.skills      || "[]"),
+    weakAreas:       JSON.parse(fields.weakAreas   || "[]"),
+    workStyle:       fields.workStyle   ?? "hybrid",
+    learningMode:    fields.learningMode ?? "self_paced",
+    availability:    fields.availability ?? "part_time",
+    careerGoals:     JSON.parse(fields.careerGoals || "[]"),
+    industries:      JSON.parse(fields.industries  || "[]"),
+    createdAt:       fields.createdAt,
+    updatedAt:       fields.updatedAt,
   };
 }
 
@@ -201,19 +207,21 @@ export async function upsertProfile(data: ProfileData): Promise<void> {
   );
 
   const fields: AirtableProfile = {
-    userId:      data.userId,
-    name:        data.name,
-    email:       data.email,
-    interests:   JSON.stringify(data.interests),
-    skills:      JSON.stringify(data.skills),
-    weakAreas:   JSON.stringify(data.weakAreas),
-    workStyle:   data.workStyle,
-    learningMode: data.learningMode,
-    availability: data.availability,
-    careerGoals: JSON.stringify(data.careerGoals),
-    industries:  JSON.stringify(data.industries),
-    createdAt:   records[0]?.fields.createdAt ?? new Date().toISOString(),
-    updatedAt:   new Date().toISOString(),
+    userId:          data.userId,
+    name:            data.name,
+    email:           data.email,
+    experienceLevel: data.experienceLevel ?? "explorer",
+    workPreferences: JSON.stringify(data.workPreferences ?? []),
+    interests:       JSON.stringify(data.interests),
+    skills:          JSON.stringify(data.skills),
+    weakAreas:       JSON.stringify(data.weakAreas),
+    workStyle:       data.workStyle,
+    learningMode:    data.learningMode,
+    availability:    data.availability,
+    careerGoals:     JSON.stringify(data.careerGoals),
+    industries:      JSON.stringify(data.industries),
+    createdAt:       records[0]?.fields.createdAt ?? new Date().toISOString(),
+    updatedAt:       new Date().toISOString(),
   };
 
   if (records.length > 0) {

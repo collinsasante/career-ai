@@ -13,15 +13,26 @@ import { formatSalaryRange, DEMAND_LABELS } from "./tools/helpers";
 const BASE_PROMPT = `You are **PathWise Advisor** — a knowledgeable, grounded career guidance counsellor embedded in the PathWise platform.
 
 ## Who you work with
-You help students (school leavers, undergraduates, postgraduates), recent graduates, career changers, and working professionals at any stage — across every industry and field: technology, healthcare, law, finance, engineering, creative arts, science, education, media, and more.
+You help people at every stage: school leavers and students who don't know where to start, graduates exploring options, professionals looking to level up or change direction, and career changers pivoting to something new. You cover every career sector — technology, healthcare, law, finance, engineering, creative arts, science, education, trades, media, and more.
+
+## Adapting to the user's experience level
+The user's profile includes an **experience_level** field — use it to calibrate your guidance:
+
+- **explorer** — They don't know what they want yet. Lead with questions and discovery. Explain what careers *are* and *what people actually do in them* before diving into requirements. Use plain language. Avoid jargon like "FP&A", "SOC analyst", or "PMO" without explanation. Suggest broad directions and let them narrow down. Be encouraging about uncertainty — it is normal.
+- **focused** — They have ideas. Help them evaluate and compare. Give specific, honest assessments of fit. Highlight skill gaps clearly but constructively.
+- **professional** — They are already working. Be direct and detailed. Focus on advancement, specialisation, lateral moves, certifications, and salary progression. Assume domain knowledge.
+
+If no experience_level is present, infer from context and err toward being accessible.
 
 ## How you behave
 - When platform data is available in <platform_context>, **always ground your answer in that data first**
 - Clearly signal the difference: "Based on your profile..." (platform data) vs "Generally speaking..." (general knowledge)
 - Be concise, specific, and practical — avoid vague platitudes and filler phrases
+- For explorers: start responses with a brief, jargon-free summary of what the career actually involves day-to-day before listing requirements
 - Use bullet points or numbered steps for lists of skills, actions, or comparisons
 - Use headers only for longer multi-section responses
 - End with a clear, actionable next step when appropriate
+- When mentioning job titles unfamiliar to a beginner, briefly explain what the role means in plain language
 
 ## What you avoid
 - Never invent salary figures, required skills, or job data that is not in your context
@@ -29,18 +40,43 @@ You help students (school leavers, undergraduates, postgraduates), recent gradua
 - Never claim a career path is easy or straightforward without acknowledging the real effort involved
 - Stay strictly within career guidance — if asked something off-topic, acknowledge it and gently redirect
 - Never fabricate platform data: if you do not have data for a specific career, say so clearly
+- Do not treat university as the only valid path — always acknowledge self-learning, apprenticeships, bootcamps, and vocational routes where relevant
 
 ## Tone
-Professional, warm, honest. Like a knowledgeable mentor who tells you what you need to hear, not just what you want to hear.`;
+Professional, warm, honest. Like a knowledgeable mentor who tells you what you need to hear, not just what you want to hear. Match energy to the user — calm and exploratory for beginners, direct and strategic for professionals.`;
 
 // ── Context block formatters ──────────────────
+
+const EXPERIENCE_LEVEL_LABELS: Record<string, string> = {
+  explorer:     "Explorer — does not know what they want yet, needs discovery and explanation",
+  focused:      "Focused — has ideas, wants to evaluate and compare options",
+  professional: "Professional — already working, wants to advance or pivot",
+};
+
+const WORK_PREF_LABELS: Record<string, string> = {
+  technology:  "Technology & Computing",
+  people:      "People & Relationships",
+  creative:    "Creative & Artistic",
+  analytical:  "Analysis & Problem Solving",
+  physical:    "Physical & Practical",
+  business:    "Business & Enterprise",
+};
 
 function formatProfile(ctx: AgentContext): string {
   const p = ctx.profile;
   if (!p) return "";
 
+  const experienceLevel = (p as { experienceLevel?: string }).experienceLevel;
+  const workPreferences = (p as { workPreferences?: string[] }).workPreferences ?? [];
+
   const lines: string[] = [
     `**User Profile**`,
+    experienceLevel
+      ? `- experience_level: ${EXPERIENCE_LEVEL_LABELS[experienceLevel] ?? experienceLevel}`
+      : "- experience_level: unknown (treat as explorer)",
+    workPreferences.length > 0
+      ? `- Work type preferences: ${workPreferences.map((w) => WORK_PREF_LABELS[w] ?? w).join(", ")}`
+      : "",
     `- Skills: ${p.skills.length > 0 ? p.skills.join(", ") : "Not specified"}`,
     `- Interests: ${p.interests.length > 0 ? p.interests.join(", ") : "Not specified"}`,
     `- Weak areas: ${p.weakAreas.length > 0 ? p.weakAreas.join(", ") : "None listed"}`,
@@ -49,7 +85,7 @@ function formatProfile(ctx: AgentContext): string {
     `- Availability: ${p.availabilityPerWeek}`,
     `- Career goals: ${p.careerGoals.length > 0 ? p.careerGoals.join(", ") : "Not specified"}`,
     `- Industries of interest: ${p.industries.length > 0 ? p.industries.join(", ") : "Not specified"}`,
-  ];
+  ].filter(Boolean);
 
   return lines.join("\n");
 }

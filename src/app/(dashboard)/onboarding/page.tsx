@@ -2,13 +2,17 @@
 
 import { useState, useRef, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowLeft, ArrowRight, CheckCircle2, Sparkles, X } from "lucide-react";
+import {
+  ArrowLeft, ArrowRight, CheckCircle2, Sparkles, X,
+  Compass, Target, TrendingUp,
+  Monitor, Users, Palette, BarChart2, Hammer, Briefcase,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select } from "@/components/ui/select";
 import { MultiSelectChips } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
-import type { OnboardingData } from "@/lib/types";
+import type { OnboardingData, ExperienceLevel, WorkPreference } from "@/lib/types";
 
 // ─────────────────────────────────────────────
 // Suggestion lists
@@ -34,38 +38,27 @@ const INTEREST_SUGGESTIONS = [
 ];
 
 const SKILL_SUGGESTIONS = [
-  // Communication & soft skills
   "Public Speaking", "Written Communication", "Active Listening", "Storytelling",
   "Negotiation", "Conflict Resolution", "Persuasion", "Presentation Skills",
-  // Leadership & teamwork
   "Team Leadership", "People Management", "Mentoring", "Collaboration",
   "Decision Making", "Critical Thinking", "Problem Solving", "Time Management",
-  // Business & finance
   "Project Management", "Budgeting", "Financial Analysis", "Accounting",
   "Business Development", "Sales", "Customer Service", "Market Research",
   "Strategic Planning", "Stakeholder Management", "Contract Negotiation",
-  // Marketing & creative
   "Social Media Management", "Content Writing", "Copywriting", "SEO",
   "Brand Strategy", "Email Marketing", "Photography", "Video Editing",
   "Graphic Design", "Illustration", "UI/UX Design",
-  // Research & analysis
   "Data Analysis", "Research", "Report Writing", "Statistics",
   "Excel / Spreadsheets", "Survey Design", "Literature Review",
-  // Healthcare & wellbeing
   "Patient Care", "First Aid", "Clinical Assessment", "Health Education",
   "Counselling", "Mental Health Support", "Nutrition & Dietetics",
-  // Education & training
   "Teaching", "Curriculum Design", "Training & Facilitation", "Tutoring",
   "Coaching", "E-Learning Development",
-  // Legal & compliance
   "Legal Research", "Contract Drafting", "Compliance & Regulation", "Case Management",
-  // Trades & practical
   "Carpentry", "Electrical Work", "Plumbing", "Welding",
   "Vehicle Maintenance", "Construction Planning", "Health & Safety",
-  // Technology (general)
   "Python", "JavaScript", "SQL", "Excel / Spreadsheets", "Data Visualisation",
   "Web Development", "Cybersecurity", "IT Support", "Network Administration",
-  // Science & environment
   "Laboratory Skills", "Field Research", "Environmental Assessment",
   "GIS & Mapping", "Scientific Writing",
 ];
@@ -80,29 +73,103 @@ const INDUSTRIES = [
   "Legal & Law", "Logistics & Supply Chain",
 ];
 
+// ─────────────────────────────────────────────
+// Step definitions
+// ─────────────────────────────────────────────
 const steps = [
-  { number: 1, title: "About You",   description: "A quick introduction" },
-  { number: 2, title: "Interests",   description: "What excites you?" },
-  { number: 3, title: "Skills",      description: "What you know" },
-  { number: 4, title: "Preferences", description: "How you like to work" },
-  { number: 5, title: "Goals",       description: "Where you want to go" },
+  { number: 1, title: "About You",      description: "Who you are" },
+  { number: 2, title: "Work Type",      description: "What appeals to you" },
+  { number: 3, title: "Interests",      description: "What excites you?" },
+  { number: 4, title: "Skills",         description: "What you know" },
+  { number: 5, title: "Preferences",    description: "How you like to work" },
+  { number: 6, title: "Goals",          description: "Where you want to go" },
 ];
 
-const defaultData: OnboardingData = {
-  name:                   "",
-  interests:              [],
-  skills:                 [],
-  weak_areas:             [],
-  preferred_work_style:   "hybrid",
-  learning_mode:          "self_paced",
-  availability:           "part_time",
-  career_goals:           [],
-  industries_of_interest: [],
-};
+// ─────────────────────────────────────────────
+// Experience level options
+// ─────────────────────────────────────────────
+const EXPERIENCE_OPTIONS: {
+  value: ExperienceLevel;
+  icon: React.ReactNode;
+  label: string;
+  description: string;
+}[] = [
+  {
+    value: "explorer",
+    icon: <Compass size={22} className="text-brand-600" />,
+    label: "I'm exploring",
+    description: "I'm not sure what I want to do yet — help me discover careers that suit me.",
+  },
+  {
+    value: "focused",
+    icon: <Target size={22} className="text-emerald-600" />,
+    label: "I have some ideas",
+    description: "I have a sense of what I'm interested in and want to find the right career path.",
+  },
+  {
+    value: "professional",
+    icon: <TrendingUp size={22} className="text-violet-600" />,
+    label: "I'm already working",
+    description: "I'm in a career and want to level up, pivot, or plan my next step.",
+  },
+];
+
+// ─────────────────────────────────────────────
+// Work preference options
+// ─────────────────────────────────────────────
+const WORK_PREFERENCE_OPTIONS: {
+  value: WorkPreference;
+  icon: React.ReactNode;
+  label: string;
+  description: string;
+  examples: string;
+}[] = [
+  {
+    value: "technology",
+    icon: <Monitor size={20} className="text-blue-600" />,
+    label: "Technology & Computing",
+    description: "Building, coding, and working with software and data",
+    examples: "Software development, data science, cybersecurity",
+  },
+  {
+    value: "people",
+    icon: <Users size={20} className="text-emerald-600" />,
+    label: "People & Relationships",
+    description: "Helping, teaching, leading, and supporting others",
+    examples: "Healthcare, education, HR, counselling",
+  },
+  {
+    value: "creative",
+    icon: <Palette size={20} className="text-rose-600" />,
+    label: "Creative & Artistic",
+    description: "Designing, writing, producing, and making things",
+    examples: "Graphic design, video production, content writing",
+  },
+  {
+    value: "analytical",
+    icon: <BarChart2 size={20} className="text-amber-600" />,
+    label: "Analysis & Problem Solving",
+    description: "Research, strategy, data, and structured thinking",
+    examples: "Finance, consulting, law, data analysis",
+  },
+  {
+    value: "physical",
+    icon: <Hammer size={20} className="text-orange-600" />,
+    label: "Physical & Practical",
+    description: "Building, fixing, and working with your hands",
+    examples: "Engineering, construction, trades",
+  },
+  {
+    value: "business",
+    icon: <Briefcase size={20} className="text-violet-600" />,
+    label: "Business & Enterprise",
+    description: "Selling, managing, and growing organisations",
+    examples: "Sales, project management, entrepreneurship",
+  },
+];
 
 // ─────────────────────────────────────────────
 // Generic tag autocomplete input
-// Reused for interests, skills, and weak areas
 // ─────────────────────────────────────────────
 interface TagInputProps {
   label: string;
@@ -182,7 +249,6 @@ function TagInput({
         {hint && <p className="text-xs text-slate-400 mt-0.5">{hint}</p>}
       </div>
 
-      {/* Chips */}
       {selected.length > 0 && (
         <div className="flex flex-wrap gap-2">
           {selected.map((s) => (
@@ -199,7 +265,6 @@ function TagInput({
         </div>
       )}
 
-      {/* Input */}
       <div className="relative">
         <input
           ref={inputRef}
@@ -254,6 +319,20 @@ function TagInput({
 // ─────────────────────────────────────────────
 // Page
 // ─────────────────────────────────────────────
+const defaultData: OnboardingData = {
+  name:                   "",
+  experience_level:       "explorer",
+  work_preferences:       [],
+  interests:              [],
+  skills:                 [],
+  weak_areas:             [],
+  preferred_work_style:   "hybrid",
+  learning_mode:          "self_paced",
+  availability:           "part_time",
+  career_goals:           [],
+  industries_of_interest: [],
+};
+
 export default function OnboardingPage() {
   const router = useRouter();
   const [step, setStep] = useState(1);
@@ -264,13 +343,23 @@ export default function OnboardingPage() {
   const update = (partial: Partial<OnboardingData>) =>
     setData((prev) => ({ ...prev, ...partial }));
 
+  const toggleWorkPref = (val: WorkPreference) => {
+    const current = data.work_preferences;
+    if (current.includes(val)) {
+      update({ work_preferences: current.filter((v) => v !== val) });
+    } else {
+      update({ work_preferences: [...current, val] });
+    }
+  };
+
   const canProceed = () => {
     switch (step) {
       case 1: return data.name.trim().length > 0;
-      case 2: return data.interests.length >= 2;
-      case 3: return data.skills.length >= 2;
-      case 4: return true;
-      case 5: return data.industries_of_interest.length >= 1;
+      case 2: return data.work_preferences.length >= 1;
+      case 3: return data.interests.length >= 1;
+      case 4: return data.skills.length >= 1;
+      case 5: return true;
+      case 6: return data.industries_of_interest.length >= 1;
       default: return true;
     }
   };
@@ -328,7 +417,7 @@ export default function OnboardingPage() {
       </div>
 
       <div className="flex-1 flex mt-14">
-        {/* Left — step indicators */}
+        {/* Left sidebar — step indicators */}
         <div className="hidden lg:flex w-72 flex-col px-8 py-12 border-r border-slate-100 bg-white">
           <div className="mb-8">
             <h2 className="text-lg font-bold text-slate-900 mb-1">Profile Setup</h2>
@@ -363,19 +452,20 @@ export default function OnboardingPage() {
           </div>
         </div>
 
-        {/* Right — form */}
+        {/* Right — form content */}
         <div className="flex-1 flex flex-col items-center px-4 py-10">
           <div className="w-full max-w-xl">
 
-            {/* Step 1 — About You */}
+            {/* ── Step 1 — About You ── */}
             {step === 1 && (
-              <div className="space-y-6">
+              <div className="space-y-8">
                 <div>
                   <h1 className="text-2xl font-bold text-slate-900 mb-1">Tell us about yourself</h1>
                   <p className="text-slate-500 text-sm">
                     PathWise works for everyone — students, graduates, professionals, and career changers.
                   </p>
                 </div>
+
                 <Input
                   label="Full name"
                   placeholder="Your name"
@@ -383,21 +473,99 @@ export default function OnboardingPage() {
                   onChange={(e) => update({ name: e.target.value })}
                   required
                 />
+
+                <div className="space-y-3">
+                  <div>
+                    <label className="text-sm font-medium text-slate-700">Where are you right now?</label>
+                    <p className="text-xs text-slate-400 mt-0.5">This shapes how PathWise guides you.</p>
+                  </div>
+                  <div className="space-y-3">
+                    {EXPERIENCE_OPTIONS.map((opt) => (
+                      <button
+                        key={opt.value}
+                        type="button"
+                        onClick={() => update({ experience_level: opt.value })}
+                        className={cn(
+                          "w-full flex items-start gap-4 p-4 rounded-2xl border-2 text-left transition-all duration-150",
+                          data.experience_level === opt.value
+                            ? "border-brand-500 bg-brand-50"
+                            : "border-slate-200 bg-white hover:border-slate-300"
+                        )}
+                      >
+                        <div className="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center flex-shrink-0">
+                          {opt.icon}
+                        </div>
+                        <div>
+                          <p className="text-sm font-semibold text-slate-900">{opt.label}</p>
+                          <p className="text-xs text-slate-500 mt-0.5 leading-relaxed">{opt.description}</p>
+                        </div>
+                        {data.experience_level === opt.value && (
+                          <CheckCircle2 size={18} className="text-brand-600 flex-shrink-0 ml-auto mt-1" />
+                        )}
+                      </button>
+                    ))}
+                  </div>
+                </div>
               </div>
             )}
 
-            {/* Step 2 — Interests */}
+            {/* ── Step 2 — Work Type ── */}
             {step === 2 && (
+              <div className="space-y-6">
+                <div>
+                  <h1 className="text-2xl font-bold text-slate-900 mb-1">What type of work appeals to you?</h1>
+                  <p className="text-slate-500 text-sm">
+                    Select everything that resonates — you can choose multiple. This helps us match you to the right career sectors.
+                  </p>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {WORK_PREFERENCE_OPTIONS.map((opt) => {
+                    const selected = data.work_preferences.includes(opt.value);
+                    return (
+                      <button
+                        key={opt.value}
+                        type="button"
+                        onClick={() => toggleWorkPref(opt.value)}
+                        className={cn(
+                          "flex flex-col gap-2 p-4 rounded-2xl border-2 text-left transition-all duration-150",
+                          selected
+                            ? "border-brand-500 bg-brand-50"
+                            : "border-slate-200 bg-white hover:border-slate-300"
+                        )}
+                      >
+                        <div className="flex items-center justify-between">
+                          <div className="w-9 h-9 rounded-xl bg-slate-100 flex items-center justify-center">
+                            {opt.icon}
+                          </div>
+                          {selected && <CheckCircle2 size={16} className="text-brand-600" />}
+                        </div>
+                        <div>
+                          <p className="text-sm font-semibold text-slate-900">{opt.label}</p>
+                          <p className="text-xs text-slate-500 mt-0.5">{opt.description}</p>
+                          <p className="text-xs text-slate-400 mt-1 italic">{opt.examples}</p>
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+                {data.work_preferences.length === 0 && (
+                  <p className="text-xs text-amber-600 font-medium">Select at least one to continue.</p>
+                )}
+              </div>
+            )}
+
+            {/* ── Step 3 — Interests ── */}
+            {step === 3 && (
               <div className="space-y-6">
                 <div>
                   <h1 className="text-2xl font-bold text-slate-900 mb-1">What excites you?</h1>
                   <p className="text-slate-500 text-sm">
-                    These drive your career matches — add anything that genuinely interests you.
+                    These drive your career matches — add anything that genuinely interests you, even if it seems unrelated to a career.
                   </p>
                 </div>
                 <TagInput
                   label="Areas of interest"
-                  hint="Add at least 2"
+                  hint="Add at least 1 — the more you add, the better your matches"
                   placeholder="Type an interest, e.g. Healthcare, Marketing, Engineering…"
                   suggestions={INTEREST_SUGGESTIONS}
                   selected={data.interests}
@@ -407,18 +575,18 @@ export default function OnboardingPage() {
               </div>
             )}
 
-            {/* Step 3 — Skills */}
-            {step === 3 && (
+            {/* ── Step 4 — Skills ── */}
+            {step === 4 && (
               <div className="space-y-8">
                 <div>
                   <h1 className="text-2xl font-bold text-slate-900 mb-1">What do you know?</h1>
                   <p className="text-slate-500 text-sm">
-                    Be honest — skills you&apos;re still learning count too. This helps us find realistic matches.
+                    Be honest — skills you&apos;re still learning count too. This helps us find realistic matches and build your roadmap.
                   </p>
                 </div>
                 <TagInput
                   label="Skills you currently have"
-                  hint="Include both technical and soft skills — add at least 2"
+                  hint="Include both technical and soft skills — add at least 1"
                   placeholder="Type a skill, e.g. Public Speaking, Project Management…"
                   suggestions={SKILL_SUGGESTIONS}
                   selected={data.skills}
@@ -437,11 +605,11 @@ export default function OnboardingPage() {
               </div>
             )}
 
-            {/* Step 4 — Preferences */}
-            {step === 4 && (
+            {/* ── Step 5 — Preferences ── */}
+            {step === 5 && (
               <div className="space-y-6">
                 <div>
-                  <h1 className="text-2xl font-bold text-slate-900 mb-1">How do you like to work?</h1>
+                  <h1 className="text-2xl font-bold text-slate-900 mb-1">How do you like to work and learn?</h1>
                   <p className="text-slate-500 text-sm">
                     Your preferences shape the careers and learning paths we suggest.
                   </p>
@@ -484,8 +652,8 @@ export default function OnboardingPage() {
               </div>
             )}
 
-            {/* Step 5 — Goals */}
-            {step === 5 && (
+            {/* ── Step 6 — Goals ── */}
+            {step === 6 && (
               <div className="space-y-8">
                 <div>
                   <h1 className="text-2xl font-bold text-slate-900 mb-1">Where do you want to go?</h1>
@@ -498,10 +666,13 @@ export default function OnboardingPage() {
                   <span className="text-sm font-medium text-slate-700">
                     Career goals <span className="text-slate-400 font-normal">(optional)</span>
                   </span>
+                  <p className="text-xs text-slate-400">
+                    What outcome do you want? e.g. &quot;Start my own business&quot;, &quot;Become a nurse&quot;, &quot;Work remotely for a tech company&quot;.
+                  </p>
                   <div className="flex gap-2">
                     <input
                       className="input-base flex-1"
-                      placeholder="e.g. Start my own business, become a nurse, open a practice…"
+                      placeholder="Type a goal and press Add…"
                       value={goalInput}
                       onChange={(e) => setGoalInput(e.target.value)}
                       onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), addGoal())}
@@ -531,7 +702,7 @@ export default function OnboardingPage() {
               </div>
             )}
 
-            {/* Navigation */}
+            {/* ── Navigation ── */}
             <div className="flex items-center justify-between mt-10 pt-6 border-t border-slate-100">
               <Button
                 variant="ghost"
