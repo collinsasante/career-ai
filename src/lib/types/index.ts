@@ -170,6 +170,27 @@ export const SECTOR_LABELS: Record<CareerSector, string> = {
 
 export type ExperienceLevel = "explorer" | "focused" | "professional";
 
+export type EducationStage =
+  | "jhs_student"
+  | "shs_student"
+  | "tvet_student"
+  | "polytechnic_student"
+  | "university_student"
+  | "graduate"
+  | "working_professional"
+  | "career_switcher";
+
+export const EDUCATION_STAGE_LABELS: Record<EducationStage, string> = {
+  jhs_student:          "JHS Student",
+  shs_student:          "SHS Student",
+  tvet_student:         "TVET Student",
+  polytechnic_student:  "Polytechnic Student",
+  university_student:   "University Student",
+  graduate:             "Graduate",
+  working_professional: "Working Professional",
+  career_switcher:      "Career Switcher",
+};
+
 export type WorkPreference =
   | "technology"
   | "people"
@@ -286,6 +307,13 @@ export interface RoadmapProgress {
 
 export interface OnboardingData {
   name: string;
+  education_stage: EducationStage;
+  current_program: string;
+  academic_background: string;
+  preferred_next_step: string;
+  certification_interest: boolean;
+  entrepreneurial_interest: boolean;
+  /** @deprecated use education_stage — kept for backwards compat */
   experience_level: ExperienceLevel;
   work_preferences: WorkPreference[];
   interests: string[];

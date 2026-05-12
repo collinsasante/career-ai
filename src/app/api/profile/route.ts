@@ -3,11 +3,15 @@ import { getSession } from "@/lib/auth/session";
 import { getProfile, upsertProfile } from "@/lib/airtable/client";
 import { sanitiseString, sanitiseStringArray, sanitiseEnum } from "@/lib/sanitise";
 
-const WORK_STYLES      = ["remote", "hybrid", "office", "flexible"] as const;
-const LEARN_MODES      = ["self_paced", "structured", "bootcamp", "university", "mentorship"] as const;
-const AVAILABILITIES   = ["full_time", "part_time", "evenings", "weekends", "limited"] as const;
+const WORK_STYLES       = ["remote", "hybrid", "office", "flexible"] as const;
+const LEARN_MODES       = ["self_paced", "structured", "bootcamp", "university", "mentorship"] as const;
+const AVAILABILITIES    = ["full_time", "part_time", "evenings", "weekends", "limited"] as const;
 const EXPERIENCE_LEVELS = ["explorer", "focused", "professional"] as const;
 const WORK_PREFERENCES  = ["technology", "people", "creative", "analytical", "physical", "business"] as const;
+const EDUCATION_STAGES  = [
+  "jhs_student", "shs_student", "tvet_student", "polytechnic_student",
+  "university_student", "graduate", "working_professional", "career_switcher",
+] as const;
 
 
 export async function GET() {
@@ -48,19 +52,25 @@ export async function POST(request: NextRequest) {
     );
 
     await upsertProfile({
-      userId:          session.userId,
-      name:            sanitiseString(body.name ?? session.name ?? "", 100),
-      email:           session.email ?? "",
-      experienceLevel: sanitiseEnum(body.experience_level ?? body.experienceLevel, EXPERIENCE_LEVELS, "explorer"),
-      workPreferences: validWorkPrefs,
-      interests:       sanitiseStringArray(body.interests),
-      skills:          sanitiseStringArray(body.skills),
-      weakAreas:       sanitiseStringArray(body.weak_areas ?? body.weakAreas),
-      workStyle:       sanitiseEnum(body.preferred_work_style ?? body.workStyle, WORK_STYLES, "hybrid"),
-      learningMode:    sanitiseEnum(body.learning_mode ?? body.learningMode, LEARN_MODES, "self_paced"),
-      availability:    sanitiseEnum(body.availability, AVAILABILITIES, "part_time"),
-      careerGoals:     sanitiseStringArray(body.career_goals ?? body.careerGoals),
-      industries:      sanitiseStringArray(body.industries_of_interest ?? body.industries),
+      userId:                  session.userId,
+      name:                    sanitiseString(body.name ?? session.name ?? "", 100),
+      email:                   session.email ?? "",
+      experienceLevel:         sanitiseEnum(body.experience_level ?? body.experienceLevel, EXPERIENCE_LEVELS, "explorer"),
+      educationStage:          sanitiseEnum(body.education_stage ?? body.educationStage, EDUCATION_STAGES, ""),
+      currentProgram:          sanitiseString(body.current_program ?? body.currentProgram ?? "", 200),
+      academicBackground:      sanitiseString(body.academic_background ?? body.academicBackground ?? "", 500),
+      preferredNextStep:       sanitiseString(body.preferred_next_step ?? body.preferredNextStep ?? "", 100),
+      certificationInterest:   Boolean(body.certification_interest ?? body.certificationInterest),
+      entrepreneurialInterest: Boolean(body.entrepreneurial_interest ?? body.entrepreneurialInterest),
+      workPreferences:         validWorkPrefs,
+      interests:               sanitiseStringArray(body.interests),
+      skills:                  sanitiseStringArray(body.skills),
+      weakAreas:               sanitiseStringArray(body.weak_areas ?? body.weakAreas),
+      workStyle:               sanitiseEnum(body.preferred_work_style ?? body.workStyle, WORK_STYLES, "hybrid"),
+      learningMode:            sanitiseEnum(body.learning_mode ?? body.learningMode, LEARN_MODES, "self_paced"),
+      availability:            sanitiseEnum(body.availability, AVAILABILITIES, "part_time"),
+      careerGoals:             sanitiseStringArray(body.career_goals ?? body.careerGoals),
+      industries:              sanitiseStringArray(body.industries_of_interest ?? body.industries),
     });
 
     return NextResponse.json({ message: "Profile saved." }, { status: 200 });

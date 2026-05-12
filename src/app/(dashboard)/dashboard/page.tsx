@@ -8,6 +8,12 @@ import {
   Clock,
   ChevronRight,
   MessageCircle,
+  GraduationCap,
+  Award,
+  Lightbulb,
+  Wrench,
+  ArrowUpRight,
+  Building,
 } from "lucide-react";
 import { getSession } from "@/lib/auth/session";
 import { redirect } from "next/navigation";
@@ -18,10 +24,12 @@ import { MatchScoreRing } from "@/components/ui/progress";
 import { CAREERS_DATA } from "@/lib/recommendation/careers-data";
 import { CareerIcon } from "@/components/ui/career-icon";
 import { formatSalary, getMatchLabel } from "@/lib/utils";
-import { getRecommendations } from "@/lib/airtable/client";
+import { getRecommendations, getProfile } from "@/lib/airtable/client";
 import { getStoredRecommendations } from "@/lib/agent/store";
 import { RegenerateButton } from "@/components/app/regenerate-button";
 import { RecommendationFeedback } from "@/components/app/recommendation-feedback";
+import { buildStageRecommendation, type StageRecommendation } from "@/lib/recommendation/stage-engine";
+import { EDUCATION_STAGE_LABELS, type EducationStage } from "@/lib/types";
 
 // ─────────────────────────────────────────────
 // Demand badge colours
@@ -39,6 +47,178 @@ const demandLabel: Record<string, string> = {
   moderate: "Moderate Demand",
   low: "Low Demand",
 };
+
+// ─────────────────────────────────────────────
+// Stage panel — top section personalised per education stage
+// ─────────────────────────────────────────────
+function StagePanel({ rec }: { rec: StageRecommendation }) {
+  const stageLabel = EDUCATION_STAGE_LABELS[rec.stage as EducationStage] ?? rec.stage;
+
+  // SHS — show suggested tertiary programmes
+  if (rec.type === "shs") {
+    return (
+      <Card padding="md" className="border-emerald-200 bg-gradient-to-br from-emerald-50 to-white">
+        <div className="flex items-center gap-2 mb-3">
+          <GraduationCap size={16} className="text-emerald-600" />
+          <span className="text-xs font-semibold text-emerald-700 uppercase tracking-wider">{stageLabel} · Next Steps</span>
+        </div>
+        <h2 className="text-base font-bold text-slate-900 mb-1">{rec.headline}</h2>
+        <p className="text-xs text-slate-500 mb-4 leading-relaxed">{rec.nextStepMessage}</p>
+        {rec.suggestedTertiaryPrograms.length > 0 && (
+          <div>
+            <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Suggested Tertiary Programmes</p>
+            <div className="space-y-2">
+              {rec.suggestedTertiaryPrograms.slice(0, 4).map((p) => (
+                <div key={p.id} className="flex items-start gap-2.5 p-2.5 rounded-lg bg-white border border-emerald-100">
+                  <Building size={13} className="text-emerald-500 mt-0.5 flex-shrink-0" />
+                  <div>
+                    <p className="text-xs font-semibold text-slate-800 leading-tight">{p.name}</p>
+                    <p className="text-2xs text-slate-400 mt-0.5">{p.institutions?.slice(0, 3).join(" · ")}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </Card>
+    );
+  }
+
+  // TVET — show certifications + entrepreneurship
+  if (rec.type === "tvet") {
+    return (
+      <Card padding="md" className="border-orange-200 bg-gradient-to-br from-orange-50 to-white">
+        <div className="flex items-center gap-2 mb-3">
+          <Wrench size={16} className="text-orange-600" />
+          <span className="text-xs font-semibold text-orange-700 uppercase tracking-wider">{stageLabel} · Career Paths</span>
+        </div>
+        <h2 className="text-base font-bold text-slate-900 mb-1">{rec.headline}</h2>
+        <p className="text-xs text-slate-500 mb-4 leading-relaxed">{rec.nextStepMessage}</p>
+        {rec.certifications.length > 0 && (
+          <div className="mb-4">
+            <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Certifications to Pursue</p>
+            <div className="flex flex-wrap gap-1.5">
+              {rec.certifications.slice(0, 4).map((c) => (
+                <span key={c.name} className="text-xs px-2.5 py-1 rounded-lg bg-orange-100 text-orange-800 font-medium">{c.name}</span>
+              ))}
+            </div>
+          </div>
+        )}
+        {rec.entrepreneurshipOpps.length > 0 && (
+          <div>
+            <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2 flex items-center gap-1">
+              <Lightbulb size={11} /> Entrepreneurship Opportunities
+            </p>
+            <div className="space-y-1">
+              {rec.entrepreneurshipOpps.slice(0, 3).map((o) => (
+                <div key={o} className="flex items-start gap-2 text-xs text-slate-600">
+                  <span className="w-1 h-1 rounded-full bg-orange-400 mt-1.5 flex-shrink-0" />{o}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </Card>
+    );
+  }
+
+  // University / Polytechnic
+  if (rec.type === "university" || rec.type === "polytechnic") {
+    return (
+      <Card padding="md" className="border-brand-200 bg-gradient-to-br from-brand-50 to-white">
+        <div className="flex items-center gap-2 mb-3">
+          <GraduationCap size={16} className="text-brand-600" />
+          <span className="text-xs font-semibold text-brand-700 uppercase tracking-wider">{stageLabel} · Career & Certifications</span>
+        </div>
+        <h2 className="text-base font-bold text-slate-900 mb-1">{rec.headline}</h2>
+        <p className="text-xs text-slate-500 mb-4 leading-relaxed">{rec.nextStepMessage}</p>
+        {rec.certifications.length > 0 && (
+          <div className="mb-4">
+            <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Recommended Certifications</p>
+            <div className="flex flex-wrap gap-1.5">
+              {rec.certifications.slice(0, 4).map((c) => (
+                <span key={c.name} className="text-xs px-2.5 py-1 rounded-lg bg-brand-100 text-brand-800 font-medium">{c.name}</span>
+              ))}
+            </div>
+          </div>
+        )}
+        {rec.internshipSectors.length > 0 && (
+          <div>
+            <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5">Internship Sectors</p>
+            <div className="flex flex-wrap gap-1.5">
+              {rec.internshipSectors.slice(0, 4).map((s) => (
+                <span key={s} className="text-2xs px-2 py-0.5 rounded bg-slate-100 text-slate-600">{s}</span>
+              ))}
+            </div>
+          </div>
+        )}
+      </Card>
+    );
+  }
+
+  // Professional / Graduate / Switcher
+  if (rec.type === "professional" || rec.type === "graduate" || rec.type === "switcher") {
+    return (
+      <Card padding="md" className="border-violet-200 bg-gradient-to-br from-violet-50 to-white">
+        <div className="flex items-center gap-2 mb-3">
+          <ArrowUpRight size={16} className="text-violet-600" />
+          <span className="text-xs font-semibold text-violet-700 uppercase tracking-wider">{stageLabel} · Advancement</span>
+        </div>
+        <h2 className="text-base font-bold text-slate-900 mb-1">{rec.headline}</h2>
+        <p className="text-xs text-slate-500 mb-4 leading-relaxed">{rec.nextStepMessage}</p>
+        {rec.advancementPaths.length > 0 && (
+          <div className="mb-4">
+            <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Advancement Paths</p>
+            <div className="space-y-2">
+              {rec.advancementPaths.slice(0, 3).map((p) => (
+                <div key={p.title} className="flex items-start gap-2.5 p-2.5 rounded-lg bg-white border border-violet-100">
+                  <Award size={13} className="text-violet-500 mt-0.5 flex-shrink-0" />
+                  <div>
+                    <p className="text-xs font-semibold text-slate-800 leading-tight">{p.title}</p>
+                    <p className="text-2xs text-slate-400 mt-0.5">{p.description}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+        {rec.upskillCertifications.length > 0 && (
+          <div>
+            <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5">Upskill Certifications</p>
+            <div className="flex flex-wrap gap-1.5">
+              {rec.upskillCertifications.slice(0, 3).map((c) => (
+                <span key={c.name} className="text-2xs px-2 py-0.5 rounded bg-violet-100 text-violet-700">{c.name}</span>
+              ))}
+            </div>
+          </div>
+        )}
+      </Card>
+    );
+  }
+
+  // JHS
+  if (rec.type === "jhs") {
+    return (
+      <Card padding="md" className="border-sky-200 bg-gradient-to-br from-sky-50 to-white">
+        <div className="flex items-center gap-2 mb-3">
+          <BookOpen size={16} className="text-sky-600" />
+          <span className="text-xs font-semibold text-sky-700 uppercase tracking-wider">{stageLabel} · SHS Programme Guide</span>
+        </div>
+        <h2 className="text-base font-bold text-slate-900 mb-1">{rec.headline}</h2>
+        <p className="text-xs text-slate-500 mb-4 leading-relaxed">{rec.nextStepMessage}</p>
+        {rec.suggestedShsPrograms.length > 0 && (
+          <div className="flex flex-wrap gap-1.5">
+            {rec.suggestedShsPrograms.map((p) => (
+              <span key={p.id} className="text-xs px-2.5 py-1 rounded-lg bg-sky-100 text-sky-800 font-medium">{p.name}</span>
+            ))}
+          </div>
+        )}
+      </Card>
+    );
+  }
+
+  return null;
+}
 
 // ─────────────────────────────────────────────
 // Empty state — shown before recommendations exist
@@ -73,7 +253,7 @@ export default async function DashboardPage() {
   const session = await getSession();
   if (!session) redirect("/login");
 
-  // 1. Try Airtable (persistent across restarts)
+  // 1. Fetch profile + recommendations in parallel
   let recommendations: {
     career_id: string;
     career_title: string;
@@ -82,10 +262,15 @@ export default async function DashboardPage() {
     matching_skills: string[];
     skill_gaps: string[];
   }[] = [];
+  let stageRec: StageRecommendation | null = null;
 
-  try {
-    const airtableRecs = await getRecommendations(session.userId);
-    recommendations = airtableRecs.map((r) => ({
+  const [airtableRecsResult, profileResult] = await Promise.allSettled([
+    getRecommendations(session.userId),
+    getProfile(session.userId),
+  ]);
+
+  if (airtableRecsResult.status === "fulfilled") {
+    recommendations = airtableRecsResult.value.map((r) => ({
       career_id:       r.careerId,
       career_title:    r.careerTitle,
       match_score:     r.matchScore,
@@ -93,10 +278,16 @@ export default async function DashboardPage() {
       matching_skills: r.matchingSkills,
       skill_gaps:      r.skillGaps,
     }));
-  } catch {
-    // 2. Fall back to in-memory store (same-process session)
+  } else {
+    // Fall back to in-memory store
     const stored = getStoredRecommendations(session.userId);
     recommendations = stored?.recommendations ?? [];
+  }
+
+  if (profileResult.status === "fulfilled" && profileResult.value) {
+    try {
+      stageRec = buildStageRecommendation(profileResult.value);
+    } catch { /* non-critical */ }
   }
 
   // No recommendations yet → show onboarding CTA
@@ -104,11 +295,10 @@ export default async function DashboardPage() {
     return <NoRecommendations name={session.name} />;
   }
 
-  const profile = null; // profile stats come from recs now
-
   // Top recommendation
   const topRec = recommendations[0];
   const topCareer = CAREERS_DATA.find((c) => c.id === topRec.career_id);
+  const profile = profileResult.status === "fulfilled" ? profileResult.value : null;
 
   return (
     <div className="space-y-8 pb-8 pt-2 lg:pt-0 mt-4 lg:mt-0">
@@ -139,6 +329,9 @@ export default async function DashboardPage() {
         </div>
       </div>
 
+      {/* ── Stage-aware panel ── */}
+      {stageRec && <StagePanel rec={stageRec} />}
+
       {/* ── Stats strip ── */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {[
@@ -164,11 +357,11 @@ export default async function DashboardPage() {
             bg: "bg-amber-50",
           },
           {
-            label: "Fields Covered",
-            value: new Set(recommendations.map((r) =>
-              CAREERS_DATA.find((c) => c.id === r.career_id)?.category
-            )).size,
-            icon: BookOpen,
+            label: "Education Stage",
+            value: profile?.educationStage
+              ? EDUCATION_STAGE_LABELS[profile.educationStage as EducationStage] ?? "—"
+              : `${new Set(recommendations.map((r) => CAREERS_DATA.find((c) => c.id === r.career_id)?.category)).size} Fields`,
+            icon: GraduationCap,
             color: "text-violet-600",
             bg: "bg-violet-50",
           },

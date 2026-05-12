@@ -10,19 +10,46 @@ import type { AgentContext } from "./types";
 import { formatSalaryRange, DEMAND_LABELS } from "./tools/helpers";
 
 // ── Base persona prompt ───────────────────────
-const BASE_PROMPT = `You are **PathWise Advisor** — a knowledgeable, grounded career guidance counsellor embedded in the PathWise platform.
+const BASE_PROMPT = `You are **PathWise Advisor** — a knowledgeable, grounded career guidance counsellor embedded in the PathWise platform, focused on Ghana and the broader African context.
 
 ## Who you work with
-You help people at every stage: school leavers and students who don't know where to start, graduates exploring options, professionals looking to level up or change direction, and career changers pivoting to something new. You cover every career sector — technology, healthcare, law, finance, engineering, creative arts, science, education, trades, media, and more.
+You help people at every stage of the Ghanaian education and career journey:
+- **JHS students** exploring future options and SHS programme choices
+- **SHS students** deciding on tertiary pathways (university, polytechnic, TVET)
+- **TVET students** navigating vocational career paths, certifications, and entrepreneurship
+- **University / polytechnic students** targeting careers, internships, and certifications
+- **Graduates** launching their first careers
+- **Working professionals** advancing, upskilling, or pivoting
+- **Career switchers** building bridges to new fields
 
-## Adapting to the user's experience level
-The user's profile includes an **experience_level** field — use it to calibrate your guidance:
+You cover every career sector — technology, healthcare, law, finance, engineering, creative arts, science, education, trades, media, agriculture, and more.
 
-- **explorer** — They don't know what they want yet. Lead with questions and discovery. Explain what careers *are* and *what people actually do in them* before diving into requirements. Use plain language. Avoid jargon like "FP&A", "SOC analyst", or "PMO" without explanation. Suggest broad directions and let them narrow down. Be encouraging about uncertainty — it is normal.
-- **focused** — They have ideas. Help them evaluate and compare. Give specific, honest assessments of fit. Highlight skill gaps clearly but constructively.
-- **professional** — They are already working. Be direct and detailed. Focus on advancement, specialisation, lateral moves, certifications, and salary progression. Assume domain knowledge.
+## Ghana education context you must understand
+- **WASSCE / BECE**: Ghana's high school exit exams — BECE for JHS, WASSCE for SHS
+- **SHS programmes**: General Science, General Arts, Business, Visual Arts, Home Economics, Agricultural Science, Technical
+- **Tertiary options**: Universities (UG, KNUST, UCC, Ashesi, GCTU, etc.), Polytechnics/Technical Universities, TVET (COTVET-accredited)
+- **COTVET**: Council for Technical and Vocational Education and Training — Ghana's TVET body
+- **Professional bodies**: ICAG (accounting), GhIE (engineering), Ghana Bar Association (law), GMDC (medicine), GNMC (nursing)
+- **Ghana National Service**: mandatory 1-year national service for graduates — advise students to use it strategically
 
-If no experience_level is present, infer from context and err toward being accessible.
+## Adapting to the user's education stage
+The user's profile includes an **education_stage** field — use it to calibrate your guidance:
+
+- **jhs_student** — Focus on SHS programme selection and early career exploration. Use simple language. Explain what SHS tracks lead to.
+- **shs_student** — Focus on tertiary programme selection, university/TVET options, and WASSCE subject importance. Be specific about institutions in Ghana.
+- **tvet_student** — Focus on COTVET certifications, vocational career paths, apprenticeships, and entrepreneurship. Validate their choice — trades are excellent careers.
+- **polytechnic_student** — Focus on HND programmes, top-up degree options, career paths, and certifications. Be aware of polytechnic/technical university context.
+- **university_student** — Help them maximise their degree: internships, certifications, specialisations, graduate schemes.
+- **graduate** — Focus on National Service, graduate trainee programmes, first job search, and early career building.
+- **working_professional** — Be direct and strategic. Focus on advancement, certifications, leadership, and salary progression.
+- **career_switcher** — Focus on transferable skills, bridge qualifications, and realistic timelines for switching.
+
+If no education_stage is present, fall back to experience_level and infer from context.
+
+## Adapting to the user's experience level (fallback)
+- **explorer** — Lead with questions and discovery. Use plain language. Suggest broad directions.
+- **focused** — Help them evaluate and compare. Give specific assessments of fit.
+- **professional** — Be direct and detailed. Focus on advancement and certifications.
 
 ## How you behave
 - When platform data is available in <platform_context>, **always ground your answer in that data first**
@@ -47,6 +74,17 @@ Professional, warm, honest. Like a knowledgeable mentor who tells you what you n
 
 // ── Context block formatters ──────────────────
 
+const EDUCATION_STAGE_LABELS: Record<string, string> = {
+  jhs_student:          "JHS Student — choosing SHS programme, early career exploration",
+  shs_student:          "SHS Student — choosing tertiary pathway (university / TVET / polytechnic)",
+  tvet_student:         "TVET Student — vocational/technical training, certifications, entrepreneurship",
+  polytechnic_student:  "Polytechnic/HND Student — career paths, top-up degrees, certifications",
+  university_student:   "University Student — career paths, internships, certifications, specialisations",
+  graduate:             "Graduate — job hunting, National Service, first career role",
+  working_professional: "Working Professional — advancement, upskilling, specialisation",
+  career_switcher:      "Career Switcher — bridge skills, transfer plan, new field entry",
+};
+
 const EXPERIENCE_LEVEL_LABELS: Record<string, string> = {
   explorer:     "Explorer — does not know what they want yet, needs discovery and explanation",
   focused:      "Focused — has ideas, wants to evaluate and compare options",
@@ -66,20 +104,31 @@ function formatProfile(ctx: AgentContext): string {
   const p = ctx.profile;
   if (!p) return "";
 
+  const educationStage = (p as { educationStage?: string }).educationStage;
+  const currentProgram = (p as { currentProgram?: string }).currentProgram;
+  const preferredNextStep = (p as { preferredNextStep?: string }).preferredNextStep;
+  const certInterest = (p as { certificationInterest?: boolean }).certificationInterest;
+  const entrepreneurInterest = (p as { entrepreneurialInterest?: boolean }).entrepreneurialInterest;
   const experienceLevel = (p as { experienceLevel?: string }).experienceLevel;
   const workPreferences = (p as { workPreferences?: string[] }).workPreferences ?? [];
 
   const lines: string[] = [
     `**User Profile**`,
-    experienceLevel
-      ? `- experience_level: ${EXPERIENCE_LEVEL_LABELS[experienceLevel] ?? experienceLevel}`
-      : "- experience_level: unknown (treat as explorer)",
+    educationStage
+      ? `- education_stage: ${EDUCATION_STAGE_LABELS[educationStage] ?? educationStage}`
+      : experienceLevel
+        ? `- experience_level: ${EXPERIENCE_LEVEL_LABELS[experienceLevel] ?? experienceLevel}`
+        : "- stage: unknown (treat as explorer)",
+    currentProgram ? `- Current programme/qualification: ${currentProgram}` : "",
+    preferredNextStep ? `- Preferred next step after current programme: ${preferredNextStep}` : "",
+    certInterest ? "- Interested in professional certifications: Yes" : "",
+    entrepreneurInterest ? "- Interested in entrepreneurship/starting a business: Yes" : "",
     workPreferences.length > 0
       ? `- Work type preferences: ${workPreferences.map((w) => WORK_PREF_LABELS[w] ?? w).join(", ")}`
       : "",
     `- Skills: ${p.skills.length > 0 ? p.skills.join(", ") : "Not specified"}`,
     `- Interests: ${p.interests.length > 0 ? p.interests.join(", ") : "Not specified"}`,
-    `- Weak areas: ${p.weakAreas.length > 0 ? p.weakAreas.join(", ") : "None listed"}`,
+    `- Weak areas / gaps: ${p.weakAreas.length > 0 ? p.weakAreas.join(", ") : "None listed"}`,
     `- Preferred work style: ${p.workStyle}`,
     `- Learning mode: ${p.learningMode}`,
     `- Availability: ${p.availabilityPerWeek}`,

@@ -4,20 +4,120 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import {
   ArrowLeft, ArrowRight, CheckCircle2, Sparkles, X,
-  Compass, Target, TrendingUp,
-  Monitor, Users, Palette, BarChart2, Hammer, Briefcase,
-  Code2, Heart, Wrench, Cpu, MessageSquare, Leaf,
+  GraduationCap, Briefcase, BookOpen, Wrench, Award,
+  RefreshCw, Users, TrendingUp, Lightbulb,
+  Palette, BarChart2, Hammer, Code2, Heart, Cpu, MessageSquare, Leaf,
+  Monitor,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Select } from "@/components/ui/select";
-import { MultiSelectChips } from "@/components/ui/select";
+import { Select, MultiSelectChips } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
-import type { OnboardingData, ExperienceLevel, WorkPreference } from "@/lib/types";
+import type { OnboardingData, EducationStage, WorkPreference } from "@/lib/types";
+import { SHS_PATHWAYS, TVET_TRACKS, UNIVERSITY_TRACKS } from "@/lib/data/progression-graph";
 
-// ─────────────────────────────────────────────
-// Suggestion lists
-// ─────────────────────────────────────────────
+// ─── Education stage config ────────────────────────────────────────────────────
+
+interface StageOption {
+  value: EducationStage;
+  icon: React.ReactNode;
+  label: string;
+  description: string;
+  color: string;
+  showProgramField: boolean;
+  programLabel: string;
+  programPlaceholder: string;
+  programOptions?: string[];
+}
+
+const STAGE_OPTIONS: StageOption[] = [
+  {
+    value: "jhs_student",
+    icon: <BookOpen size={20} className="text-sky-600" />,
+    label: "JHS Student",
+    description: "I'm in Junior High School and exploring future options",
+    color: "border-sky-300 bg-sky-50",
+    showProgramField: false,
+    programLabel: "",
+    programPlaceholder: "",
+  },
+  {
+    value: "shs_student",
+    icon: <GraduationCap size={20} className="text-emerald-600" />,
+    label: "SHS Student",
+    description: "I'm in Senior High School — choosing a tertiary pathway",
+    color: "border-emerald-300 bg-emerald-50",
+    showProgramField: true,
+    programLabel: "Your SHS Programme",
+    programPlaceholder: "e.g. General Science, Business, General Arts…",
+    programOptions: SHS_PATHWAYS.map((p) => p.name),
+  },
+  {
+    value: "tvet_student",
+    icon: <Wrench size={20} className="text-orange-600" />,
+    label: "TVET / Technical Student",
+    description: "I'm in a vocational or technical training programme",
+    color: "border-orange-300 bg-orange-50",
+    showProgramField: true,
+    programLabel: "Your TVET Specialisation",
+    programPlaceholder: "e.g. Electrical Installation, ICT & Digital, Auto Mechanics…",
+    programOptions: TVET_TRACKS.map((t) => t.name),
+  },
+  {
+    value: "polytechnic_student",
+    icon: <Award size={20} className="text-amber-600" />,
+    label: "Polytechnic / HND Student",
+    description: "I'm studying for an HND or similar qualification",
+    color: "border-amber-300 bg-amber-50",
+    showProgramField: true,
+    programLabel: "Your Programme / Course",
+    programPlaceholder: "e.g. HND Computer Science, HND Business…",
+  },
+  {
+    value: "university_student",
+    icon: <GraduationCap size={20} className="text-brand-600" />,
+    label: "University Student",
+    description: "I'm pursuing a degree at university",
+    color: "border-brand-300 bg-brand-50",
+    showProgramField: true,
+    programLabel: "Your Degree Programme",
+    programPlaceholder: "e.g. BSc Computer Science, BBA, LLB, BSc Nursing…",
+    programOptions: UNIVERSITY_TRACKS.map((t) => t.name.split(" (")[0]),
+  },
+  {
+    value: "graduate",
+    icon: <Award size={20} className="text-violet-600" />,
+    label: "Recent Graduate",
+    description: "I recently completed my studies and I'm job hunting",
+    color: "border-violet-300 bg-violet-50",
+    showProgramField: true,
+    programLabel: "Your Qualification",
+    programPlaceholder: "e.g. BSc Computer Science, BBA, LLB…",
+  },
+  {
+    value: "working_professional",
+    icon: <Briefcase size={20} className="text-slate-600" />,
+    label: "Working Professional",
+    description: "I'm employed and want to advance or specialise",
+    color: "border-slate-300 bg-slate-50",
+    showProgramField: false,
+    programLabel: "",
+    programPlaceholder: "",
+  },
+  {
+    value: "career_switcher",
+    icon: <RefreshCw size={20} className="text-rose-600" />,
+    label: "Career Switcher",
+    description: "I want to change careers or move into a new field",
+    color: "border-rose-300 bg-rose-50",
+    showProgramField: false,
+    programLabel: "",
+    programPlaceholder: "",
+  },
+];
+
+// ─── Suggestion lists ──────────────────────────────────────────────────────────
+
 const INTEREST_SUGGESTIONS = [
   "Artificial Intelligence", "Machine Learning", "Data Analysis", "Data Science",
   "Web Development", "Mobile Development", "Cloud Computing", "Cybersecurity",
@@ -55,13 +155,13 @@ const SKILL_SUGGESTIONS = [
   "Counselling", "Mental Health Support", "Nutrition & Dietetics",
   "Teaching", "Curriculum Design", "Training & Facilitation", "Tutoring",
   "Coaching", "E-Learning Development",
-  "Legal Research", "Contract Drafting", "Compliance & Regulation", "Case Management",
+  "Legal Research", "Contract Drafting", "Compliance & Regulation",
   "Carpentry", "Electrical Work", "Plumbing", "Welding",
   "Vehicle Maintenance", "Construction Planning", "Health & Safety",
-  "Python", "JavaScript", "SQL", "Excel / Spreadsheets", "Data Visualisation",
+  "Python", "JavaScript", "SQL", "Data Visualisation",
   "Web Development", "Cybersecurity", "IT Support", "Network Administration",
   "Laboratory Skills", "Field Research", "Environmental Assessment",
-  "GIS & Mapping", "Scientific Writing",
+  "Scientific Writing",
 ];
 
 const INDUSTRIES = [
@@ -74,127 +174,8 @@ const INDUSTRIES = [
   "Legal & Law", "Logistics & Supply Chain",
 ];
 
-// ─────────────────────────────────────────────
-// Activity discovery cards (Step 3)
-// ─────────────────────────────────────────────
-interface ActivityCard {
-  id: string;
-  icon: React.ReactNode;
-  label: string;
-  description: string;
-  seeds: string[];
-}
+// ─── Work preference options ──────────────────────────────────────────────────
 
-const ACTIVITY_CARDS: ActivityCard[] = [
-  {
-    id: "creative",
-    icon: <Palette size={16} className="text-rose-600" />,
-    label: "Creative & design",
-    description: "Art, design, writing, visual storytelling",
-    seeds: ["UI/UX Design", "Graphic Design", "Content Creation", "Photography", "Animation", "Brand Identity"],
-  },
-  {
-    id: "technical",
-    icon: <Code2 size={16} className="text-blue-600" />,
-    label: "Technical problem solving",
-    description: "Code, systems, logic, engineering puzzles",
-    seeds: ["Software Engineering", "Web Development", "Cybersecurity", "DevOps & Automation"],
-  },
-  {
-    id: "helping",
-    icon: <Heart size={16} className="text-pink-600" />,
-    label: "Helping people",
-    description: "Healthcare, teaching, counselling, support",
-    seeds: ["Healthcare & Medicine", "Education & Teaching", "Mental Health", "Coaching & Mentoring"],
-  },
-  {
-    id: "analytical",
-    icon: <BarChart2 size={16} className="text-amber-600" />,
-    label: "Analysis & research",
-    description: "Data, finance, law, evidence-based thinking",
-    seeds: ["Data Analysis", "Finance & Investing", "Research & Science", "Economics", "Law & Legal Tech"],
-  },
-  {
-    id: "physical",
-    icon: <Wrench size={16} className="text-orange-600" />,
-    label: "Hands-on building",
-    description: "Engineering, construction, practical trades",
-    seeds: ["Engineering", "Robotics", "Electronics", "Architecture"],
-  },
-  {
-    id: "business",
-    icon: <Briefcase size={16} className="text-violet-600" />,
-    label: "Business & leadership",
-    description: "Managing, growing, and organising teams",
-    seeds: ["Entrepreneurship", "Business Strategy", "Product Management", "Project Management"],
-  },
-  {
-    id: "technology",
-    icon: <Cpu size={16} className="text-sky-600" />,
-    label: "Technology & AI",
-    description: "Software, AI, cloud, and digital innovation",
-    seeds: ["Artificial Intelligence", "Machine Learning", "Cloud Computing", "Data Science"],
-  },
-  {
-    id: "communication",
-    icon: <MessageSquare size={16} className="text-teal-600" />,
-    label: "Communication & media",
-    description: "Marketing, journalism, social, storytelling",
-    seeds: ["Digital Marketing", "Writing & Journalism", "Social Media", "Content Creation"],
-  },
-  {
-    id: "science",
-    icon: <Leaf size={16} className="text-emerald-600" />,
-    label: "Science & environment",
-    description: "Biology, sustainability, research, discovery",
-    seeds: ["Research & Science", "Biotech", "Environment & Sustainability", "Agriculture & Food Tech"],
-  },
-];
-
-// ─────────────────────────────────────────────
-// Step definitions
-// ─────────────────────────────────────────────
-const steps = [
-  { number: 1, title: "About You",      description: "Who you are" },
-  { number: 2, title: "Work Type",      description: "What appeals to you" },
-  { number: 3, title: "Interests",      description: "What excites you?" },
-  { number: 4, title: "Skills",         description: "What you know" },
-  { number: 5, title: "Preferences",    description: "How you like to work" },
-  { number: 6, title: "Goals",          description: "Where you want to go" },
-];
-
-// ─────────────────────────────────────────────
-// Experience level options
-// ─────────────────────────────────────────────
-const EXPERIENCE_OPTIONS: {
-  value: ExperienceLevel;
-  icon: React.ReactNode;
-  label: string;
-  description: string;
-}[] = [
-  {
-    value: "explorer",
-    icon: <Compass size={22} className="text-brand-600" />,
-    label: "I'm exploring",
-    description: "I'm not sure what I want to do yet — help me discover careers that suit me.",
-  },
-  {
-    value: "focused",
-    icon: <Target size={22} className="text-emerald-600" />,
-    label: "I have some ideas",
-    description: "I have a sense of what I'm interested in and want to find the right career path.",
-  },
-  {
-    value: "professional",
-    icon: <TrendingUp size={22} className="text-violet-600" />,
-    label: "I'm already working",
-    description: "I'm in a career and want to level up, pivot, or plan my next step.",
-  },
-];
-
-// ─────────────────────────────────────────────
-// Work preference options
-// ─────────────────────────────────────────────
 const WORK_PREFERENCE_OPTIONS: {
   value: WorkPreference;
   icon: React.ReactNode;
@@ -202,190 +183,67 @@ const WORK_PREFERENCE_OPTIONS: {
   description: string;
   examples: string;
 }[] = [
-  {
-    value: "technology",
-    icon: <Monitor size={20} className="text-blue-600" />,
-    label: "Technology & Computing",
-    description: "Building, coding, and working with software and data",
-    examples: "Software development, data science, cybersecurity",
-  },
-  {
-    value: "people",
-    icon: <Users size={20} className="text-emerald-600" />,
-    label: "People & Relationships",
-    description: "Helping, teaching, leading, and supporting others",
-    examples: "Healthcare, education, HR, counselling",
-  },
-  {
-    value: "creative",
-    icon: <Palette size={20} className="text-rose-600" />,
-    label: "Creative & Artistic",
-    description: "Designing, writing, producing, and making things",
-    examples: "Graphic design, video production, content writing",
-  },
-  {
-    value: "analytical",
-    icon: <BarChart2 size={20} className="text-amber-600" />,
-    label: "Analysis & Problem Solving",
-    description: "Research, strategy, data, and structured thinking",
-    examples: "Finance, consulting, law, data analysis",
-  },
-  {
-    value: "physical",
-    icon: <Hammer size={20} className="text-orange-600" />,
-    label: "Physical & Practical",
-    description: "Building, fixing, and working with your hands",
-    examples: "Engineering, construction, trades",
-  },
-  {
-    value: "business",
-    icon: <Briefcase size={20} className="text-violet-600" />,
-    label: "Business & Enterprise",
-    description: "Selling, managing, and growing organisations",
-    examples: "Sales, project management, entrepreneurship",
-  },
+  { value: "technology", icon: <Monitor size={20} className="text-blue-600" />, label: "Technology & Computing", description: "Building, coding, and working with software and data", examples: "Software, data science, cybersecurity" },
+  { value: "people", icon: <Users size={20} className="text-emerald-600" />, label: "People & Relationships", description: "Helping, teaching, leading, and supporting others", examples: "Healthcare, education, HR, counselling" },
+  { value: "creative", icon: <Palette size={20} className="text-rose-600" />, label: "Creative & Artistic", description: "Designing, writing, producing, and making things", examples: "Graphic design, video, content writing" },
+  { value: "analytical", icon: <BarChart2 size={20} className="text-amber-600" />, label: "Analysis & Problem Solving", description: "Research, strategy, data, and structured thinking", examples: "Finance, consulting, law, data analysis" },
+  { value: "physical", icon: <Hammer size={20} className="text-orange-600" />, label: "Physical & Practical", description: "Building, fixing, and working with your hands", examples: "Engineering, construction, trades" },
+  { value: "business", icon: <Briefcase size={20} className="text-violet-600" />, label: "Business & Enterprise", description: "Selling, managing, and growing organisations", examples: "Sales, project management, entrepreneurship" },
 ];
 
-// ─────────────────────────────────────────────
-// Generic tag autocomplete input
-// ─────────────────────────────────────────────
-interface TagInputProps {
-  label: string;
-  hint?: string;
-  placeholder: string;
-  suggestions: string[];
-  selected: string[];
-  onChange: (vals: string[]) => void;
-  chipColor?: "brand" | "emerald" | "amber";
-}
+// ─── Activity discovery cards (Step 4) ────────────────────────────────────────
 
-function TagInput({
-  label,
-  hint,
-  placeholder,
-  suggestions,
-  selected,
-  onChange,
-  chipColor = "brand",
-}: TagInputProps) {
+const ACTIVITY_CARDS = [
+  { id: "creative", icon: <Palette size={16} className="text-rose-600" />, label: "Creative & design", description: "Art, design, writing, visual storytelling", seeds: ["UI/UX Design", "Graphic Design", "Content Creation", "Photography", "Animation", "Brand Identity"] },
+  { id: "technical", icon: <Code2 size={16} className="text-blue-600" />, label: "Technical problem solving", description: "Code, systems, logic, engineering puzzles", seeds: ["Software Engineering", "Web Development", "Cybersecurity", "DevOps & Automation"] },
+  { id: "helping", icon: <Heart size={16} className="text-pink-600" />, label: "Helping people", description: "Healthcare, teaching, counselling, support", seeds: ["Healthcare & Medicine", "Education & Teaching", "Mental Health", "Coaching & Mentoring"] },
+  { id: "analytical", icon: <BarChart2 size={16} className="text-amber-600" />, label: "Analysis & research", description: "Data, finance, law, evidence-based thinking", seeds: ["Data Analysis", "Finance & Investing", "Research & Science", "Economics", "Law & Legal Tech"] },
+  { id: "physical", icon: <Wrench size={16} className="text-orange-600" />, label: "Hands-on building", description: "Engineering, construction, practical trades", seeds: ["Engineering", "Robotics", "Electronics", "Architecture"] },
+  { id: "business", icon: <Briefcase size={16} className="text-violet-600" />, label: "Business & leadership", description: "Managing, growing, and organising teams", seeds: ["Entrepreneurship", "Business Strategy", "Product Management", "Project Management"] },
+  { id: "technology", icon: <Cpu size={16} className="text-sky-600" />, label: "Technology & AI", description: "Software, AI, cloud, and digital innovation", seeds: ["Artificial Intelligence", "Machine Learning", "Cloud Computing", "Data Science"] },
+  { id: "communication", icon: <MessageSquare size={16} className="text-teal-600" />, label: "Communication & media", description: "Marketing, journalism, social, storytelling", seeds: ["Digital Marketing", "Writing & Journalism", "Social Media", "Content Creation"] },
+  { id: "science", icon: <Leaf size={16} className="text-emerald-600" />, label: "Science & environment", description: "Biology, sustainability, research, discovery", seeds: ["Research & Science", "Biotech", "Environment & Sustainability", "Agriculture & Food Tech"] },
+];
+
+// ─── TagInput component ────────────────────────────────────────────────────────
+
+function TagInput({ label, hint, placeholder, suggestions, selected, onChange, chipColor = "brand" }: {
+  label: string; hint?: string; placeholder: string; suggestions: string[];
+  selected: string[]; onChange: (vals: string[]) => void; chipColor?: "brand" | "emerald" | "amber";
+}) {
   const [query, setQuery] = useState("");
   const [open, setOpen] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
-
   const trimmed = query.trim();
-
-  const filtered = trimmed.length === 0
-    ? []
-    : suggestions
-        .filter((s) => s.toLowerCase().includes(trimmed.toLowerCase()) && !selected.includes(s))
-        .slice(0, 8);
-
-  const showCustom =
-    trimmed.length > 1 &&
-    !suggestions.some((s) => s.toLowerCase() === trimmed.toLowerCase()) &&
-    !selected.includes(trimmed);
-
+  const filtered = trimmed ? suggestions.filter((s) => s.toLowerCase().includes(trimmed.toLowerCase()) && !selected.includes(s)).slice(0, 8) : [];
+  const showCustom = trimmed.length > 1 && !suggestions.some((s) => s.toLowerCase() === trimmed.toLowerCase()) && !selected.includes(trimmed);
   const add = useCallback((val: string) => {
     const clean = val.trim();
-    if (clean && !selected.includes(clean)) {
-      onChange([...selected, clean]);
-    }
-    setQuery("");
-    setOpen(false);
-    inputRef.current?.focus();
+    if (clean && !selected.includes(clean)) onChange([...selected, clean]);
+    setQuery(""); setOpen(false); inputRef.current?.focus();
   }, [selected, onChange]);
-
   const remove = (val: string) => onChange(selected.filter((s) => s !== val));
-
   useEffect(() => {
-    const handler = (e: MouseEvent) => {
-      if (
-        !inputRef.current?.contains(e.target as Node) &&
-        !listRef.current?.contains(e.target as Node)
-      ) setOpen(false);
-    };
-    document.addEventListener("mousedown", handler);
-    return () => document.removeEventListener("mousedown", handler);
+    const h = (e: MouseEvent) => { if (!inputRef.current?.contains(e.target as Node) && !listRef.current?.contains(e.target as Node)) setOpen(false); };
+    document.addEventListener("mousedown", h);
+    return () => document.removeEventListener("mousedown", h);
   }, []);
-
-  const chipStyles = {
-    brand:   "bg-brand-50 text-brand-700 hover:text-brand-700",
-    emerald: "bg-emerald-50 text-emerald-700 hover:text-emerald-700",
-    amber:   "bg-amber-50 text-amber-700 hover:text-amber-700",
-  };
-  const removeStyles = {
-    brand:   "text-brand-400 hover:text-brand-700",
-    emerald: "text-emerald-400 hover:text-emerald-700",
-    amber:   "text-amber-400 hover:text-amber-700",
-  };
-
+  const chipStyles = { brand: "bg-brand-50 text-brand-700", emerald: "bg-emerald-50 text-emerald-700", amber: "bg-amber-50 text-amber-700" };
+  const removeStyles = { brand: "text-brand-400 hover:text-brand-700", emerald: "text-emerald-400 hover:text-emerald-700", amber: "text-amber-400 hover:text-amber-700" };
   return (
     <div className="flex flex-col gap-2">
-      <div>
-        <label className="text-sm font-medium text-slate-700">{label}</label>
-        {hint && <p className="text-xs text-slate-400 mt-0.5">{hint}</p>}
-      </div>
-
-      {selected.length > 0 && (
-        <div className="flex flex-wrap gap-2">
-          {selected.map((s) => (
-            <span
-              key={s}
-              className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-xl text-sm font-medium ${chipStyles[chipColor]}`}
-            >
-              {s}
-              <button type="button" onClick={() => remove(s)} className={removeStyles[chipColor]}>
-                <X size={12} />
-              </button>
-            </span>
-          ))}
-        </div>
-      )}
-
+      <div><label className="text-sm font-medium text-slate-700">{label}</label>{hint && <p className="text-xs text-slate-400 mt-0.5">{hint}</p>}</div>
+      {selected.length > 0 && <div className="flex flex-wrap gap-2">{selected.map((s) => (<span key={s} className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-xl text-sm font-medium ${chipStyles[chipColor]}`}>{s}<button type="button" onClick={() => remove(s)} className={removeStyles[chipColor]}><X size={12} /></button></span>))}</div>}
       <div className="relative">
-        <input
-          ref={inputRef}
-          type="text"
-          className="input-base"
-          placeholder={placeholder}
-          value={query}
+        <input ref={inputRef} type="text" className="input-base" placeholder={placeholder} value={query}
           onChange={(e) => { setQuery(e.target.value); setOpen(true); }}
           onFocus={() => trimmed && setOpen(true)}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              e.preventDefault();
-              if (filtered.length > 0) add(filtered[0]);
-              else if (showCustom) add(trimmed);
-            }
-            if (e.key === "Escape") setOpen(false);
-          }}
-        />
-
+          onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); if (filtered.length > 0) add(filtered[0]); else if (showCustom) add(trimmed); } if (e.key === "Escape") setOpen(false); }} />
         {open && (filtered.length > 0 || showCustom) && (
-          <div
-            ref={listRef}
-            className="absolute z-30 top-full left-0 right-0 mt-1 bg-white rounded-xl border border-slate-200 shadow-lg overflow-hidden"
-          >
-            {filtered.map((s) => (
-              <button
-                key={s}
-                type="button"
-                onMouseDown={(e) => { e.preventDefault(); add(s); }}
-                className="w-full text-left px-4 py-2.5 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-700 transition-colors"
-              >
-                {s}
-              </button>
-            ))}
-            {showCustom && (
-              <button
-                type="button"
-                onMouseDown={(e) => { e.preventDefault(); add(trimmed); }}
-                className="w-full text-left px-4 py-2.5 text-sm text-slate-500 hover:bg-slate-50 border-t border-slate-100 transition-colors"
-              >
-                Add &ldquo;<span className="font-medium text-slate-700">{trimmed}</span>&rdquo;
-              </button>
-            )}
+          <div ref={listRef} className="absolute z-30 top-full left-0 right-0 mt-1 bg-white rounded-xl border border-slate-200 shadow-lg overflow-hidden">
+            {filtered.map((s) => <button key={s} type="button" onMouseDown={(e) => { e.preventDefault(); add(s); }} className="w-full text-left px-4 py-2.5 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-700 transition-colors">{s}</button>)}
+            {showCustom && <button type="button" onMouseDown={(e) => { e.preventDefault(); add(trimmed); }} className="w-full text-left px-4 py-2.5 text-sm text-slate-500 hover:bg-slate-50 border-t border-slate-100 transition-colors">Add &ldquo;<span className="font-medium text-slate-700">{trimmed}</span>&rdquo;</button>}
           </div>
         )}
       </div>
@@ -394,22 +252,40 @@ function TagInput({
   );
 }
 
-// ─────────────────────────────────────────────
-// Page
-// ─────────────────────────────────────────────
+// ─── Steps ────────────────────────────────────────────────────────────────────
+
+const steps = [
+  { number: 1, title: "Your Stage",   description: "Where you are now" },
+  { number: 2, title: "Work Type",    description: "What appeals to you" },
+  { number: 3, title: "Interests",    description: "What excites you" },
+  { number: 4, title: "Skills",       description: "What you know" },
+  { number: 5, title: "Preferences",  description: "How you like to work" },
+  { number: 6, title: "Goals",        description: "Where you want to go" },
+];
+
+// ─── Default data ─────────────────────────────────────────────────────────────
+
 const defaultData: OnboardingData = {
-  name:                   "",
-  experience_level:       "explorer",
-  work_preferences:       [],
-  interests:              [],
-  skills:                 [],
-  weak_areas:             [],
-  preferred_work_style:   "hybrid",
-  learning_mode:          "self_paced",
-  availability:           "part_time",
-  career_goals:           [],
+  name: "",
+  education_stage: "university_student",
+  current_program: "",
+  academic_background: "",
+  preferred_next_step: "",
+  certification_interest: false,
+  entrepreneurial_interest: false,
+  experience_level: "explorer",
+  work_preferences: [],
+  interests: [],
+  skills: [],
+  weak_areas: [],
+  preferred_work_style: "hybrid",
+  learning_mode: "self_paced",
+  availability: "part_time",
+  career_goals: [],
   industries_of_interest: [],
 };
+
+// ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function OnboardingPage() {
   const router = useRouter();
@@ -420,35 +296,42 @@ export default function OnboardingPage() {
   const [goalInput, setGoalInput] = useState("");
   const [discoveryPicks, setDiscoveryPicks] = useState<Set<string>>(new Set());
 
-  const update = (partial: Partial<OnboardingData>) =>
-    setData((prev) => ({ ...prev, ...partial }));
+  // Restore progress from localStorage
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem("pathwise-onboarding-draft");
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        setData((prev) => ({ ...prev, ...parsed }));
+      }
+    } catch { /* ignore */ }
+  }, []);
 
-  const toggleActivity = (card: ActivityCard) => {
+  const update = (partial: Partial<OnboardingData>) =>
+    setData((prev) => {
+      const next = { ...prev, ...partial };
+      try { localStorage.setItem("pathwise-onboarding-draft", JSON.stringify(next)); } catch { /* ignore */ }
+      return next;
+    });
+
+  const toggleActivity = (card: typeof ACTIVITY_CARDS[number]) => {
     const isPicked = discoveryPicks.has(card.id);
     const next = new Set(discoveryPicks);
-    if (isPicked) {
-      next.delete(card.id);
-      update({ interests: data.interests.filter((i) => !card.seeds.includes(i)) });
-    } else {
-      next.add(card.id);
-      const toAdd = card.seeds.filter((s) => !data.interests.includes(s));
-      update({ interests: [...data.interests, ...toAdd] });
-    }
+    if (isPicked) { next.delete(card.id); update({ interests: data.interests.filter((i) => !card.seeds.includes(i)) }); }
+    else { next.add(card.id); update({ interests: [...data.interests, ...card.seeds.filter((s) => !data.interests.includes(s))] }); }
     setDiscoveryPicks(next);
   };
 
   const toggleWorkPref = (val: WorkPreference) => {
     const current = data.work_preferences;
-    if (current.includes(val)) {
-      update({ work_preferences: current.filter((v) => v !== val) });
-    } else {
-      update({ work_preferences: [...current, val] });
-    }
+    update({ work_preferences: current.includes(val) ? current.filter((v) => v !== val) : [...current, val] });
   };
+
+  const selectedStageOption = STAGE_OPTIONS.find((s) => s.value === data.education_stage);
 
   const canProceed = () => {
     switch (step) {
-      case 1: return data.name.trim().length > 0;
+      case 1: return data.name.trim().length > 0 && !!data.education_stage;
       case 2: return data.work_preferences.length >= 1;
       case 3: return data.interests.length >= 1;
       case 4: return data.skills.length >= 1;
@@ -462,20 +345,29 @@ export default function OnboardingPage() {
     setLoading(true);
     setSubmitError("");
     try {
+      // Map education_stage to experience_level for backwards compat
+      const experienceLevel =
+        ["working_professional", "career_switcher"].includes(data.education_stage) ? "professional" :
+        ["graduate", "university_student", "polytechnic_student"].includes(data.education_stage) ? "focused" :
+        "explorer";
+
+      const payload = { ...data, experience_level: experienceLevel };
+
       const profileRes = await fetch("/api/profile", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify(payload),
       });
       if (!profileRes.ok) throw new Error("Failed to save your profile. Please try again.");
 
       const recRes = await fetch("/api/recommendations", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ profile: data }),
+        body: JSON.stringify({ profile: payload }),
       });
       if (!recRes.ok) throw new Error("Failed to generate recommendations. Please try again.");
 
+      localStorage.removeItem("pathwise-onboarding-draft");
       router.push("/dashboard");
     } catch (err) {
       setSubmitError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
@@ -485,23 +377,15 @@ export default function OnboardingPage() {
 
   const addGoal = () => {
     const trimmed = goalInput.trim();
-    if (trimmed && !data.career_goals.includes(trimmed)) {
-      update({ career_goals: [...data.career_goals, trimmed] });
-    }
+    if (trimmed && !data.career_goals.includes(trimmed)) update({ career_goals: [...data.career_goals, trimmed] });
     setGoalInput("");
   };
-
-  const removeGoal = (goal: string) =>
-    update({ career_goals: data.career_goals.filter((g) => g !== goal) });
 
   return (
     <div className="min-h-screen bg-surface-subtle flex flex-col">
       {/* Top progress bar */}
       <div className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-slate-100">
-        <div
-          className="h-1 bg-brand-600 transition-all duration-500"
-          style={{ width: `${(step / steps.length) * 100}%` }}
-        />
+        <div className="h-1 bg-brand-600 transition-all duration-500" style={{ width: `${(step / steps.length) * 100}%` }} />
         <div className="container-page h-14 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
             <div className="w-7 h-7 rounded-lg bg-brand-600 flex items-center justify-center">
@@ -517,33 +401,24 @@ export default function OnboardingPage() {
       </div>
 
       <div className="flex-1 flex mt-14">
-        {/* Left sidebar — step indicators */}
+        {/* Left sidebar */}
         <div className="hidden lg:flex w-72 flex-col px-8 py-12 border-r border-slate-100 bg-white">
           <div className="mb-8">
             <h2 className="text-lg font-bold text-slate-900 mb-1">Profile Setup</h2>
-            <p className="text-sm text-slate-500">
-              Complete your profile to get personalised career recommendations.
-            </p>
+            <p className="text-sm text-slate-500">Complete your profile to get personalised career guidance.</p>
           </div>
           <div className="space-y-3">
             {steps.map((s) => {
-              const done   = s.number < step;
+              const done = s.number < step;
               const active = s.number === step;
               return (
-                <div
-                  key={s.number}
-                  className={cn("flex items-center gap-3 p-3 rounded-xl transition-colors", active ? "bg-brand-50" : "")}
-                >
-                  <div className={cn(
-                    "w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 text-sm font-semibold transition-all",
-                    done ? "bg-emerald-500 text-white" : active ? "bg-brand-600 text-white" : "bg-slate-100 text-slate-400"
-                  )}>
+                <div key={s.number} className={cn("flex items-center gap-3 p-3 rounded-xl transition-colors", active && "bg-brand-50")}>
+                  <div className={cn("w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 text-sm font-semibold",
+                    done ? "bg-emerald-500 text-white" : active ? "bg-brand-600 text-white" : "bg-slate-100 text-slate-400")}>
                     {done ? <CheckCircle2 size={16} /> : s.number}
                   </div>
                   <div>
-                    <p className={cn("text-sm font-semibold", active ? "text-brand-700" : done ? "text-slate-700" : "text-slate-400")}>
-                      {s.title}
-                    </p>
+                    <p className={cn("text-sm font-semibold", active ? "text-brand-700" : done ? "text-slate-700" : "text-slate-400")}>{s.title}</p>
                     <p className="text-xs text-slate-400">{s.description}</p>
                   </div>
                 </div>
@@ -552,18 +427,16 @@ export default function OnboardingPage() {
           </div>
         </div>
 
-        {/* Right — form content */}
+        {/* Main form */}
         <div className="flex-1 flex flex-col items-center px-4 py-10">
           <div className="w-full max-w-xl">
 
-            {/* ── Step 1 — About You ── */}
+            {/* ── Step 1 — Education Stage ── */}
             {step === 1 && (
-              <div className="space-y-8">
+              <div className="space-y-6">
                 <div>
                   <h1 className="text-2xl font-bold text-slate-900 mb-1">Tell us about yourself</h1>
-                  <p className="text-slate-500 text-sm">
-                    PathWise works for everyone — students, graduates, professionals, and career changers.
-                  </p>
+                  <p className="text-slate-500 text-sm">PathWise personalises everything based on where you are in your education or career.</p>
                 </div>
 
                 <Input
@@ -574,38 +447,88 @@ export default function OnboardingPage() {
                   required
                 />
 
-                <div className="space-y-3">
-                  <div>
-                    <label className="text-sm font-medium text-slate-700">Where are you right now?</label>
-                    <p className="text-xs text-slate-400 mt-0.5">This shapes how PathWise guides you.</p>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-slate-700">Your current education or career stage</label>
+                  <p className="text-xs text-slate-400 mt-0.5">This shapes all your recommendations.</p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2">
+                    {STAGE_OPTIONS.map((opt) => {
+                      const selected = data.education_stage === opt.value;
+                      return (
+                        <button
+                          key={opt.value}
+                          type="button"
+                          onClick={() => update({ education_stage: opt.value, current_program: "" })}
+                          className={cn(
+                            "flex items-start gap-3 p-3.5 rounded-xl border-2 text-left transition-all duration-150",
+                            selected ? `${opt.color} border-opacity-100` : "border-slate-200 bg-white hover:border-slate-300"
+                          )}
+                        >
+                          <div className="w-8 h-8 rounded-lg bg-white/80 flex items-center justify-center flex-shrink-0 shadow-sm">
+                            {opt.icon}
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <p className="text-sm font-semibold text-slate-900 leading-tight">{opt.label}</p>
+                            <p className="text-xs text-slate-500 mt-0.5 leading-tight">{opt.description}</p>
+                          </div>
+                          {selected && <CheckCircle2 size={16} className="text-brand-600 flex-shrink-0 mt-0.5" />}
+                        </button>
+                      );
+                    })}
                   </div>
-                  <div className="space-y-3">
-                    {EXPERIENCE_OPTIONS.map((opt) => (
+                </div>
+
+                {/* Conditional program field */}
+                {selectedStageOption?.showProgramField && (
+                  <div className="space-y-1">
+                    <label className="text-sm font-medium text-slate-700">{selectedStageOption.programLabel}</label>
+                    {selectedStageOption.programOptions ? (
+                      <select
+                        className="input-base"
+                        value={data.current_program}
+                        onChange={(e) => update({ current_program: e.target.value })}
+                      >
+                        <option value="">Select your programme…</option>
+                        {selectedStageOption.programOptions.map((p) => (
+                          <option key={p} value={p}>{p}</option>
+                        ))}
+                        <option value="Other">Other</option>
+                      </select>
+                    ) : (
+                      <input
+                        type="text"
+                        className="input-base"
+                        placeholder={selectedStageOption.programPlaceholder}
+                        value={data.current_program}
+                        onChange={(e) => update({ current_program: e.target.value })}
+                      />
+                    )}
+                  </div>
+                )}
+
+                {/* Entrepreneur & certification interest */}
+                {["tvet_student", "shs_student", "jhs_student"].includes(data.education_stage) && (
+                  <div className="flex flex-col gap-3 pt-2">
+                    <label className="text-sm font-medium text-slate-700">Quick preferences</label>
+                    {[
+                      { key: "entrepreneurial_interest" as keyof OnboardingData, icon: <Lightbulb size={14} className="text-amber-500" />, label: "I'm interested in starting my own business or enterprise" },
+                      { key: "certification_interest" as keyof OnboardingData, icon: <Award size={14} className="text-brand-500" />, label: "I want to earn professional certifications" },
+                    ].map(({ key, icon, label }) => (
                       <button
-                        key={opt.value}
+                        key={key}
                         type="button"
-                        onClick={() => update({ experience_level: opt.value })}
+                        onClick={() => update({ [key]: !data[key] } as Partial<OnboardingData>)}
                         className={cn(
-                          "w-full flex items-start gap-4 p-4 rounded-2xl border-2 text-left transition-all duration-150",
-                          data.experience_level === opt.value
-                            ? "border-brand-500 bg-brand-50"
-                            : "border-slate-200 bg-white hover:border-slate-300"
+                          "flex items-center gap-3 px-4 py-3 rounded-xl border-2 text-left transition-all",
+                          data[key] ? "border-brand-400 bg-brand-50" : "border-slate-200 bg-white hover:border-slate-300"
                         )}
                       >
-                        <div className="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center flex-shrink-0">
-                          {opt.icon}
-                        </div>
-                        <div>
-                          <p className="text-sm font-semibold text-slate-900">{opt.label}</p>
-                          <p className="text-xs text-slate-500 mt-0.5 leading-relaxed">{opt.description}</p>
-                        </div>
-                        {data.experience_level === opt.value && (
-                          <CheckCircle2 size={18} className="text-brand-600 flex-shrink-0 ml-auto mt-1" />
-                        )}
+                        <div className="w-6 h-6 rounded-lg bg-white/80 flex items-center justify-center shadow-sm">{icon}</div>
+                        <span className="text-sm text-slate-700 flex-1">{label}</span>
+                        {data[key] && <CheckCircle2 size={15} className="text-brand-600 flex-shrink-0" />}
                       </button>
                     ))}
                   </div>
-                </div>
+                )}
               </div>
             )}
 
@@ -614,29 +537,16 @@ export default function OnboardingPage() {
               <div className="space-y-6">
                 <div>
                   <h1 className="text-2xl font-bold text-slate-900 mb-1">What type of work appeals to you?</h1>
-                  <p className="text-slate-500 text-sm">
-                    Select everything that resonates — you can choose multiple. This helps us match you to the right career sectors.
-                  </p>
+                  <p className="text-slate-500 text-sm">Select everything that resonates — you can choose multiple. This helps us match you to the right career sectors.</p>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {WORK_PREFERENCE_OPTIONS.map((opt) => {
                     const selected = data.work_preferences.includes(opt.value);
                     return (
-                      <button
-                        key={opt.value}
-                        type="button"
-                        onClick={() => toggleWorkPref(opt.value)}
-                        className={cn(
-                          "flex flex-col gap-2 p-4 rounded-2xl border-2 text-left transition-all duration-150",
-                          selected
-                            ? "border-brand-500 bg-brand-50"
-                            : "border-slate-200 bg-white hover:border-slate-300"
-                        )}
-                      >
+                      <button key={opt.value} type="button" onClick={() => toggleWorkPref(opt.value)}
+                        className={cn("flex flex-col gap-2 p-4 rounded-2xl border-2 text-left transition-all duration-150", selected ? "border-brand-500 bg-brand-50" : "border-slate-200 bg-white hover:border-slate-300")}>
                         <div className="flex items-center justify-between">
-                          <div className="w-9 h-9 rounded-xl bg-slate-100 flex items-center justify-center">
-                            {opt.icon}
-                          </div>
+                          <div className="w-9 h-9 rounded-xl bg-slate-100 flex items-center justify-center">{opt.icon}</div>
                           {selected && <CheckCircle2 size={16} className="text-brand-600" />}
                         </div>
                         <div>
@@ -648,9 +558,7 @@ export default function OnboardingPage() {
                     );
                   })}
                 </div>
-                {data.work_preferences.length === 0 && (
-                  <p className="text-xs text-amber-600 font-medium">Select at least one to continue.</p>
-                )}
+                {data.work_preferences.length === 0 && <p className="text-xs text-amber-600 font-medium">Select at least one to continue.</p>}
               </div>
             )}
 
@@ -659,35 +567,18 @@ export default function OnboardingPage() {
               <div className="space-y-6">
                 <div>
                   <h1 className="text-2xl font-bold text-slate-900 mb-1">What do you enjoy doing?</h1>
-                  <p className="text-slate-500 text-sm">
-                    Start by picking the activities that feel most like you — PathWise will use these to map you to real careers. Then refine below.
-                  </p>
+                  <p className="text-slate-500 text-sm">Start by picking activity types that feel like you — PathWise maps these to real careers. Then refine below.</p>
                 </div>
-
-                {/* Activity discovery cards */}
                 <div>
-                  <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">
-                    Quick discovery — select everything that resonates
-                  </p>
+                  <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">Quick discovery — select everything that resonates</p>
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                     {ACTIVITY_CARDS.map((card) => {
                       const picked = discoveryPicks.has(card.id);
                       return (
-                        <button
-                          key={card.id}
-                          type="button"
-                          onClick={() => toggleActivity(card)}
-                          className={cn(
-                            "flex flex-col gap-1.5 p-3 rounded-xl border-2 text-left transition-all duration-150",
-                            picked
-                              ? "border-brand-500 bg-brand-50"
-                              : "border-slate-200 bg-white hover:border-slate-300"
-                          )}
-                        >
+                        <button key={card.id} type="button" onClick={() => toggleActivity(card)}
+                          className={cn("flex flex-col gap-1.5 p-3 rounded-xl border-2 text-left transition-all duration-150", picked ? "border-brand-500 bg-brand-50" : "border-slate-200 bg-white hover:border-slate-300")}>
                           <div className="flex items-center justify-between">
-                            <div className="w-7 h-7 rounded-lg bg-slate-100 flex items-center justify-center flex-shrink-0">
-                              {card.icon}
-                            </div>
+                            <div className="w-7 h-7 rounded-lg bg-slate-100 flex items-center justify-center flex-shrink-0">{card.icon}</div>
                             {picked && <CheckCircle2 size={13} className="text-brand-500 flex-shrink-0" />}
                           </div>
                           <p className="text-xs font-semibold text-slate-800 leading-tight">{card.label}</p>
@@ -696,23 +587,10 @@ export default function OnboardingPage() {
                       );
                     })}
                   </div>
-                  {discoveryPicks.size > 0 && (
-                    <p className="text-xs text-brand-600 font-medium mt-2">
-                      {data.interests.length} interests added from your selections — review and add more below.
-                    </p>
-                  )}
+                  {discoveryPicks.size > 0 && <p className="text-xs text-brand-600 font-medium mt-2">{data.interests.length} interests added — review and add more below.</p>}
                 </div>
-
                 <div className="border-t border-slate-100 pt-5">
-                  <TagInput
-                    label="Your interests"
-                    hint="Add at least 1 — the more specific, the better your matches"
-                    placeholder="Type an interest, e.g. Healthcare, Marketing, Engineering…"
-                    suggestions={INTEREST_SUGGESTIONS}
-                    selected={data.interests}
-                    onChange={(vals) => update({ interests: vals })}
-                    chipColor="brand"
-                  />
+                  <TagInput label="Your interests" hint="Add at least 1 — the more specific, the better your matches" placeholder="Type an interest, e.g. Healthcare, Engineering, Marketing…" suggestions={INTEREST_SUGGESTIONS} selected={data.interests} onChange={(vals) => update({ interests: vals })} chipColor="brand" />
                 </div>
               </div>
             )}
@@ -722,28 +600,10 @@ export default function OnboardingPage() {
               <div className="space-y-8">
                 <div>
                   <h1 className="text-2xl font-bold text-slate-900 mb-1">What do you know?</h1>
-                  <p className="text-slate-500 text-sm">
-                    Be honest — skills you&apos;re still learning count too. This helps us find realistic matches and build your roadmap.
-                  </p>
+                  <p className="text-slate-500 text-sm">Be honest — skills you&apos;re still learning count too. This helps us find realistic matches.</p>
                 </div>
-                <TagInput
-                  label="Skills you currently have"
-                  hint="Include both technical and soft skills — add at least 1"
-                  placeholder="Type a skill, e.g. Public Speaking, Project Management…"
-                  suggestions={SKILL_SUGGESTIONS}
-                  selected={data.skills}
-                  onChange={(vals) => update({ skills: vals })}
-                  chipColor="emerald"
-                />
-                <TagInput
-                  label="Areas you feel less confident in"
-                  hint="Knowing your gaps helps us build a better roadmap"
-                  placeholder="Type a skill gap, e.g. Public Speaking, Data Analysis…"
-                  suggestions={SKILL_SUGGESTIONS}
-                  selected={data.weak_areas}
-                  onChange={(vals) => update({ weak_areas: vals })}
-                  chipColor="amber"
-                />
+                <TagInput label="Skills you currently have" hint="Include technical and soft skills — add at least 1" placeholder="Type a skill, e.g. Public Speaking, Project Management…" suggestions={SKILL_SUGGESTIONS} selected={data.skills} onChange={(vals) => update({ skills: vals })} chipColor="emerald" />
+                <TagInput label="Areas you feel less confident in" hint="Knowing your gaps helps us build a better roadmap" placeholder="Type a skill gap, e.g. Public Speaking, Data Analysis…" suggestions={SKILL_SUGGESTIONS} selected={data.weak_areas} onChange={(vals) => update({ weak_areas: vals })} chipColor="amber" />
               </div>
             )}
 
@@ -752,45 +612,28 @@ export default function OnboardingPage() {
               <div className="space-y-6">
                 <div>
                   <h1 className="text-2xl font-bold text-slate-900 mb-1">How do you like to work and learn?</h1>
-                  <p className="text-slate-500 text-sm">
-                    Your preferences shape the careers and learning paths we suggest.
-                  </p>
+                  <p className="text-slate-500 text-sm">Your preferences shape the careers and learning paths we suggest.</p>
                 </div>
-                <Select
-                  label="Preferred work style"
-                  value={data.preferred_work_style}
-                  onChange={(e) => update({ preferred_work_style: e.target.value as OnboardingData["preferred_work_style"] })}
-                  options={[
-                    { value: "remote",   label: "Remote — work from anywhere" },
-                    { value: "hybrid",   label: "Hybrid — mix of remote and in-office" },
-                    { value: "office",   label: "In-office — prefer a physical workplace" },
-                    { value: "flexible", label: "Flexible — no strong preference" },
-                  ]}
-                />
-                <Select
-                  label="Preferred learning mode"
-                  value={data.learning_mode}
-                  onChange={(e) => update({ learning_mode: e.target.value as OnboardingData["learning_mode"] })}
-                  options={[
-                    { value: "self_paced",  label: "Self-paced — I learn at my own speed" },
-                    { value: "structured",  label: "Structured — I follow a clear curriculum" },
-                    { value: "bootcamp",    label: "Bootcamp-style — intensive, fast-paced" },
-                    { value: "university",  label: "University / formal courses" },
-                    { value: "mentorship",  label: "Mentorship — learning from practitioners" },
-                  ]}
-                />
-                <Select
-                  label="Time available for learning"
-                  value={data.availability}
-                  onChange={(e) => update({ availability: e.target.value as OnboardingData["availability"] })}
-                  options={[
-                    { value: "full_time", label: "Full-time — 30+ hours/week" },
-                    { value: "part_time", label: "Part-time — 10–20 hours/week" },
-                    { value: "evenings",  label: "Evenings only — a few hours/weekday" },
-                    { value: "weekends",  label: "Weekends only" },
-                    { value: "limited",   label: "Very limited — less than 5 hours/week" },
-                  ]}
-                />
+                <Select label="Preferred work style" value={data.preferred_work_style} onChange={(e) => update({ preferred_work_style: e.target.value as OnboardingData["preferred_work_style"] })} options={[
+                  { value: "remote", label: "Remote — work from anywhere" },
+                  { value: "hybrid", label: "Hybrid — mix of remote and in-office" },
+                  { value: "office", label: "In-office — prefer a physical workplace" },
+                  { value: "flexible", label: "Flexible — no strong preference" },
+                ]} />
+                <Select label="Preferred learning mode" value={data.learning_mode} onChange={(e) => update({ learning_mode: e.target.value as OnboardingData["learning_mode"] })} options={[
+                  { value: "self_paced", label: "Self-paced — I learn at my own speed" },
+                  { value: "structured", label: "Structured — I follow a clear curriculum" },
+                  { value: "bootcamp", label: "Bootcamp-style — intensive, fast-paced" },
+                  { value: "university", label: "University / formal courses" },
+                  { value: "mentorship", label: "Mentorship — learning from practitioners" },
+                ]} />
+                <Select label="Time available for learning" value={data.availability} onChange={(e) => update({ availability: e.target.value as OnboardingData["availability"] })} options={[
+                  { value: "full_time", label: "Full-time — 30+ hours/week" },
+                  { value: "part_time", label: "Part-time — 10–20 hours/week" },
+                  { value: "evenings", label: "Evenings only — a few hours/weekday" },
+                  { value: "weekends", label: "Weekends only" },
+                  { value: "limited", label: "Very limited — less than 5 hours/week" },
+                ]} />
               </div>
             )}
 
@@ -799,26 +642,33 @@ export default function OnboardingPage() {
               <div className="space-y-8">
                 <div>
                   <h1 className="text-2xl font-bold text-slate-900 mb-1">Where do you want to go?</h1>
-                  <p className="text-slate-500 text-sm">
-                    Share your aspirations and the industries that interest you most.
-                  </p>
+                  <p className="text-slate-500 text-sm">Share your aspirations and the industries that interest you most.</p>
                 </div>
 
+                {/* preferred_next_step — shown for students */}
+                {["jhs_student", "shs_student", "tvet_student", "polytechnic_student", "university_student"].includes(data.education_stage) && (
+                  <Select
+                    label="What do you want to do after your current programme?"
+                    value={data.preferred_next_step}
+                    onChange={(e) => update({ preferred_next_step: e.target.value })}
+                    options={[
+                      { value: "", label: "Choose an option…" },
+                      { value: "university", label: "Go to University" },
+                      { value: "tvet", label: "Pursue TVET / Technical Training" },
+                      { value: "work", label: "Start Working Immediately" },
+                      { value: "certification", label: "Get Professional Certifications" },
+                      { value: "entrepreneurship", label: "Start My Own Business" },
+                      { value: "postgraduate", label: "Pursue Postgraduate Studies" },
+                      { value: "not_sure", label: "Not sure yet" },
+                    ]}
+                  />
+                )}
+
                 <div className="flex flex-col gap-2">
-                  <span className="text-sm font-medium text-slate-700">
-                    Career goals <span className="text-slate-400 font-normal">(optional)</span>
-                  </span>
-                  <p className="text-xs text-slate-400">
-                    What outcome do you want? e.g. &quot;Start my own business&quot;, &quot;Become a nurse&quot;, &quot;Work remotely for a tech company&quot;.
-                  </p>
+                  <span className="text-sm font-medium text-slate-700">Career goals <span className="text-slate-400 font-normal">(optional)</span></span>
+                  <p className="text-xs text-slate-400">What outcome do you want? e.g. &quot;Become a software engineer&quot;, &quot;Start my own business&quot;, &quot;Become a nurse&quot;.</p>
                   <div className="flex gap-2">
-                    <input
-                      className="input-base flex-1"
-                      placeholder="Type a goal and press Add…"
-                      value={goalInput}
-                      onChange={(e) => setGoalInput(e.target.value)}
-                      onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), addGoal())}
-                    />
+                    <input className="input-base flex-1" placeholder="Type a goal and press Add…" value={goalInput} onChange={(e) => setGoalInput(e.target.value)} onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), addGoal())} />
                     <Button variant="outline" onClick={addGoal} size="md">Add</Button>
                   </div>
                   {data.career_goals.length > 0 && (
@@ -826,7 +676,7 @@ export default function OnboardingPage() {
                       {data.career_goals.map((goal) => (
                         <span key={goal} className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-brand-50 text-brand-700 text-sm font-medium">
                           {goal}
-                          <button onClick={() => removeGoal(goal)} className="text-brand-400 hover:text-brand-700 ml-0.5">×</button>
+                          <button onClick={() => update({ career_goals: data.career_goals.filter((g) => g !== goal) })} className="text-brand-400 hover:text-brand-700 ml-0.5">×</button>
                         </span>
                       ))}
                     </div>
@@ -853,26 +703,11 @@ export default function OnboardingPage() {
 
             {/* ── Navigation ── */}
             <div className="flex items-center justify-between mt-10 pt-6 border-t border-slate-100">
-              <Button
-                variant="ghost"
-                leftIcon={<ArrowLeft size={16} />}
-                onClick={() => setStep((s) => Math.max(1, s - 1))}
-                disabled={step === 1}
-              >
-                Back
-              </Button>
+              <Button variant="ghost" leftIcon={<ArrowLeft size={16} />} onClick={() => setStep((s) => Math.max(1, s - 1))} disabled={step === 1}>Back</Button>
               {step < steps.length ? (
-                <Button rightIcon={<ArrowRight size={16} />} onClick={() => setStep((s) => s + 1)} disabled={!canProceed()}>
-                  Continue
-                </Button>
+                <Button rightIcon={<ArrowRight size={16} />} onClick={() => setStep((s) => s + 1)} disabled={!canProceed()}>Continue</Button>
               ) : (
-                <Button
-                  rightIcon={<Sparkles size={16} />}
-                  onClick={handleSubmit}
-                  loading={loading}
-                  disabled={!canProceed()}
-                  className="shadow-md shadow-brand-600/20"
-                >
+                <Button rightIcon={<Sparkles size={16} />} onClick={handleSubmit} loading={loading} disabled={!canProceed()} className="shadow-md shadow-brand-600/20">
                   {loading ? "Generating…" : "Generate My Recommendations"}
                 </Button>
               )}

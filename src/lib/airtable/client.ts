@@ -138,6 +138,12 @@ export interface AirtableProfile {
   name: string;
   email: string;
   experienceLevel: string;
+  educationStage: string;
+  currentProgram: string;
+  academicBackground: string;
+  preferredNextStep: string;
+  certificationInterest: string;    // "true" | "false"
+  entrepreneurialInterest: string;  // "true" | "false"
   workPreferences: string; // JSON string
   interests: string;       // JSON string
   skills: string;          // JSON string
@@ -156,6 +162,12 @@ export interface ProfileData {
   name: string;
   email: string;
   experienceLevel?: string;
+  educationStage?: string;
+  currentProgram?: string;
+  academicBackground?: string;
+  preferredNextStep?: string;
+  certificationInterest?: boolean;
+  entrepreneurialInterest?: boolean;
   workPreferences?: string[];
   interests: string[];
   skills: string[];
@@ -171,21 +183,27 @@ export interface ProfileData {
 
 function deserializeProfile(fields: AirtableProfile): ProfileData {
   return {
-    userId:          fields.userId,
-    name:            fields.name ?? "",
-    email:           fields.email ?? "",
-    experienceLevel: fields.experienceLevel ?? "explorer",
-    workPreferences: JSON.parse(fields.workPreferences || "[]"),
-    interests:       JSON.parse(fields.interests   || "[]"),
-    skills:          JSON.parse(fields.skills      || "[]"),
-    weakAreas:       JSON.parse(fields.weakAreas   || "[]"),
-    workStyle:       fields.workStyle   ?? "hybrid",
-    learningMode:    fields.learningMode ?? "self_paced",
-    availability:    fields.availability ?? "part_time",
-    careerGoals:     JSON.parse(fields.careerGoals || "[]"),
-    industries:      JSON.parse(fields.industries  || "[]"),
-    createdAt:       fields.createdAt,
-    updatedAt:       fields.updatedAt,
+    userId:                  fields.userId,
+    name:                    fields.name ?? "",
+    email:                   fields.email ?? "",
+    experienceLevel:         fields.experienceLevel ?? "explorer",
+    educationStage:          fields.educationStage ?? "",
+    currentProgram:          fields.currentProgram ?? "",
+    academicBackground:      fields.academicBackground ?? "",
+    preferredNextStep:       fields.preferredNextStep ?? "",
+    certificationInterest:   fields.certificationInterest === "true",
+    entrepreneurialInterest: fields.entrepreneurialInterest === "true",
+    workPreferences:         JSON.parse(fields.workPreferences || "[]"),
+    interests:               JSON.parse(fields.interests   || "[]"),
+    skills:                  JSON.parse(fields.skills      || "[]"),
+    weakAreas:               JSON.parse(fields.weakAreas   || "[]"),
+    workStyle:               fields.workStyle   ?? "hybrid",
+    learningMode:            fields.learningMode ?? "self_paced",
+    availability:            fields.availability ?? "part_time",
+    careerGoals:             JSON.parse(fields.careerGoals || "[]"),
+    industries:              JSON.parse(fields.industries  || "[]"),
+    createdAt:               fields.createdAt,
+    updatedAt:               fields.updatedAt,
   };
 }
 
@@ -207,21 +225,27 @@ export async function upsertProfile(data: ProfileData): Promise<void> {
   );
 
   const fields: AirtableProfile = {
-    userId:          data.userId,
-    name:            data.name,
-    email:           data.email,
-    experienceLevel: data.experienceLevel ?? "explorer",
-    workPreferences: JSON.stringify(data.workPreferences ?? []),
-    interests:       JSON.stringify(data.interests),
-    skills:          JSON.stringify(data.skills),
-    weakAreas:       JSON.stringify(data.weakAreas),
-    workStyle:       data.workStyle,
-    learningMode:    data.learningMode,
-    availability:    data.availability,
-    careerGoals:     JSON.stringify(data.careerGoals),
-    industries:      JSON.stringify(data.industries),
-    createdAt:       records[0]?.fields.createdAt ?? new Date().toISOString(),
-    updatedAt:       new Date().toISOString(),
+    userId:                  data.userId,
+    name:                    data.name,
+    email:                   data.email,
+    experienceLevel:         data.experienceLevel ?? "explorer",
+    educationStage:          data.educationStage ?? "",
+    currentProgram:          data.currentProgram ?? "",
+    academicBackground:      data.academicBackground ?? "",
+    preferredNextStep:       data.preferredNextStep ?? "",
+    certificationInterest:   String(data.certificationInterest ?? false),
+    entrepreneurialInterest: String(data.entrepreneurialInterest ?? false),
+    workPreferences:         JSON.stringify(data.workPreferences ?? []),
+    interests:               JSON.stringify(data.interests),
+    skills:                  JSON.stringify(data.skills),
+    weakAreas:               JSON.stringify(data.weakAreas),
+    workStyle:               data.workStyle,
+    learningMode:            data.learningMode,
+    availability:            data.availability,
+    careerGoals:             JSON.stringify(data.careerGoals),
+    industries:              JSON.stringify(data.industries),
+    createdAt:               records[0]?.fields.createdAt ?? new Date().toISOString(),
+    updatedAt:               new Date().toISOString(),
   };
 
   if (records.length > 0) {
