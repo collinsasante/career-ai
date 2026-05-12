@@ -236,10 +236,15 @@ export default function ProfilePage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [fetchError, setFetchError] = useState(false);
+  const [saveError, setSaveError] = useState("");
 
   useEffect(() => {
     fetch("/api/profile")
-      .then((r) => r.json())
+      .then((r) => {
+        if (!r.ok) throw new Error(`Status ${r.status}`);
+        return r.json();
+      })
       .then(({ data }) => {
         if (data) {
           setProfile({
@@ -256,14 +261,15 @@ export default function ProfilePage() {
           });
         }
       })
-      .catch(() => {})
+      .catch(() => setFetchError(true))
       .finally(() => setLoading(false));
   }, []);
 
   const handleSave = async () => {
     setSaving(true);
+    setSaveError("");
     try {
-      await fetch("/api/profile", {
+      const res = await fetch("/api/profile", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -278,8 +284,11 @@ export default function ProfilePage() {
           career_goals:           profile.career_goals,
         }),
       });
+      if (!res.ok) throw new Error(`Server returned ${res.status}`);
       setSaved(true);
       setTimeout(() => setSaved(false), 2500);
+    } catch {
+      setSaveError("Failed to save changes. Please try again.");
     } finally {
       setSaving(false);
     }
@@ -299,8 +308,31 @@ export default function ProfilePage() {
     );
   }
 
+  if (fetchError) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[40vh] gap-4">
+        <p className="text-sm text-red-600 font-medium">Failed to load your profile. Please refresh the page.</p>
+        <button
+          onClick={() => window.location.reload()}
+          className="text-sm text-brand-600 underline hover:text-brand-700"
+        >
+          Refresh
+        </button>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-6 pb-8 pt-2 lg:pt-0 mt-4 lg:mt-0">
+      {/* Save error banner */}
+      {saveError && (
+        <div className="flex items-center gap-3 px-4 py-3 rounded-xl bg-red-50 border border-red-200 text-sm text-red-700">
+          <span className="flex-1">{saveError}</span>
+          <button onClick={() => setSaveError("")} className="text-red-400 hover:text-red-700">
+            <X size={14} />
+          </button>
+        </div>
+      )}
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div>

@@ -5,7 +5,6 @@ import {
   Briefcase,
   Clock,
   TrendingUp,
-  Star,
   BookOpen,
   Wrench,
   Users,
@@ -23,6 +22,7 @@ import { CareerIcon } from "@/components/ui/career-icon";
 import { formatSalary, getJobDemandLabel, getMatchLabel } from "@/lib/utils";
 import { getSession } from "@/lib/auth/session";
 import { getRecommendations } from "@/lib/airtable/client";
+import { SaveCareerButton } from "@/components/app/save-career-button";
 import type { Metadata } from "next";
 
 interface Props {
@@ -190,9 +190,7 @@ export default async function CareerDetailPage({ params }: Props) {
                 View Roadmap
               </Button>
             </Link>
-            <Button fullWidth variant="outline" leftIcon={<Star size={15} />}>
-              Save Career
-            </Button>
+            <SaveCareerButton careerId={career.id} careerTitle={career.title} />
           </div>
         </div>
       </div>

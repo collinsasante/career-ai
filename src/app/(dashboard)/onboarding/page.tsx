@@ -416,6 +416,7 @@ export default function OnboardingPage() {
   const [step, setStep] = useState(1);
   const [data, setData] = useState<OnboardingData>(defaultData);
   const [loading, setLoading] = useState(false);
+  const [submitError, setSubmitError] = useState("");
   const [goalInput, setGoalInput] = useState("");
   const [discoveryPicks, setDiscoveryPicks] = useState<Set<string>>(new Set());
 
@@ -459,19 +460,25 @@ export default function OnboardingPage() {
 
   const handleSubmit = async () => {
     setLoading(true);
+    setSubmitError("");
     try {
-      await fetch("/api/profile", {
+      const profileRes = await fetch("/api/profile", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
-      await fetch("/api/recommendations", {
+      if (!profileRes.ok) throw new Error("Failed to save your profile. Please try again.");
+
+      const recRes = await fetch("/api/recommendations", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ profile: data }),
       });
+      if (!recRes.ok) throw new Error("Failed to generate recommendations. Please try again.");
+
       router.push("/dashboard");
-    } catch {
+    } catch (err) {
+      setSubmitError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
       setLoading(false);
     }
   };
@@ -834,6 +841,13 @@ export default function OnboardingPage() {
                   maxSelections={6}
                   hint="Pick at least 1 industry"
                 />
+              </div>
+            )}
+
+            {/* ── Submit error ── */}
+            {submitError && (
+              <div className="mt-6 px-4 py-3 rounded-xl bg-red-50 border border-red-200 text-sm text-red-700">
+                {submitError}
               </div>
             )}
 

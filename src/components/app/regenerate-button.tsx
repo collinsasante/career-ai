@@ -8,21 +8,22 @@ import { Button } from "@/components/ui/button";
 export function RegenerateButton() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const handleRegenerate = async () => {
     setLoading(true);
+    setError("");
     try {
-      // 1. Fetch current profile
       const profileRes = await fetch("/api/profile");
+      if (!profileRes.ok) throw new Error("Could not load your profile.");
       const { data: profileData } = await profileRes.json();
 
       if (!profileData) {
-        alert("Please complete your profile before generating recommendations.");
+        setError("Complete your profile before regenerating recommendations.");
         return;
       }
 
-      // 2. Generate new recommendations
-      await fetch("/api/recommendations", {
+      const recRes = await fetch("/api/recommendations", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -38,23 +39,30 @@ export function RegenerateButton() {
           },
         }),
       });
+      if (!recRes.ok) throw new Error("Failed to generate recommendations. Please try again.");
 
-      // 3. Refresh the page to show new results
       router.refresh();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <Button
-      variant="outline"
-      size="sm"
-      loading={loading}
-      leftIcon={!loading ? <RefreshCw size={14} /> : undefined}
-      onClick={handleRegenerate}
-    >
-      Regenerate
-    </Button>
+    <div className="flex flex-col items-end gap-1">
+      <Button
+        variant="outline"
+        size="sm"
+        loading={loading}
+        leftIcon={!loading ? <RefreshCw size={14} /> : undefined}
+        onClick={handleRegenerate}
+      >
+        Regenerate
+      </Button>
+      {error && (
+        <p className="text-xs text-red-600 max-w-xs text-right">{error}</p>
+      )}
+    </div>
   );
 }

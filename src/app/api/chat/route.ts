@@ -46,6 +46,14 @@ async function getAuthSession(request: Request) {
 
 // ── Route handler ─────────────────────────────
 export async function POST(request: Request): Promise<Response> {
+  // 0. Validate API key before doing any work
+  if (!process.env.ANTHROPIC_API_KEY) {
+    return new Response(
+      JSON.stringify({ error: "ANTHROPIC_API_KEY is not configured on the server." }),
+      { status: 503, headers: { "Content-Type": "application/json" } }
+    );
+  }
+
   // 1. Authenticate
   const session = await getAuthSession(request);
   if (!session) {

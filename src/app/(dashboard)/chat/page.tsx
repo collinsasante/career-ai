@@ -231,7 +231,8 @@ export default function ChatPage() {
         });
 
         if (!res.ok) {
-          throw new Error(`Server error ${res.status}`);
+          const errBody = await res.json().catch(() => ({}));
+          throw new Error(errBody.error ?? `Server error ${res.status}`);
         }
 
         const reader = res.body?.getReader();
@@ -277,11 +278,11 @@ export default function ChatPage() {
         setMessages((prev) => [...prev, assistantMessage]);
       } catch (err) {
         if (err instanceof Error && err.name === "AbortError") return;
+        const detail = err instanceof Error ? err.message : "Unknown error";
         const errorMessage: Message = {
           id: crypto.randomUUID(),
           role: "assistant",
-          content:
-            "Sorry, I couldn't process that request. Please check that your API key is configured and try again.",
+          content: `Sorry, I couldn't process that request. ${detail}`,
           timestamp: new Date(),
         };
         setMessages((prev) => [...prev, errorMessage]);
