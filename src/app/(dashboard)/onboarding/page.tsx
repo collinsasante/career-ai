@@ -6,10 +6,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   ChevronLeft, ChevronRight, Check, Sparkles, BookOpen,
   GraduationCap, Wrench, Award, Briefcase, ArrowRight,
-  TrendingUp, Rocket, Star, Zap, BadgeCheck,
+  TrendingUp, Rocket, Star, Zap, BadgeCheck, Plus, X,
   Monitor, Heart, Leaf, Palette, Music, Trophy,
   Home, Building2, Globe, Users, User, BarChart2,
   Cpu, Brain, MessageSquare, Target, Layers, RefreshCw,
+  Clock, Flame, ChevronUp,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { EducationStage } from "@/lib/types";
@@ -30,10 +31,10 @@ interface CareerMatch {
   careerTitle: string;
   matchScore: number;
   matchReasons: string[];
+  demand?: string;
+  timeToReady?: string;
 }
 
-// Mirrors the StageRecommendation union from stage-engine — we keep it loose
-// so we don't need to import server-side types into a client bundle.
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type StageRec = Record<string, any>;
 
@@ -52,17 +53,17 @@ const EDUCATION_OPTIONS: {
   desc: string;
   icon: React.ElementType;
 }[] = [
-  { value: "jhs_student",        label: "JHS Student",          desc: "Junior High School",              icon: BookOpen },
-  { value: "shs_student",        label: "SHS Student",          desc: "Senior High School",              icon: GraduationCap },
-  { value: "tvet_student",       label: "TVET Student",         desc: "Technical & Vocational Training", icon: Wrench },
-  { value: "polytechnic_student",label: "Polytechnic Student",  desc: "HND / Technical University",     icon: Layers },
-  { value: "university_student", label: "University Student",   desc: "Degree Programme",                icon: Building2 },
-  { value: "graduate",           label: "Graduate",             desc: "Completed Tertiary Education",    icon: Award },
-  { value: "working_professional",label: "Working Professional",desc: "Currently Employed",              icon: Briefcase },
-  { value: "career_switcher",    label: "Career Switcher",      desc: "Changing Fields",                 icon: RefreshCw },
+  { value: "jhs_student",         label: "JHS Student",          desc: "Junior High School",              icon: BookOpen },
+  { value: "shs_student",         label: "SHS Student",          desc: "Senior High School",              icon: GraduationCap },
+  { value: "tvet_student",        label: "TVET Student",         desc: "Technical & Vocational Training", icon: Wrench },
+  { value: "polytechnic_student", label: "Polytechnic Student",  desc: "HND / Technical University",     icon: Layers },
+  { value: "university_student",  label: "University Student",   desc: "Degree Programme",                icon: Building2 },
+  { value: "graduate",            label: "Graduate",             desc: "Completed Tertiary Education",    icon: Award },
+  { value: "working_professional",label: "Working Professional", desc: "Currently Employed",              icon: Briefcase },
+  { value: "career_switcher",     label: "Career Switcher",      desc: "Changing Fields",                 icon: RefreshCw },
 ];
 
-const INTERESTS = [
+const PREDEFINED_INTERESTS = [
   { id: "technology",  label: "Technology",    icon: Monitor },
   { id: "healthcare",  label: "Healthcare",    icon: Heart },
   { id: "business",    label: "Business",      icon: Briefcase },
@@ -74,6 +75,8 @@ const INTERESTS = [
   { id: "sports",      label: "Sports",        icon: Trophy },
   { id: "teaching",    label: "Education",     icon: BookOpen },
 ] as const;
+
+const PREDEFINED_IDS: Set<string> = new Set(PREDEFINED_INTERESTS.map((i) => i.id));
 
 const SUBJECTS = [
   "Mathematics", "Science", "ICT", "English", "Social Studies",
@@ -225,61 +228,92 @@ function StepDots({ current, total }: { current: number; total: number }) {
 
 function WelcomeStep({ onStart, onExplore }: { onStart: () => void; onExplore: () => void }) {
   return (
-    <div className="relative min-h-screen flex flex-col bg-slate-950 overflow-hidden">
+    <div className="relative min-h-screen flex flex-col bg-[#0a0f1e] overflow-hidden">
+      {/* Ghana accent bar */}
       <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-red-500 via-amber-400 to-green-500" />
+
+      {/* Subtle grid */}
       <div
-        className="absolute inset-0 pointer-events-none"
+        className="absolute inset-0 pointer-events-none opacity-40"
         style={{
           backgroundImage:
-            "linear-gradient(rgba(99,102,241,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(99,102,241,0.04) 1px,transparent 1px)",
-          backgroundSize: "64px 64px",
+            "linear-gradient(rgba(99,102,241,0.06) 1px,transparent 1px),linear-gradient(90deg,rgba(99,102,241,0.06) 1px,transparent 1px)",
+          backgroundSize: "56px 56px",
         }}
       />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[560px] h-[560px] rounded-full bg-indigo-600/10 blur-[130px] pointer-events-none" />
 
-      <div className="relative z-10 flex flex-col items-center justify-center flex-1 px-6 py-16 text-center">
+      {/* Glow orbs */}
+      <div className="absolute top-[30%] left-[20%] w-[400px] h-[400px] rounded-full bg-indigo-600/10 blur-[120px] pointer-events-none" />
+      <div className="absolute top-[50%] right-[15%] w-[300px] h-[300px] rounded-full bg-violet-600/8 blur-[100px] pointer-events-none" />
+
+      {/* Nav */}
+      <div className="relative z-10 px-6 pt-6 flex items-center gap-2">
+        <div className="w-7 h-7 rounded-lg bg-indigo-600 flex items-center justify-center">
+          <Rocket size={14} className="text-white" />
+        </div>
+        <span className="text-sm font-bold text-white/80">PathWise</span>
+      </div>
+
+      {/* Hero */}
+      <div className="relative z-10 flex flex-col items-center justify-center flex-1 px-6 py-12 text-center">
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="w-full max-w-lg"
+          className="w-full max-w-xl"
         >
-          <div className="inline-flex items-center gap-2.5 mb-10 px-4 py-2 rounded-full border border-white/10 bg-white/5">
-            <div className="w-5 h-5 rounded-md bg-indigo-500 flex items-center justify-center">
-              <Rocket size={11} className="text-white" />
-            </div>
-            <span className="text-sm font-semibold text-white/70 tracking-wide">PathWise AI</span>
+          <div className="inline-flex items-center gap-2 mb-8 px-3.5 py-1.5 rounded-full border border-indigo-500/30 bg-indigo-500/10 text-indigo-300 text-xs font-semibold tracking-wide">
+            <Sparkles size={11} />
+            AI-Powered Career Guidance for Ghana
           </div>
 
-          <h1 className="text-5xl sm:text-6xl font-extrabold text-white leading-[1.1] tracking-tight mb-5">
+          <h1 className="text-[2.75rem] sm:text-6xl font-extrabold text-white leading-[1.08] tracking-tight mb-6">
             Find your perfect<br />
-            <span className="text-indigo-400">career path</span>
+            <span className="bg-gradient-to-r from-indigo-400 to-violet-400 bg-clip-text text-transparent">
+              career path
+            </span>
           </h1>
 
-          <p className="text-lg text-slate-400 leading-relaxed max-w-md mx-auto mb-10">
-            Answer 7 quick questions and our AI will map the best education programme,
-            university course, and career path tailored for you in Ghana.
+          <p className="text-base sm:text-lg text-slate-400 leading-relaxed max-w-md mx-auto mb-10">
+            Answer 7 quick questions and our AI maps the best SHS programme,
+            university course, or career path — built around who you are.
           </p>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-10">
-            <PrimaryBtn onClick={onStart} className="w-full sm:w-auto px-10 py-3.5 text-base rounded-xl">
-              Begin Setup <ArrowRight size={16} />
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-12">
+            <PrimaryBtn onClick={onStart} className="w-full sm:w-auto px-8 py-4 text-base">
+              Begin Your Journey <ArrowRight size={17} />
             </PrimaryBtn>
             <button
               onClick={onExplore}
-              className="w-full sm:w-auto px-10 py-3.5 rounded-xl font-semibold text-slate-400 hover:text-white border border-white/10 hover:bg-white/5 transition-all text-base"
+              className="w-full sm:w-auto px-8 py-4 rounded-xl font-semibold text-slate-400 hover:text-white border border-white/10 hover:bg-white/5 transition-all text-base"
             >
               Explore Careers
             </button>
           </div>
 
-          <p className="text-sm text-slate-600">3 minutes · Free · No CV required</p>
+          {/* 3 feature pills */}
+          <div className="flex flex-wrap items-center justify-center gap-3">
+            {[
+              { icon: Target,  text: "Personalised to you" },
+              { icon: Globe,   text: "Built for Ghana" },
+              { icon: Clock,   text: "Ready in 3 minutes" },
+            ].map(({ icon: Icon, text }) => (
+              <div
+                key={text}
+                className="flex items-center gap-2 px-3.5 py-2 rounded-full bg-white/5 border border-white/8 text-slate-400 text-xs font-medium"
+              >
+                <Icon size={13} className="text-indigo-400" />
+                {text}
+              </div>
+            ))}
+          </div>
         </motion.div>
       </div>
 
+      {/* Stats bar */}
       <motion.div
         initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }}
-        className="relative z-10 border-t border-white/5 px-8 py-6"
+        className="relative z-10 border-t border-white/5 px-8 py-5"
       >
         <div className="max-w-sm mx-auto grid grid-cols-3 gap-4">
           {[
@@ -288,8 +322,8 @@ function WelcomeStep({ onStart, onExplore }: { onStart: () => void; onExplore: (
             { value: "8",       label: "Education stages" },
           ].map((s) => (
             <div key={s.label} className="text-center">
-              <div className="text-lg font-bold text-white">{s.value}</div>
-              <div className="text-xs text-slate-500 mt-0.5">{s.label}</div>
+              <div className="text-base font-bold text-white">{s.value}</div>
+              <div className="text-xs text-slate-600 mt-0.5">{s.label}</div>
             </div>
           ))}
         </div>
@@ -302,13 +336,15 @@ function WelcomeStep({ onStart, onExplore }: { onStart: () => void; onExplore: (
 
 function EducationStep({ value, onChange }: { value: string; onChange: (v: EducationStage) => void }) {
   return (
-    <div className="space-y-6">
+    <div className="space-y-5">
       <div>
-        <h2 className="text-2xl font-bold text-slate-900">Where are you right now?</h2>
-        <p className="text-slate-500 mt-1.5 text-sm">Select your current education or career stage.</p>
+        <h2 className="text-2xl font-bold text-slate-900 tracking-tight">Where are you right now?</h2>
+        <p className="text-slate-500 mt-1.5 text-sm leading-relaxed">
+          Select your current stage — we&apos;ll personalise everything around it.
+        </p>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
         {EDUCATION_OPTIONS.map((opt) => {
           const selected = value === opt.value;
           const Icon = opt.icon;
@@ -320,18 +356,18 @@ function EducationStep({ value, onChange }: { value: string; onChange: (v: Educa
               className={cn(
                 "relative flex items-center gap-3.5 p-3.5 rounded-xl border-2 text-left transition-all duration-200",
                 selected
-                  ? "border-indigo-500 bg-indigo-50/70 shadow-sm"
-                  : "border-slate-200 bg-white hover:border-slate-300 hover:shadow-sm",
+                  ? "border-indigo-500 bg-indigo-50/80 shadow-sm"
+                  : "border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50/80",
               )}
             >
               <div className={cn(
-                "w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 transition-all",
-                selected ? "bg-indigo-100" : "bg-slate-100",
+                "w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 transition-all",
+                selected ? "bg-indigo-600" : "bg-slate-100",
               )}>
-                <Icon size={18} className={selected ? "text-indigo-600" : "text-slate-500"} />
+                <Icon size={18} className={selected ? "text-white" : "text-slate-500"} />
               </div>
               <div className="min-w-0">
-                <p className={cn("font-semibold text-sm", selected ? "text-indigo-900" : "text-slate-900")}>
+                <p className={cn("font-semibold text-sm", selected ? "text-indigo-900" : "text-slate-800")}>
                   {opt.label}
                 </p>
                 <p className="text-xs text-slate-500 mt-0.5">{opt.desc}</p>
@@ -355,15 +391,30 @@ function EducationStep({ value, onChange }: { value: string; onChange: (v: Educa
 // ─── Step 2: Interests ────────────────────────────────────────────────────────
 
 function InterestsStep({ selected, onToggle }: { selected: string[]; onToggle: (id: string) => void }) {
+  const [customInput, setCustomInput] = useState("");
+
+  const customInterests = selected.filter((id) => !PREDEFINED_IDS.has(id));
+
+  const handleAdd = () => {
+    const trimmed = customInput.trim();
+    if (!trimmed) return;
+    const key = trimmed.toLowerCase();
+    if (!selected.includes(key)) onToggle(key);
+    setCustomInput("");
+  };
+
   return (
-    <div className="space-y-6">
+    <div className="space-y-5">
       <div>
-        <h2 className="text-2xl font-bold text-slate-900">What excites you?</h2>
-        <p className="text-slate-500 mt-1.5 text-sm">Select at least one area that interests you most.</p>
+        <h2 className="text-2xl font-bold text-slate-900 tracking-tight">What excites you?</h2>
+        <p className="text-slate-500 mt-1.5 text-sm leading-relaxed">
+          Pick at least one area — or type your own below.
+        </p>
       </div>
 
-      <div className="grid grid-cols-2 gap-2.5">
-        {INTERESTS.map((item) => {
+      {/* Predefined grid */}
+      <div className="grid grid-cols-2 gap-2">
+        {PREDEFINED_INTERESTS.map((item) => {
           const on = selected.includes(item.id);
           const Icon = item.icon;
           return (
@@ -374,15 +425,15 @@ function InterestsStep({ selected, onToggle }: { selected: string[]; onToggle: (
               className={cn(
                 "relative flex items-center gap-3 p-3.5 rounded-xl border-2 text-left transition-all duration-200",
                 on
-                  ? "border-indigo-500 bg-indigo-50/70 shadow-sm"
-                  : "border-slate-200 bg-white hover:border-slate-300 hover:shadow-sm",
+                  ? "border-indigo-500 bg-indigo-50/80 shadow-sm"
+                  : "border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50/80",
               )}
             >
               <div className={cn(
                 "w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 transition-all",
-                on ? "bg-indigo-100" : "bg-slate-100",
+                on ? "bg-indigo-600" : "bg-slate-100",
               )}>
-                <Icon size={17} className={on ? "text-indigo-600" : "text-slate-500"} />
+                <Icon size={16} className={on ? "text-white" : "text-slate-500"} />
               </div>
               <span className={cn("text-sm font-medium leading-tight", on ? "text-indigo-900" : "text-slate-700")}>
                 {item.label}
@@ -391,7 +442,7 @@ function InterestsStep({ selected, onToggle }: { selected: string[]; onToggle: (
                 {on && (
                   <motion.div
                     initial={{ scale: 0 }} animate={{ scale: 1 }} exit={{ scale: 0 }}
-                    className="absolute top-2.5 right-2.5 w-4 h-4 rounded-full bg-indigo-600 flex items-center justify-center"
+                    className="absolute top-2 right-2 w-4 h-4 rounded-full bg-indigo-600 flex items-center justify-center"
                   >
                     <Check size={9} className="text-white" />
                   </motion.div>
@@ -400,6 +451,46 @@ function InterestsStep({ selected, onToggle }: { selected: string[]; onToggle: (
             </motion.button>
           );
         })}
+      </div>
+
+      {/* Custom interest input */}
+      <div>
+        <p className="text-xs text-slate-400 font-medium mb-2">Don&apos;t see yours? Add it:</p>
+        <div className="flex gap-2">
+          <input
+            type="text"
+            value={customInput}
+            onChange={(e) => setCustomInput(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && handleAdd()}
+            placeholder="e.g. Law, Aviation, Fashion…"
+            className="flex-1 px-3.5 py-2.5 rounded-xl border-2 border-slate-200 focus:border-indigo-500 outline-none text-sm text-slate-900 bg-white placeholder:text-slate-400 transition-all"
+          />
+          <button
+            onClick={handleAdd}
+            disabled={!customInput.trim()}
+            className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold transition-colors disabled:opacity-40"
+          >
+            <Plus size={14} /> Add
+          </button>
+        </div>
+
+        {/* Custom interest chips */}
+        {customInterests.length > 0 && (
+          <div className="flex flex-wrap gap-2 mt-3">
+            {customInterests.map((id) => (
+              <motion.span
+                key={id}
+                initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-indigo-600 text-white text-xs font-medium"
+              >
+                {id}
+                <button onClick={() => onToggle(id)} className="hover:bg-indigo-700 rounded-full p-0.5 transition-colors">
+                  <X size={10} />
+                </button>
+              </motion.span>
+            ))}
+          </div>
+        )}
       </div>
 
       {selected.length > 0 && (
@@ -415,10 +506,12 @@ function InterestsStep({ selected, onToggle }: { selected: string[]; onToggle: (
 
 function SubjectsStep({ selected, onToggle }: { selected: string[]; onToggle: (s: string) => void }) {
   return (
-    <div className="space-y-6">
+    <div className="space-y-5">
       <div>
-        <h2 className="text-2xl font-bold text-slate-900">Your favourite subjects?</h2>
-        <p className="text-slate-500 mt-1.5 text-sm">Select all that apply — helps us align recommendations to your strengths.</p>
+        <h2 className="text-2xl font-bold text-slate-900 tracking-tight">Your favourite subjects?</h2>
+        <p className="text-slate-500 mt-1.5 text-sm leading-relaxed">
+          Select all that apply — we use this to align recommendations to your strengths.
+        </p>
       </div>
 
       <div className="flex flex-wrap gap-2">
@@ -430,13 +523,13 @@ function SubjectsStep({ selected, onToggle }: { selected: string[]; onToggle: (s
               whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}
               onClick={() => onToggle(sub)}
               className={cn(
-                "px-4 py-2 rounded-lg text-sm font-medium border-2 transition-all",
+                "px-4 py-2 rounded-full text-sm font-medium border-2 transition-all",
                 on
                   ? "bg-indigo-600 text-white border-indigo-600 shadow-sm"
-                  : "bg-white border-slate-200 text-slate-700 hover:border-slate-300",
+                  : "bg-white border-slate-200 text-slate-700 hover:border-indigo-300 hover:bg-indigo-50/50",
               )}
             >
-              {on && <Check size={12} className="inline mr-1.5 -mt-0.5" />}
+              {on && <Check size={11} className="inline mr-1.5 -mt-0.5" />}
               {sub}
             </motion.button>
           );
@@ -472,10 +565,12 @@ function PersonalityStep({
   ];
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-5">
       <div>
-        <h2 className="text-2xl font-bold text-slate-900">How do you work best?</h2>
-        <p className="text-slate-500 mt-1.5 text-sm">Rate each statement from 1 (strongly disagree) to 5 (strongly agree).</p>
+        <h2 className="text-2xl font-bold text-slate-900 tracking-tight">How do you work best?</h2>
+        <p className="text-slate-500 mt-1.5 text-sm leading-relaxed">
+          Rate each honestly — 1 = strongly disagree, 5 = strongly agree.
+        </p>
       </div>
 
       <div className="space-y-3">
@@ -483,8 +578,8 @@ function PersonalityStep({
           const val = answers[q.id] ?? 0;
           return (
             <div key={q.id} className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
-              <div className="flex items-start gap-3 mb-4">
-                <span className="w-6 h-6 rounded-md bg-slate-100 text-slate-500 text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">
+              <div className="flex items-start gap-3 mb-3.5">
+                <span className="w-6 h-6 rounded-lg bg-slate-100 text-slate-500 text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">
                   {qi + 1}
                 </span>
                 <p className="text-sm font-medium text-slate-800 leading-relaxed">{q.q}</p>
@@ -496,7 +591,7 @@ function PersonalityStep({
                     whileHover={{ y: -1 }} whileTap={{ scale: 0.92 }}
                     onClick={() => onChange(q.id, n)}
                     className={cn(
-                      "flex-1 h-10 rounded-lg text-sm font-semibold border-2 transition-all",
+                      "flex-1 h-10 rounded-lg text-sm font-bold border-2 transition-all",
                       val === n
                         ? cn(COLORS[n - 1], "text-white shadow-sm")
                         : "bg-slate-50 border-slate-200 text-slate-500 hover:border-slate-300",
@@ -507,8 +602,12 @@ function PersonalityStep({
                 ))}
               </div>
               {val > 0 && (
-                <p className="text-xs text-slate-400 mt-2">
-                  {q.lo} → <span className="text-slate-600 font-medium">{LABELS[val - 1]}</span> → {q.hi}
+                <p className="text-xs text-slate-400 mt-2 flex items-center gap-1">
+                  <span>{q.lo}</span>
+                  <ChevronRight size={10} />
+                  <span className="text-slate-600 font-medium">{LABELS[val - 1]}</span>
+                  <ChevronRight size={10} />
+                  <span>{q.hi}</span>
                 </p>
               )}
             </div>
@@ -540,14 +639,16 @@ function AspirationsStep({
   const suggestions = [...new Set(interests.flatMap((i) => CAREER_SUGGESTIONS[i] ?? []))].slice(0, 8);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-5">
       <div>
-        <h2 className="text-2xl font-bold text-slate-900">Your dream career?</h2>
-        <p className="text-slate-500 mt-1.5 text-sm">Type it in, or choose from AI suggestions based on your interests.</p>
+        <h2 className="text-2xl font-bold text-slate-900 tracking-tight">Your dream career?</h2>
+        <p className="text-slate-500 mt-1.5 text-sm leading-relaxed">
+          Type it in, or choose from AI suggestions based on your interests.
+        </p>
       </div>
 
       <div className="relative">
-        <Brain size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+        <Brain size={17} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
         <input
           type="text"
           value={value}
@@ -560,7 +661,7 @@ function AspirationsStep({
       {suggestions.length > 0 && (
         <div>
           <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3 flex items-center gap-1.5">
-            <Sparkles size={12} className="text-indigo-500" />
+            <Sparkles size={11} className="text-indigo-500" />
             Suggestions based on your interests
           </p>
           <div className="flex flex-wrap gap-2">
@@ -570,10 +671,10 @@ function AspirationsStep({
                 whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}
                 onClick={() => onChange(sug)}
                 className={cn(
-                  "px-3.5 py-1.5 rounded-lg text-sm font-medium border-2 transition-all",
+                  "px-3.5 py-1.5 rounded-full text-sm font-medium border-2 transition-all",
                   value === sug
                     ? "bg-indigo-600 text-white border-indigo-600 shadow-sm"
-                    : "bg-white border-slate-200 text-slate-700 hover:border-indigo-300",
+                    : "bg-white border-slate-200 text-slate-700 hover:border-indigo-300 hover:bg-indigo-50/50",
                 )}
               >
                 {sug}
@@ -584,9 +685,9 @@ function AspirationsStep({
       )}
 
       <div className="flex items-start gap-3 bg-slate-50 rounded-xl p-3.5 border border-slate-200">
-        <MessageSquare size={15} className="text-slate-400 mt-0.5 flex-shrink-0" />
+        <MessageSquare size={14} className="text-slate-400 mt-0.5 flex-shrink-0" />
         <p className="text-xs text-slate-500 leading-relaxed">
-          Not sure? Skip this — our AI will suggest careers based on your interests and personality profile.
+          Not sure yet? Skip this — our AI will suggest careers based on your interests and personality.
         </p>
       </div>
     </div>
@@ -597,13 +698,15 @@ function AspirationsStep({
 
 function EnvironmentStep({ selected, onToggle }: { selected: string[]; onToggle: (id: string) => void }) {
   return (
-    <div className="space-y-6">
+    <div className="space-y-5">
       <div>
-        <h2 className="text-2xl font-bold text-slate-900">Where do you work best?</h2>
-        <p className="text-slate-500 mt-1.5 text-sm">Choose all environments that suit your working style.</p>
+        <h2 className="text-2xl font-bold text-slate-900 tracking-tight">Where do you work best?</h2>
+        <p className="text-slate-500 mt-1.5 text-sm leading-relaxed">
+          Choose all environments that feel right for you.
+        </p>
       </div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
         {ENVIRONMENTS.map((env) => {
           const on = selected.includes(env.id);
           const Icon = env.icon;
@@ -613,17 +716,17 @@ function EnvironmentStep({ selected, onToggle }: { selected: string[]; onToggle:
               whileHover={{ y: -1 }} whileTap={{ scale: 0.98 }}
               onClick={() => onToggle(env.id)}
               className={cn(
-                "relative flex flex-col items-start gap-3 p-4 rounded-xl border-2 text-left transition-all duration-200",
+                "relative flex flex-col items-start gap-2.5 p-4 rounded-xl border-2 text-left transition-all duration-200",
                 on
-                  ? "border-indigo-500 bg-indigo-50/70 shadow-sm"
-                  : "border-slate-200 bg-white hover:border-slate-300 hover:shadow-sm",
+                  ? "border-indigo-500 bg-indigo-50/80 shadow-sm"
+                  : "border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50/80",
               )}
             >
               <div className={cn(
-                "w-10 h-10 rounded-lg flex items-center justify-center transition-all",
-                on ? "bg-indigo-100" : "bg-slate-100",
+                "w-10 h-10 rounded-xl flex items-center justify-center transition-all",
+                on ? "bg-indigo-600" : "bg-slate-100",
               )}>
-                <Icon size={18} className={on ? "text-indigo-600" : "text-slate-500"} />
+                <Icon size={18} className={on ? "text-white" : "text-slate-500"} />
               </div>
               <div>
                 <p className={cn("text-sm font-semibold leading-tight", on ? "text-indigo-900" : "text-slate-800")}>
@@ -669,15 +772,13 @@ function AnalysisStep({ form, onDone }: { form: FormState; onDone: (data: Result
         }
       };
 
-      const apiCalls = async () => {
-        // Save profile first, then fetch recommendations in parallel
+      const apiCalls = async (): Promise<ResultsData> => {
         await fetch("/api/profile", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
         });
 
-        // Pass education_stage directly so stage-recs doesn't depend on Airtable column existence
         const stageParam = encodeURIComponent(form.education);
         const [recRes, stageRes] = await Promise.all([
           fetch("/api/recommendations", {
@@ -687,12 +788,22 @@ function AnalysisStep({ form, onDone }: { form: FormState; onDone: (data: Result
           }),
           fetch(`/api/stage-recommendations?stage=${stageParam}`),
         ]);
+
+        // API returns snake_case — map to camelCase
         const recJson   = await recRes.json().catch(() => ({ data: [] }));
         const stageJson = await stageRes.json().catch(() => ({ data: null }));
-        return {
-          careers: (recJson.data ?? []).slice(0, 4) as CareerMatch[],
-          stage: stageJson.data ?? null,
-        };
+
+        const rawCareers: Record<string, unknown>[] = Array.isArray(recJson.data) ? recJson.data : [];
+        const careers: CareerMatch[] = rawCareers.slice(0, 4).map((r) => ({
+          careerId:    String(r.career_id ?? r.careerId ?? ""),
+          careerTitle: String(r.career_title ?? r.careerTitle ?? ""),
+          matchScore:  Number(r.match_score ?? r.matchScore ?? 0),
+          matchReasons: Array.isArray(r.match_reasons) ? (r.match_reasons as string[]) : [],
+          demand:      String(r.demand ?? ""),
+          timeToReady: String(r.time_to_ready ?? r.timeToReady ?? ""),
+        }));
+
+        return { careers, stage: stageJson.data ?? null };
       };
 
       const [resultsData] = await Promise.all([
@@ -711,12 +822,12 @@ function AnalysisStep({ form, onDone }: { form: FormState; onDone: (data: Result
   const pct = Math.round((completed.length / ANALYSIS_ITEMS.length) * 100);
 
   return (
-    <div className="relative min-h-screen flex flex-col items-center justify-center bg-slate-950 overflow-hidden">
+    <div className="relative min-h-screen flex flex-col items-center justify-center bg-[#0a0f1e] overflow-hidden">
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
         <motion.div
-          animate={{ scale: [1, 1.1, 1], opacity: [0.25, 0.45, 0.25] }}
+          animate={{ scale: [1, 1.1, 1], opacity: [0.2, 0.4, 0.2] }}
           transition={{ duration: 4, repeat: Infinity }}
-          className="w-[440px] h-[440px] rounded-full bg-indigo-600/15 blur-[100px]"
+          className="w-[500px] h-[500px] rounded-full bg-indigo-600/12 blur-[120px]"
         />
       </div>
 
@@ -725,15 +836,15 @@ function AnalysisStep({ form, onDone }: { form: FormState; onDone: (data: Result
           <motion.div
             animate={{ rotate: 360 }}
             transition={{ duration: 2.5, repeat: Infinity, ease: "linear" }}
-            className="absolute inset-0 rounded-full border-2 border-indigo-500/20 border-t-indigo-500"
+            className="absolute inset-0 rounded-full border-[3px] border-indigo-500/15 border-t-indigo-500"
           />
-          <div className="absolute inset-2 rounded-full bg-indigo-600/15 flex items-center justify-center">
-            <Sparkles size={26} className="text-indigo-400" />
+          <div className="absolute inset-2.5 rounded-full bg-indigo-600/15 flex items-center justify-center">
+            <Sparkles size={24} className="text-indigo-400" />
           </div>
           <div className="absolute -bottom-8 left-0 right-0 text-center">
             <motion.span
               key={pct}
-              initial={{ scale: 1.2, opacity: 0 }}
+              initial={{ scale: 1.3, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               className="text-base font-bold text-white"
             >
@@ -742,10 +853,10 @@ function AnalysisStep({ form, onDone }: { form: FormState; onDone: (data: Result
           </div>
         </div>
 
-        <h2 className="text-xl font-bold text-white mb-1.5">Analysing your profile</h2>
+        <h2 className="text-xl font-bold text-white mb-1.5 tracking-tight">Analysing your profile</h2>
         <p className="text-slate-400 text-sm mb-10">Building your personalised career roadmap…</p>
 
-        <div className="w-full space-y-2.5">
+        <div className="w-full space-y-2">
           {ANALYSIS_ITEMS.map((item, i) => {
             const done    = completed.includes(i);
             const current = i === completed.length;
@@ -753,7 +864,7 @@ function AnalysisStep({ form, onDone }: { form: FormState; onDone: (data: Result
               <motion.div
                 key={i}
                 initial={{ opacity: 0, x: -16 }}
-                animate={{ opacity: i <= completed.length ? 1 : 0.3, x: 0 }}
+                animate={{ opacity: i <= completed.length ? 1 : 0.25, x: 0 }}
                 transition={{ delay: i * 0.07 }}
                 className={cn(
                   "flex items-center gap-3 px-4 py-3 rounded-xl border transition-all",
@@ -768,7 +879,7 @@ function AnalysisStep({ form, onDone }: { form: FormState; onDone: (data: Result
                 )}>
                   {done
                     ? <Check size={13} className="text-white" />
-                    : <span className="text-xs text-slate-500 font-semibold">{i + 1}</span>
+                    : <span className="text-xs text-slate-500 font-bold">{i + 1}</span>
                   }
                 </div>
                 <span className={cn("text-sm text-left", done ? "text-indigo-300" : "text-slate-500")}>
@@ -776,7 +887,7 @@ function AnalysisStep({ form, onDone }: { form: FormState; onDone: (data: Result
                 </span>
                 {current && !done && (
                   <motion.div
-                    animate={{ opacity: [1, 0.25, 1] }}
+                    animate={{ opacity: [1, 0.2, 1] }}
                     transition={{ duration: 0.9, repeat: Infinity }}
                     className="ml-auto w-1.5 h-1.5 rounded-full bg-indigo-400 flex-shrink-0"
                   />
@@ -792,30 +903,39 @@ function AnalysisStep({ form, onDone }: { form: FormState; onDone: (data: Result
   );
 }
 
+// ─── Results helpers ──────────────────────────────────────────────────────────
+
+const DEMAND_CONFIG: Record<string, { label: string; color: string }> = {
+  very_high: { label: "Very high demand", color: "bg-emerald-100 text-emerald-700" },
+  high:      { label: "High demand",      color: "bg-teal-100 text-teal-700" },
+  moderate:  { label: "Moderate demand",  color: "bg-blue-100 text-blue-700" },
+  low:       { label: "Low demand",       color: "bg-slate-100 text-slate-600" },
+};
+
+function scoreColor(score: number) {
+  if (score >= 80) return "bg-emerald-500";
+  if (score >= 65) return "bg-indigo-500";
+  return "bg-amber-500";
+}
+
 // ─── Step 8: Results — stage-specific sections ────────────────────────────────
 
 function StageSection({ stage }: { stage: StageRec }) {
   const type: string = stage.type ?? "";
 
-  // JHS → show recommended SHS programmes
   if (type === "jhs") {
-    const programs: { id: string; name: string; rationale: string }[] =
-      stage.suggestedShsPrograms ?? [];
+    const programs: { id: string; name: string; rationale: string }[] = stage.suggestedShsPrograms ?? [];
     if (!programs.length) return null;
     return (
-      <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
-        <div className="flex items-center gap-2 mb-3">
-          <div className="w-8 h-8 rounded-lg bg-amber-50 flex items-center justify-center">
-            <GraduationCap size={15} className="text-amber-600" />
-          </div>
-          <span className="text-xs font-bold text-amber-600 uppercase tracking-wider">
-            Recommended SHS Programmes
-          </span>
+      <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+        <div className="flex items-center gap-2 px-4 py-3 border-b border-slate-100 bg-amber-50/60">
+          <GraduationCap size={15} className="text-amber-600" />
+          <span className="text-xs font-bold text-amber-700 uppercase tracking-wider">Recommended SHS Programmes</span>
         </div>
-        <div className="space-y-2">
+        <div className="divide-y divide-slate-100">
           {programs.slice(0, 4).map((p, i) => (
-            <div key={p.id} className="flex items-start gap-3">
-              <span className="w-5 h-5 rounded-md bg-amber-100 text-amber-700 text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">
+            <div key={p.id} className="flex items-start gap-3 px-4 py-3">
+              <span className="w-6 h-6 rounded-lg bg-amber-100 text-amber-700 text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">
                 {i + 1}
               </span>
               <div>
@@ -825,33 +945,28 @@ function StageSection({ stage }: { stage: StageRec }) {
             </div>
           ))}
         </div>
-        <p className="text-xs text-slate-400 mt-3 pt-3 border-t border-slate-100">
-          {stage.nextStepMessage}
-        </p>
+        <div className="px-4 py-3 bg-amber-50/40 border-t border-slate-100">
+          <p className="text-xs text-slate-500">{stage.nextStepMessage}</p>
+        </div>
       </div>
     );
   }
 
-  // SHS → show tertiary / university programme options
   if (type === "shs") {
     const programs: { name: string; level: string; institutions: string[]; rationale: string }[] =
       stage.suggestedTertiaryPrograms ?? [];
     if (!programs.length) return null;
     return (
-      <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
-        <div className="flex items-center gap-2 mb-3">
-          <div className="w-8 h-8 rounded-lg bg-violet-50 flex items-center justify-center">
-            <Building2 size={15} className="text-violet-600" />
-          </div>
-          <span className="text-xs font-bold text-violet-600 uppercase tracking-wider">
-            Tertiary Programme Options
-          </span>
+      <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+        <div className="flex items-center gap-2 px-4 py-3 border-b border-slate-100 bg-violet-50/60">
+          <Building2 size={15} className="text-violet-600" />
+          <span className="text-xs font-bold text-violet-700 uppercase tracking-wider">Tertiary Programme Options</span>
         </div>
-        <div className="space-y-2">
+        <div className="divide-y divide-slate-100">
           {programs.slice(0, 5).map((p, i) => (
-            <div key={i} className="flex items-start gap-3">
+            <div key={i} className="flex items-start gap-3 px-4 py-3">
               <span className={cn(
-                "px-2 py-0.5 rounded text-xs font-semibold flex-shrink-0 mt-0.5",
+                "px-2 py-0.5 rounded-md text-xs font-bold flex-shrink-0 mt-0.5",
                 p.level === "degree" ? "bg-violet-100 text-violet-700" : "bg-slate-100 text-slate-600",
               )}>
                 {p.level === "degree" ? "BSc" : p.level === "diploma" ? "Dip" : "HND"}
@@ -865,31 +980,26 @@ function StageSection({ stage }: { stage: StageRec }) {
             </div>
           ))}
         </div>
-        <p className="text-xs text-slate-400 mt-3 pt-3 border-t border-slate-100">
-          {stage.nextStepMessage}
-        </p>
+        <div className="px-4 py-3 bg-violet-50/40 border-t border-slate-100">
+          <p className="text-xs text-slate-500">{stage.nextStepMessage}</p>
+        </div>
       </div>
     );
   }
 
-  // TVET → show certifications + career paths
   if (type === "tvet") {
     const certs: { name: string; rationale: string }[] = stage.certifications ?? [];
     const entrepreneurship: string[] = stage.entrepreneurshipOpps ?? [];
     return (
-      <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
-        <div className="flex items-center gap-2 mb-3">
-          <div className="w-8 h-8 rounded-lg bg-orange-50 flex items-center justify-center">
-            <Award size={15} className="text-orange-600" />
-          </div>
-          <span className="text-xs font-bold text-orange-600 uppercase tracking-wider">
-            Certifications to Pursue
-          </span>
+      <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+        <div className="flex items-center gap-2 px-4 py-3 border-b border-slate-100 bg-orange-50/60">
+          <Award size={15} className="text-orange-600" />
+          <span className="text-xs font-bold text-orange-700 uppercase tracking-wider">Certifications & Opportunities</span>
         </div>
-        {certs.length > 0 ? (
-          <div className="space-y-2 mb-3">
+        {certs.length > 0 && (
+          <div className="divide-y divide-slate-100">
             {certs.slice(0, 4).map((c, i) => (
-              <div key={i} className="flex items-start gap-3">
+              <div key={i} className="flex items-start gap-3 px-4 py-3">
                 <Check size={13} className="text-orange-500 mt-0.5 flex-shrink-0" />
                 <div>
                   <p className="text-sm font-semibold text-slate-900">{c.name}</p>
@@ -898,78 +1008,73 @@ function StageSection({ stage }: { stage: StageRec }) {
               </div>
             ))}
           </div>
-        ) : null}
+        )}
         {entrepreneurship.length > 0 && (
-          <div className="mt-3 pt-3 border-t border-slate-100">
-            <p className="text-xs font-semibold text-slate-500 mb-2">Entrepreneurship opportunities</p>
+          <div className="px-4 py-3 border-t border-slate-100 bg-orange-50/30">
+            <p className="text-xs font-semibold text-orange-700 mb-1.5">Entrepreneurship paths</p>
             {entrepreneurship.slice(0, 2).map((e, i) => (
               <p key={i} className="text-xs text-slate-600 flex items-start gap-1.5 mb-1">
-                <span className="text-orange-400 mt-0.5">→</span> {e}
+                <span className="text-orange-400 mt-0.5 flex-shrink-0">→</span> {e}
               </p>
             ))}
           </div>
         )}
-        <p className="text-xs text-slate-400 mt-3 pt-3 border-t border-slate-100">
-          {stage.nextStepMessage}
-        </p>
+        <div className="px-4 py-3 bg-orange-50/40 border-t border-slate-100">
+          <p className="text-xs text-slate-500">{stage.nextStepMessage}</p>
+        </div>
       </div>
     );
   }
 
-  // University / Polytechnic → show internship sectors + certifications
   if (type === "university" || type === "polytechnic") {
     const internships: string[] = stage.internshipSectors ?? [];
     const certs: { name: string; rationale: string }[] = stage.certifications ?? [];
     return (
-      <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
-        <div className="flex items-center gap-2 mb-3">
-          <div className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center">
-            <Briefcase size={15} className="text-blue-600" />
-          </div>
-          <span className="text-xs font-bold text-blue-600 uppercase tracking-wider">
-            Internship Sectors & Certifications
-          </span>
+      <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+        <div className="flex items-center gap-2 px-4 py-3 border-b border-slate-100 bg-blue-50/60">
+          <Briefcase size={15} className="text-blue-600" />
+          <span className="text-xs font-bold text-blue-700 uppercase tracking-wider">Internships & Certifications</span>
         </div>
         {internships.length > 0 && (
-          <div className="flex flex-wrap gap-1.5 mb-3">
-            {internships.slice(0, 6).map((s) => (
-              <span key={s} className="px-2.5 py-1 bg-blue-50 text-blue-700 text-xs font-medium rounded-lg">
-                {s}
-              </span>
-            ))}
+          <div className="px-4 py-3 border-b border-slate-100">
+            <p className="text-xs font-semibold text-slate-500 mb-2">Internship sectors to target</p>
+            <div className="flex flex-wrap gap-1.5">
+              {internships.slice(0, 6).map((s) => (
+                <span key={s} className="px-2.5 py-1 bg-blue-50 text-blue-700 text-xs font-medium rounded-lg border border-blue-100">
+                  {s}
+                </span>
+              ))}
+            </div>
           </div>
         )}
         {certs.slice(0, 3).map((c, i) => (
-          <div key={i} className="flex items-start gap-2 mt-2">
-            <Check size={13} className="text-blue-500 mt-0.5 flex-shrink-0" />
+          <div key={i} className="flex items-start gap-2 px-4 py-2.5 border-b border-slate-100 last:border-0">
+            <Check size={12} className="text-blue-500 mt-0.5 flex-shrink-0" />
             <p className="text-xs text-slate-700 font-medium">{c.name}</p>
           </div>
         ))}
-        <p className="text-xs text-slate-400 mt-3 pt-3 border-t border-slate-100">
-          {stage.nextStepMessage}
-        </p>
+        <div className="px-4 py-3 bg-blue-50/40 border-t border-slate-100">
+          <p className="text-xs text-slate-500">{stage.nextStepMessage}</p>
+        </div>
       </div>
     );
   }
 
-  // Graduate / Professional / Switcher → show advancement paths
   if (type === "graduate" || type === "professional" || type === "switcher") {
     const paths: { title: string; description: string }[] = stage.advancementPaths ?? [];
     const transitions: { to: string; bridgeSkills: string[] }[] = stage.transitionPaths ?? [];
     return (
-      <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
-        <div className="flex items-center gap-2 mb-3">
-          <div className="w-8 h-8 rounded-lg bg-emerald-50 flex items-center justify-center">
-            <TrendingUp size={15} className="text-emerald-600" />
-          </div>
-          <span className="text-xs font-bold text-emerald-600 uppercase tracking-wider">
-            {type === "switcher" ? "Career Switch Plan" : "Advancement Paths"}
+      <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+        <div className="flex items-center gap-2 px-4 py-3 border-b border-slate-100 bg-emerald-50/60">
+          <ChevronUp size={15} className="text-emerald-600" />
+          <span className="text-xs font-bold text-emerald-700 uppercase tracking-wider">
+            {type === "switcher" ? "Your Career Switch Plan" : "Advancement Paths"}
           </span>
         </div>
-        <div className="space-y-2">
+        <div className="divide-y divide-slate-100">
           {paths.slice(0, 3).map((p, i) => (
-            <div key={i} className="flex items-start gap-3">
-              <span className="w-5 h-5 rounded-md bg-emerald-100 text-emerald-700 text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">
+            <div key={i} className="flex items-start gap-3 px-4 py-3">
+              <span className="w-6 h-6 rounded-lg bg-emerald-100 text-emerald-700 text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">
                 {i + 1}
               </span>
               <div>
@@ -979,7 +1084,7 @@ function StageSection({ stage }: { stage: StageRec }) {
             </div>
           ))}
           {type === "switcher" && transitions.slice(0, 2).map((t, i) => (
-            <div key={i} className="flex items-start gap-3 mt-2">
+            <div key={i} className="flex items-start gap-3 px-4 py-3">
               <RefreshCw size={13} className="text-emerald-500 mt-0.5 flex-shrink-0" />
               <div>
                 <p className="text-sm font-semibold text-slate-900">Pivot to: {t.to}</p>
@@ -990,26 +1095,21 @@ function StageSection({ stage }: { stage: StageRec }) {
             </div>
           ))}
         </div>
-        <p className="text-xs text-slate-400 mt-3 pt-3 border-t border-slate-100">
-          {stage.nextStepMessage}
-        </p>
+        <div className="px-4 py-3 bg-emerald-50/40 border-t border-slate-100">
+          <p className="text-xs text-slate-500">{stage.nextStepMessage}</p>
+        </div>
       </div>
     );
   }
 
-  // Fallback: just show the subheadline
   return (
     <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
       <div className="flex items-center gap-2 mb-2">
-        <div className="w-8 h-8 rounded-lg bg-emerald-50 flex items-center justify-center">
-          <Target size={15} className="text-emerald-600" />
-        </div>
+        <Target size={15} className="text-emerald-600" />
         <span className="text-xs font-bold text-emerald-600 uppercase tracking-wider">Recommended Pathway</span>
       </div>
       <p className="text-sm font-semibold text-slate-900">{stage.subheadline}</p>
-      {stage.nextStepMessage && (
-        <p className="text-xs text-slate-500 mt-1.5">{stage.nextStepMessage}</p>
-      )}
+      {stage.nextStepMessage && <p className="text-xs text-slate-500 mt-1.5">{stage.nextStepMessage}</p>}
     </div>
   );
 }
@@ -1025,75 +1125,91 @@ function ResultsStep({ results, form, onDashboard }: {
       {/* Hero */}
       <motion.div
         initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
-        className="relative rounded-2xl overflow-hidden p-6 text-white"
-        style={{ background: "linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%)" }}
+        className="rounded-2xl overflow-hidden p-6 text-white relative"
+        style={{ background: "linear-gradient(135deg, #4338ca 0%, #6d28d9 60%, #7c3aed 100%)" }}
       >
+        <div className="absolute inset-0 opacity-10" style={{ backgroundImage: "radial-gradient(circle at 70% 50%, white 0%, transparent 60%)" }} />
         <div className="relative z-10">
           <div className="flex items-center gap-2 mb-3">
-            <Sparkles size={14} className="text-indigo-200" />
-            <span className="text-xs font-bold tracking-widest text-indigo-200 uppercase">
-              AI Analysis Complete
-            </span>
+            <Sparkles size={13} className="text-indigo-200" />
+            <span className="text-xs font-bold tracking-widest text-indigo-200 uppercase">Analysis Complete</span>
           </div>
-          <h2 className="text-2xl font-extrabold">Your results are ready!</h2>
+          <h2 className="text-2xl font-extrabold tracking-tight">Your results are ready!</h2>
           {results.stage && (
-            <p className="text-indigo-100 text-sm mt-1.5 leading-relaxed">{results.stage.headline}</p>
+            <p className="text-indigo-100/90 text-sm mt-1.5 leading-relaxed">{results.stage.headline}</p>
           )}
         </div>
       </motion.div>
 
-      {/* Stage-specific primary section */}
+      {/* Stage-specific section */}
       {results.stage && (
-        <motion.div
-          initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-        >
+        <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
           <StageSection stage={results.stage} />
         </motion.div>
       )}
 
       {/* Career matches */}
       {results.careers.length > 0 && (
-        <motion.div
-          initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
-        >
-          <div className="flex items-center gap-2 mb-3">
+        <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
+          <div className="flex items-center gap-2 mb-2.5">
             <div className="w-7 h-7 rounded-lg bg-indigo-50 flex items-center justify-center">
               <TrendingUp size={13} className="text-indigo-600" />
             </div>
             <span className="text-xs font-bold text-indigo-600 uppercase tracking-wider">Top Career Matches</span>
           </div>
           <div className="space-y-2.5">
-            {results.careers.map((career, i) => (
-              <motion.div
-                key={career.careerId}
-                initial={{ opacity: 0, x: -12 }} animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.28 + i * 0.07 }}
-                className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm"
-              >
-                <div className="flex items-center justify-between mb-2.5">
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
-                      {i + 1}
+            {results.careers.map((career, i) => {
+              const demand = DEMAND_CONFIG[career.demand ?? ""] ?? DEMAND_CONFIG.moderate;
+              const barColor = scoreColor(career.matchScore);
+              return (
+                <motion.div
+                  key={career.careerId || i}
+                  initial={{ opacity: 0, x: -12 }} animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.3 + i * 0.07 }}
+                  className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm"
+                >
+                  <div className="flex items-start justify-between gap-3 mb-3">
+                    <div className="flex items-center gap-3 min-w-0">
+                      <div className="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
+                        {i + 1}
+                      </div>
+                      <div className="min-w-0">
+                        <p className="font-semibold text-slate-900 text-sm leading-tight">
+                          {career.careerTitle || "—"}
+                        </p>
+                        <div className="flex items-center gap-2 mt-1 flex-wrap">
+                          <span className={cn("text-xs px-2 py-0.5 rounded-md font-medium", demand.color)}>
+                            {demand.label}
+                          </span>
+                          {career.timeToReady && career.timeToReady !== "undefined" && (
+                            <span className="flex items-center gap-1 text-xs text-slate-400">
+                              <Clock size={10} /> {career.timeToReady}
+                            </span>
+                          )}
+                        </div>
+                      </div>
                     </div>
-                    <span className="font-semibold text-slate-900 text-sm">{career.careerTitle}</span>
+                    <div className="flex-shrink-0 text-right">
+                      <span className="text-2xl font-extrabold text-indigo-600 leading-none">
+                        {career.matchScore}
+                      </span>
+                      <span className="text-sm font-semibold text-indigo-400">%</span>
+                    </div>
                   </div>
-                  <span className="text-xs font-bold text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-full flex-shrink-0">
-                    {career.matchScore}%
-                  </span>
-                </div>
-                <div className="h-1.5 bg-slate-100 rounded-full overflow-hidden">
-                  <motion.div
-                    initial={{ width: 0 }}
-                    animate={{ width: `${career.matchScore}%` }}
-                    transition={{ delay: 0.4 + i * 0.1, duration: 0.7, ease: "easeOut" }}
-                    className="h-full bg-indigo-500 rounded-full"
-                  />
-                </div>
-                {career.matchReasons?.[0] && (
-                  <p className="text-xs text-slate-500 mt-1.5">{career.matchReasons[0]}</p>
-                )}
-              </motion.div>
-            ))}
+                  <div className="h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                    <motion.div
+                      initial={{ width: 0 }}
+                      animate={{ width: `${career.matchScore}%` }}
+                      transition={{ delay: 0.45 + i * 0.1, duration: 0.7, ease: "easeOut" }}
+                      className={cn("h-full rounded-full", barColor)}
+                    />
+                  </div>
+                  {career.matchReasons?.[0] && (
+                    <p className="text-xs text-slate-500 mt-2">{career.matchReasons[0]}</p>
+                  )}
+                </motion.div>
+              );
+            })}
           </div>
         </motion.div>
       )}
@@ -1101,8 +1217,8 @@ function ResultsStep({ results, form, onDashboard }: {
       {/* Profile summary */}
       {edu && (
         <motion.div
-          initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}
-          className="flex items-center gap-3 bg-slate-50 border border-slate-200 rounded-xl p-4"
+          initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.45 }}
+          className="flex items-center gap-3 bg-slate-50 border border-slate-200 rounded-xl p-3.5"
         >
           <div className="w-10 h-10 rounded-xl bg-indigo-100 flex items-center justify-center">
             <EduIcon size={18} className="text-indigo-600" />
@@ -1119,14 +1235,12 @@ function ResultsStep({ results, form, onDashboard }: {
       )}
 
       {/* CTA */}
-      <motion.div
-        initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}
-      >
+      <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.55 }}>
         <PrimaryBtn onClick={onDashboard} className="w-full py-4 text-base">
-          <Zap size={16} /> Go to My Dashboard <ArrowRight size={16} />
+          <Flame size={16} /> Go to My Dashboard <ArrowRight size={16} />
         </PrimaryBtn>
         <p className="text-center text-xs text-slate-400 mt-2.5">
-          Full roadmaps, skill gap analysis, and AI advisor await you
+          Roadmaps, skill gap analysis, and AI advisor await you
         </p>
       </motion.div>
     </div>
@@ -1230,12 +1344,7 @@ export default function OnboardingPage() {
   }
 
   const stepContent: Record<number, React.ReactNode> = {
-    1: (
-      <EducationStep
-        value={form.education}
-        onChange={(v) => update({ education: v })}
-      />
-    ),
+    1: <EducationStep value={form.education} onChange={(v) => update({ education: v })} />,
     2: (
       <InterestsStep
         selected={form.interests}
@@ -1308,14 +1417,7 @@ export default function OnboardingPage() {
       {/* Content */}
       <div className="max-w-lg mx-auto px-4 py-8 pb-36">
         <AnimatePresence mode="wait" custom={dir}>
-          <motion.div
-            key={step}
-            custom={dir}
-            variants={fade}
-            initial="enter"
-            animate="center"
-            exit="exit"
-          >
+          <motion.div key={step} custom={dir} variants={fade} initial="enter" animate="center" exit="exit">
             {stepContent[step]}
           </motion.div>
         </AnimatePresence>
@@ -1333,11 +1435,7 @@ export default function OnboardingPage() {
               <ChevronLeft size={16} /> Back
             </motion.button>
           )}
-          <PrimaryBtn
-            onClick={() => go(1)}
-            disabled={!canProceed()}
-            className="flex-1 py-3"
-          >
+          <PrimaryBtn onClick={() => go(1)} disabled={!canProceed()} className="flex-1 py-3">
             {step === 6 ? (
               <><Sparkles size={15} /> Analyse My Profile</>
             ) : (
