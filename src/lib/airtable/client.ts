@@ -224,37 +224,33 @@ export async function upsertProfile(data: ProfileData): Promise<void> {
     `{userId} = "${data.userId}"`
   );
 
-  const baseFields = {
-    userId:          data.userId,
-    name:            data.name,
+  const allFields: Record<string, string> = {
+    userId:                  data.userId,
+    name:                    data.name,
     ...(data.email ? { email: data.email } : {}),
-    experienceLevel: data.experienceLevel ?? "explorer",
-    workPreferences: JSON.stringify(data.workPreferences ?? []),
-    interests:       JSON.stringify(data.interests),
-    skills:          JSON.stringify(data.skills),
-    weakAreas:       JSON.stringify(data.weakAreas),
-    workStyle:       data.workStyle,
-    learningMode:    data.learningMode,
-    availability:    data.availability,
-    careerGoals:     JSON.stringify(data.careerGoals),
-    industries:      JSON.stringify(data.industries),
-    createdAt:       records[0]?.fields.createdAt ?? new Date().toISOString(),
-    updatedAt:       new Date().toISOString(),
+    experienceLevel:         data.experienceLevel ?? "explorer",
+    workPreferences:         JSON.stringify(data.workPreferences ?? []),
+    interests:               JSON.stringify(data.interests),
+    skills:                  JSON.stringify(data.skills),
+    weakAreas:               JSON.stringify(data.weakAreas),
+    workStyle:               data.workStyle,
+    learningMode:            data.learningMode,
+    availability:            data.availability,
+    careerGoals:             JSON.stringify(data.careerGoals),
+    industries:              JSON.stringify(data.industries),
+    createdAt:               records[0]?.fields.createdAt ?? new Date().toISOString(),
+    updatedAt:               new Date().toISOString(),
   };
 
-  // New stage-aware fields — only include non-empty values so that Airtable
-  // does not reject the write if these columns haven't been created yet.
-  const stageFields: Record<string, string> = {};
-  if (data.educationStage)    stageFields.educationStage          = data.educationStage;
-  if (data.currentProgram)    stageFields.currentProgram          = data.currentProgram;
-  if (data.academicBackground) stageFields.academicBackground     = data.academicBackground;
-  if (data.preferredNextStep) stageFields.preferredNextStep       = data.preferredNextStep;
-  if (data.certificationInterest !== undefined)
-    stageFields.certificationInterest   = String(data.certificationInterest);
-  if (data.entrepreneurialInterest !== undefined)
-    stageFields.entrepreneurialInterest = String(data.entrepreneurialInterest);
+  // Stage-aware fields — only include if non-empty
+  if (data.educationStage)             allFields.educationStage          = data.educationStage;
+  if (data.currentProgram)             allFields.currentProgram          = data.currentProgram;
+  if (data.academicBackground)         allFields.academicBackground      = data.academicBackground;
+  if (data.preferredNextStep)          allFields.preferredNextStep       = data.preferredNextStep;
+  if (data.certificationInterest   !== undefined) allFields.certificationInterest   = String(data.certificationInterest);
+  if (data.entrepreneurialInterest !== undefined) allFields.entrepreneurialInterest = String(data.entrepreneurialInterest);
 
-  const write = async (fields: object) => {
+  const write = async (fields: Record<string, string>) => {
     if (records.length > 0) {
       await updateRecord("Profiles", records[0].id, fields);
     } else {
@@ -262,23 +258,30 @@ export async function upsertProfile(data: ProfileData): Promise<void> {
     }
   };
 
-  try {
-    await write({ ...baseFields, ...stageFields });
-  } catch (stageErr) {
-    const msg = stageErr instanceof Error ? stageErr.message : String(stageErr);
-    // Airtable rejects writes if a column doesn't exist (UNKNOWN_FIELD_NAME)
-    // or has the wrong type (INVALID_VALUE_FOR_COLUMN). Either way, retry
-    // with core fields only so the user's profile is always saved.
-    const isFieldError =
-      msg.includes("UNKNOWN_FIELD_NAME") ||
-      msg.includes("INVALID_VALUE_FOR_COLUMN") ||
-      msg.includes("Unknown field") ||
-      msg.includes("422");
-    if (isFieldError) {
-      console.warn("[Airtable] Stage field write rejected — retrying with base fields only. Check column names and types in Airtable.", msg);
-      await write(baseFields);
-    } else {
-      throw stageErr;
+  // Extract the field name from Airtable's UNKNOWN_FIELD_NAME error.
+  const extractUnknownField = (msg: string): string | null => {
+    const m = msg.match(/Unknown field name: "([^"]+)"/);
+    return m ? m[1] : null;
+  };
+
+  // Progressively strip fields that Airtable doesn't recognise and retry.
+  // This handles column name mismatches without hard-coding which fields
+  // are optional — every field except userId is strippable.
+  let pending = { ...allFields };
+  while (true) {
+    try {
+      await write(pending);
+      break;
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : String(err);
+      const unknownField = extractUnknownField(msg);
+      if (unknownField && unknownField in pending && unknownField !== "userId") {
+        console.warn(`[Airtable] Skipping unrecognised column "${unknownField}" — add it to your Airtable base to persist this field.`);
+        const { [unknownField]: _removed, ...rest } = pending;
+        pending = rest;
+      } else {
+        throw err;
+      }
     }
   }
 }
