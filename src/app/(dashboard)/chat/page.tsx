@@ -4,6 +4,7 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import {
   Send, Sparkles, RotateCcw, Copy, Check,
   Plus, Compass, Map, TrendingUp, Lightbulb,
+  X, FileText,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -12,20 +13,26 @@ interface Message {
   role: "user" | "assistant";
   content: string;
   timestamp: Date;
+  attachmentNames?: string[];
+}
+
+interface Attachment {
+  id: string;
+  file: File;
+  preview?: string; // object URL for images
+  kind: "image" | "file";
 }
 
 const GUIDED_DISCOVERY_PROMPT =
   `I'm not sure what career I want. Can you guide me through some questions to help me figure out what might suit me? Start by asking me what kinds of activities or subjects I enjoy, then take it from there.`;
 
-// Action pills (like ChatGPT's "Create an image / Write or edit / Look something up")
 const ACTION_PILLS = [
-  { label: "Explore careers",    icon: Compass,     prompt: "What are the most in-demand careers in Ghana right now, and what qualifications do they need?" },
-  { label: "Plan my path",       icon: Map,          prompt: "Can you help me build a step-by-step plan to reach my career goal?" },
-  { label: "Skill gap advice",   icon: TrendingUp,   prompt: "What skills should I be developing to stay competitive in today's job market?" },
-  { label: "Not sure? Start here", icon: Lightbulb,  prompt: GUIDED_DISCOVERY_PROMPT },
+  { label: "Explore careers",      icon: Compass,    prompt: "What are the most in-demand careers in Ghana right now, and what qualifications do they need?" },
+  { label: "Plan my path",         icon: Map,         prompt: "Can you help me build a step-by-step plan to reach my career goal?" },
+  { label: "Skill gap advice",     icon: TrendingUp,  prompt: "What skills should I be developing to stay competitive in today's job market?" },
+  { label: "Not sure? Start here", icon: Lightbulb,   prompt: GUIDED_DISCOVERY_PROMPT },
 ];
 
-// Suggestion prompts shown below the pills
 const SUGGESTIONS = [
   "What careers are good for someone who enjoys helping people?",
   "I enjoy creative work but also like structure — what suits me?",
@@ -35,7 +42,59 @@ const SUGGESTIONS = [
   "How do I pivot from marketing into product management?",
 ];
 
-// ─── Message row ─────────────────────────────────────────────────────────────
+// ─── Helpers ──────────────────────────────────────────────────────────────────
+
+async function fileToBase64(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve((reader.result as string).split(",")[1]);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+async function fileToText(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = reject;
+    reader.readAsText(file);
+  });
+}
+
+// ─── Attachment chip ──────────────────────────────────────────────────────────
+
+function AttachmentChip({
+  attachment,
+  onRemove,
+}: {
+  attachment: Attachment;
+  onRemove: () => void;
+}) {
+  return (
+    <div className="relative inline-flex items-center gap-1.5 bg-slate-100 border border-slate-200 rounded-xl px-2.5 py-1.5 text-xs text-slate-700">
+      {attachment.kind === "image" && attachment.preview ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={attachment.preview}
+          alt={attachment.file.name}
+          className="w-6 h-6 rounded object-cover flex-shrink-0"
+        />
+      ) : (
+        <FileText size={12} className="text-indigo-500 flex-shrink-0" />
+      )}
+      <span className="max-w-[120px] truncate">{attachment.file.name}</span>
+      <button
+        onClick={onRemove}
+        className="ml-0.5 text-slate-400 hover:text-slate-700 transition-colors"
+      >
+        <X size={11} />
+      </button>
+    </div>
+  );
+}
+
+// ─── Message row ──────────────────────────────────────────────────────────────
 
 function MessageRow({ message }: { message: Message }) {
   const [copied, setCopied] = useState(false);
@@ -50,8 +109,23 @@ function MessageRow({ message }: { message: Message }) {
   if (isUser) {
     return (
       <div className="flex justify-end mb-6">
-        <div className="max-w-[70%] bg-slate-100 text-slate-900 rounded-2xl rounded-br-sm px-4 py-3 text-sm leading-relaxed whitespace-pre-wrap break-words">
-          {message.content}
+        <div className="max-w-[70%] space-y-1.5">
+          {message.attachmentNames && message.attachmentNames.length > 0 && (
+            <div className="flex flex-wrap gap-1.5 justify-end">
+              {message.attachmentNames.map((name) => (
+                <span
+                  key={name}
+                  className="inline-flex items-center gap-1 bg-indigo-50 border border-indigo-200 text-indigo-700 rounded-lg px-2 py-1 text-xs"
+                >
+                  <FileText size={10} />
+                  {name}
+                </span>
+              ))}
+            </div>
+          )}
+          <div className="bg-slate-100 text-slate-900 rounded-2xl rounded-br-sm px-4 py-3 text-sm leading-relaxed whitespace-pre-wrap break-words">
+            {message.content}
+          </div>
         </div>
       </div>
     );
@@ -59,7 +133,6 @@ function MessageRow({ message }: { message: Message }) {
 
   return (
     <div className="flex gap-3 mb-6 group">
-      {/* AI avatar */}
       <div className="w-7 h-7 rounded-full bg-indigo-600 flex items-center justify-center flex-shrink-0 mt-0.5">
         <Sparkles size={13} className="text-white" />
       </div>
@@ -109,15 +182,130 @@ function StreamingRow({ content }: { content: string }) {
   );
 }
 
+// ─── Input box (shared between empty-state and chat-state) ───────────────────
+
+function InputBox({
+  inputRef,
+  fileInputRef,
+  value,
+  onChange,
+  onKeyDown,
+  onFileChange,
+  onSend,
+  onStop,
+  isStreaming,
+  disabled,
+  placeholder,
+  attachments,
+  onRemoveAttachment,
+}: {
+  inputRef: React.RefObject<HTMLTextAreaElement | null>;
+  fileInputRef: React.RefObject<HTMLInputElement | null>;
+  value: string;
+  onChange: (v: string) => void;
+  onKeyDown: (e: React.KeyboardEvent<HTMLTextAreaElement>) => void;
+  onFileChange: (files: FileList) => void;
+  onSend: () => void;
+  onStop: () => void;
+  isStreaming: boolean;
+  disabled?: boolean;
+  placeholder: string;
+  attachments: Attachment[];
+  onRemoveAttachment: (id: string) => void;
+}) {
+  return (
+    <div className="border border-slate-200 rounded-2xl bg-white shadow-sm focus-within:border-indigo-400 focus-within:ring-2 focus-within:ring-indigo-500/15 transition-all">
+      {/* Attachment chips */}
+      {attachments.length > 0 && (
+        <div className="flex flex-wrap gap-1.5 px-4 pt-3">
+          {attachments.map((a) => (
+            <AttachmentChip
+              key={a.id}
+              attachment={a}
+              onRemove={() => onRemoveAttachment(a.id)}
+            />
+          ))}
+        </div>
+      )}
+
+      <div className="flex items-end gap-2 px-3 py-3">
+        {/* + / attach button */}
+        <button
+          type="button"
+          onClick={() => fileInputRef.current?.click()}
+          className="mb-0.5 w-7 h-7 rounded-lg border border-slate-200 flex items-center justify-center text-slate-500 hover:bg-slate-50 hover:border-slate-300 flex-shrink-0 transition-colors"
+          title="Attach image or file"
+        >
+          <Plus size={14} />
+        </button>
+
+        {/* Hidden file input */}
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept="image/*,.pdf,.doc,.docx,.txt,.csv,.xlsx,.pptx"
+          multiple
+          className="hidden"
+          onChange={(e) => e.target.files && onFileChange(e.target.files)}
+        />
+
+        {/* Textarea */}
+        <textarea
+          ref={inputRef}
+          value={value}
+          onChange={(e) => {
+            onChange(e.target.value);
+            e.target.style.height = "auto";
+            e.target.style.height = Math.min(e.target.scrollHeight, 160) + "px";
+          }}
+          onKeyDown={onKeyDown}
+          placeholder={placeholder}
+          rows={1}
+          disabled={disabled}
+          className="flex-1 resize-none text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none leading-relaxed bg-transparent max-h-40 overflow-y-auto disabled:opacity-50"
+        />
+
+        {/* Send / stop */}
+        {isStreaming ? (
+          <button
+            type="button"
+            onClick={onStop}
+            className="mb-0.5 w-8 h-8 rounded-xl bg-red-100 hover:bg-red-200 text-red-600 flex items-center justify-center transition-colors flex-shrink-0"
+            title="Stop"
+          >
+            <span className="w-3 h-3 rounded-sm bg-red-600" />
+          </button>
+        ) : (
+          <button
+            type="button"
+            onClick={onSend}
+            disabled={!value.trim() && attachments.length === 0}
+            className={cn(
+              "mb-0.5 w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0 transition-all",
+              value.trim() || attachments.length > 0
+                ? "bg-indigo-600 hover:bg-indigo-700 text-white"
+                : "bg-slate-100 text-slate-400 cursor-not-allowed"
+            )}
+          >
+            <Send size={14} />
+          </button>
+        )}
+      </div>
+    </div>
+  );
+}
+
 // ─── Main page ────────────────────────────────────────────────────────────────
 
 export default function ChatPage() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
+  const [attachments, setAttachments] = useState<Attachment[]>([]);
   const [isStreaming, setIsStreaming] = useState(false);
   const [streamingContent, setStreamingContent] = useState("");
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const abortRef = useRef<AbortController | null>(null);
 
   const scrollToBottom = useCallback(() => {
@@ -128,20 +316,79 @@ export default function ChatPage() {
     scrollToBottom();
   }, [messages, streamingContent, scrollToBottom]);
 
+  // Clean up object URLs on unmount
+  useEffect(() => {
+    return () => {
+      attachments.forEach((a) => { if (a.preview) URL.revokeObjectURL(a.preview); });
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleFileChange = useCallback((files: FileList) => {
+    const newAttachments: Attachment[] = Array.from(files).map((file) => {
+      const isImage = file.type.startsWith("image/");
+      return {
+        id: crypto.randomUUID(),
+        file,
+        preview: isImage ? URL.createObjectURL(file) : undefined,
+        kind: isImage ? "image" : "file",
+      };
+    });
+    setAttachments((prev) => [...prev, ...newAttachments]);
+    // Reset file input so the same file can be re-attached
+    if (fileInputRef.current) fileInputRef.current.value = "";
+  }, []);
+
+  const removeAttachment = useCallback((id: string) => {
+    setAttachments((prev) => {
+      const a = prev.find((x) => x.id === id);
+      if (a?.preview) URL.revokeObjectURL(a.preview);
+      return prev.filter((x) => x.id !== id);
+    });
+  }, []);
+
   const sendMessage = useCallback(
     async (text: string) => {
-      if (!text.trim() || isStreaming) return;
+      if ((!text.trim() && attachments.length === 0) || isStreaming) return;
+
+      // Build image attachments payload
+      const imageAttachments = await Promise.all(
+        attachments
+          .filter((a) => a.kind === "image")
+          .map(async (a) => ({
+            name: a.file.name,
+            mediaType: a.file.type,
+            data: await fileToBase64(a.file),
+          }))
+      );
+
+      // For non-image files, prepend content as text context
+      const textFileContexts = await Promise.all(
+        attachments
+          .filter((a) => a.kind === "file" && a.file.size < 200_000)
+          .map(async (a) => {
+            const content = await fileToText(a.file).catch(() => null);
+            return content ? `[File: ${a.file.name}]\n${content}\n` : `[File attached: ${a.file.name}]`;
+          })
+      );
+
+      const fullText = [
+        ...textFileContexts,
+        text.trim(),
+      ].filter(Boolean).join("\n\n");
 
       const userMessage: Message = {
         id: crypto.randomUUID(),
         role: "user",
-        content: text.trim(),
+        content: fullText || `[${attachments.map((a) => a.file.name).join(", ")}]`,
         timestamp: new Date(),
+        attachmentNames: attachments.map((a) => a.file.name),
       };
 
       const updatedMessages = [...messages, userMessage];
       setMessages(updatedMessages);
       setInput("");
+      setAttachments([]);
       setIsStreaming(true);
       setStreamingContent("");
 
@@ -153,6 +400,7 @@ export default function ChatPage() {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             messages: updatedMessages.map((m) => ({ role: m.role, content: m.content })),
+            ...(imageAttachments.length > 0 && { imageAttachments }),
           }),
           signal: abortRef.current.signal,
         });
@@ -171,8 +419,7 @@ export default function ChatPage() {
         while (true) {
           const { done, value } = await reader.read();
           if (done) break;
-          const chunk = decoder.decode(value, { stream: true });
-          for (const line of chunk.split("\n")) {
+          for (const line of decoder.decode(value, { stream: true }).split("\n")) {
             if (line.startsWith("data: ")) {
               const data = line.slice(6).trim();
               if (data === "[DONE]") break;
@@ -203,7 +450,7 @@ export default function ChatPage() {
         inputRef.current?.focus();
       }
     },
-    [messages, isStreaming]
+    [messages, attachments, isStreaming]
   );
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -212,7 +459,9 @@ export default function ChatPage() {
 
   const handleReset = () => {
     if (isStreaming) abortRef.current?.abort();
+    attachments.forEach((a) => { if (a.preview) URL.revokeObjectURL(a.preview); });
     setMessages([]);
+    setAttachments([]);
     setStreamingContent("");
     setIsStreaming(false);
     inputRef.current?.focus();
@@ -223,7 +472,7 @@ export default function ChatPage() {
   return (
     <div className="flex flex-col -mx-4 sm:-mx-6 lg:-mx-8 -my-8 h-[calc(100vh-3.5rem)] lg:h-screen bg-white">
 
-      {/* Minimal top bar — only visible when chatting */}
+      {/* Top bar — only when chatting */}
       {!isEmpty && (
         <div className="border-b border-slate-100 px-6 py-3 flex items-center justify-between flex-shrink-0">
           <div className="flex items-center gap-2">
@@ -242,48 +491,31 @@ export default function ChatPage() {
         </div>
       )}
 
-      {/* Messages / Empty state */}
-      <div className="flex-1 overflow-y-auto">
+      {/* Messages / empty state — flex-1 flex flex-col so children can fill height */}
+      <div className="flex-1 overflow-y-auto flex flex-col">
         {isEmpty ? (
-          /* ── Empty state (ChatGPT-style) ── */
-          <div className="flex flex-col items-center justify-center h-full px-4 pb-8">
+          <div className="flex-1 flex flex-col items-center justify-center px-4 pb-8">
             <div className="w-full max-w-2xl">
               <h1 className="text-3xl font-semibold text-slate-900 text-center mb-8">
                 What are you working on?
               </h1>
 
-              {/* Input box */}
-              <div className="relative mb-4">
-                <div className="flex items-start gap-3 border border-slate-200 rounded-2xl bg-white shadow-sm px-4 py-3.5 focus-within:border-indigo-400 focus-within:ring-2 focus-within:ring-indigo-500/15 transition-all">
-                  <button className="mt-0.5 w-7 h-7 rounded-lg border border-slate-200 flex items-center justify-center text-slate-500 hover:bg-slate-50 flex-shrink-0 transition-colors">
-                    <Plus size={14} />
-                  </button>
-                  <textarea
-                    ref={inputRef}
-                    value={input}
-                    onChange={(e) => {
-                      setInput(e.target.value);
-                      e.target.style.height = "auto";
-                      e.target.style.height = Math.min(e.target.scrollHeight, 160) + "px";
-                    }}
-                    onKeyDown={handleKeyDown}
-                    placeholder="Ask anything about your career…"
-                    rows={1}
-                    className="flex-1 resize-none text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none leading-relaxed bg-transparent max-h-40 overflow-y-auto"
-                  />
-                  <button
-                    onClick={() => sendMessage(input)}
-                    disabled={!input.trim()}
-                    className={cn(
-                      "mt-0.5 w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0 transition-all",
-                      input.trim()
-                        ? "bg-indigo-600 hover:bg-indigo-700 text-white"
-                        : "bg-slate-100 text-slate-400 cursor-not-allowed"
-                    )}
-                  >
-                    <Send size={14} />
-                  </button>
-                </div>
+              {/* Input */}
+              <div className="mb-4">
+                <InputBox
+                  inputRef={inputRef}
+                  fileInputRef={fileInputRef}
+                  value={input}
+                  onChange={setInput}
+                  onKeyDown={handleKeyDown}
+                  onFileChange={handleFileChange}
+                  onSend={() => sendMessage(input)}
+                  onStop={() => abortRef.current?.abort()}
+                  isStreaming={isStreaming}
+                  placeholder="Ask anything about your career…"
+                  attachments={attachments}
+                  onRemoveAttachment={removeAttachment}
+                />
               </div>
 
               {/* Action pills */}
@@ -300,7 +532,7 @@ export default function ChatPage() {
                 ))}
               </div>
 
-              {/* Suggestion grid */}
+              {/* Suggestions */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {SUGGESTIONS.map((s) => (
                   <button
@@ -315,8 +547,7 @@ export default function ChatPage() {
             </div>
           </div>
         ) : (
-          /* ── Conversation ── */
-          <div className="max-w-3xl mx-auto px-4 py-8">
+          <div className="flex-1 max-w-3xl w-full mx-auto px-4 py-8">
             {messages.map((m) => (
               <MessageRow key={m.id} message={m} />
             ))}
@@ -324,52 +555,27 @@ export default function ChatPage() {
             <div ref={bottomRef} />
           </div>
         )}
-        {!isEmpty && <div ref={bottomRef} />}
       </div>
 
-      {/* Sticky input — only shown when chatting */}
+      {/* Sticky input — only when chatting */}
       {!isEmpty && (
         <div className="border-t border-slate-100 px-4 py-4 bg-white flex-shrink-0">
           <div className="max-w-3xl mx-auto">
-            <div className="flex items-start gap-3 border border-slate-200 rounded-2xl bg-white shadow-sm px-4 py-3 focus-within:border-indigo-400 focus-within:ring-2 focus-within:ring-indigo-500/15 transition-all">
-              <textarea
-                ref={inputRef}
-                value={input}
-                onChange={(e) => {
-                  setInput(e.target.value);
-                  e.target.style.height = "auto";
-                  e.target.style.height = Math.min(e.target.scrollHeight, 160) + "px";
-                }}
-                onKeyDown={handleKeyDown}
-                placeholder="Ask a follow-up…"
-                rows={1}
-                disabled={isStreaming}
-                className="flex-1 resize-none text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none leading-relaxed bg-transparent max-h-40 overflow-y-auto disabled:opacity-50"
-              />
-              {isStreaming ? (
-                <button
-                  type="button"
-                  onClick={() => abortRef.current?.abort()}
-                  className="w-8 h-8 rounded-xl bg-red-100 hover:bg-red-200 text-red-600 flex items-center justify-center transition-colors flex-shrink-0"
-                  title="Stop"
-                >
-                  <span className="w-3 h-3 rounded-sm bg-red-600" />
-                </button>
-              ) : (
-                <button
-                  onClick={() => sendMessage(input)}
-                  disabled={!input.trim()}
-                  className={cn(
-                    "w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0 transition-all",
-                    input.trim()
-                      ? "bg-indigo-600 hover:bg-indigo-700 text-white"
-                      : "bg-slate-100 text-slate-400 cursor-not-allowed"
-                  )}
-                >
-                  <Send size={14} />
-                </button>
-              )}
-            </div>
+            <InputBox
+              inputRef={inputRef}
+              fileInputRef={fileInputRef}
+              value={input}
+              onChange={setInput}
+              onKeyDown={handleKeyDown}
+              onFileChange={handleFileChange}
+              onSend={() => sendMessage(input)}
+              onStop={() => abortRef.current?.abort()}
+              isStreaming={isStreaming}
+              disabled={isStreaming}
+              placeholder="Ask a follow-up…"
+              attachments={attachments}
+              onRemoveAttachment={removeAttachment}
+            />
             <p className="text-center text-xs text-slate-400 mt-2">
               Shift+Enter for new line · Guidance is a starting point, not a final answer
             </p>

@@ -59,23 +59,24 @@ export const chapter3: DocChapter = {
 │   ├── login/page.tsx          # Email/password login
 │   └── register/page.tsx       # New account registration
 ├── (dashboard)/
-│   ├── layout.tsx              # Sidebar + navigation shell
+│   ├── layout.tsx              # Auth guard → DashboardShell
 │   ├── dashboard/page.tsx      # Career recommendations
 │   ├── careers/page.tsx        # Ghana education pathway explorer
 │   ├── careers/[id]/page.tsx   # Individual career detail
 │   ├── roadmap/page.tsx        # Roadmap list
 │   ├── roadmap/[careerId]/     # Personalised roadmap view
-│   ├── chat/page.tsx           # AI advisor chat
-│   ├── onboarding/page.tsx     # 6-step onboarding form
+│   ├── chat/page.tsx           # AI advisor (ChatGPT-style, file upload)
+│   ├── onboarding/page.tsx     # 9-step AI-powered onboarding
 │   └── profile/page.tsx        # User profile editor
 ├── api/
-│   ├── auth/[...nextauth]/     # Firebase auth callbacks
+│   ├── auth/                   # Firebase auth callbacks (login/register/logout)
 │   ├── profile/route.ts        # GET/POST/PATCH profile
 │   ├── recommendations/        # GET/POST recommendations
+│   ├── stage-recommendations/  # GET stage-specific pathway suggestions
 │   ├── careers/route.ts        # Career library queries
 │   ├── careers/[id]/route.ts   # Single career lookup
 │   ├── roadmap/[careerId]/     # Roadmap generation
-│   ├── chat/route.ts           # AI chat stream
+│   ├── chat/route.ts           # Streaming AI chat (multimodal image support)
 │   └── firebase-config/        # Server-side config endpoint
 ├── documentation/
 │   └── page.tsx                # This documentation portal
@@ -543,6 +544,98 @@ npm run db:migrate:prod
           variant: "tip",
           title: "Edge Runtime Constraints",
           text: "Cloudflare Workers operate under the edge runtime, which has a reduced Node.js API surface. This means Node.js-specific modules (fs, crypto, path) are not available. PathWise is carefully designed to avoid these dependencies. The Firebase Admin SDK — which requires Node.js — is replaced with a lightweight JWT-verification approach using the jose package.",
+        },
+      ],
+    },
+    {
+      id: "ch3-onboarding-arch",
+      title: "3.8 Onboarding Flow Architecture",
+      blocks: [
+        {
+          type: "paragraph",
+          lead: true,
+          text: "PathWise's onboarding is a 9-step, fully client-side multi-step form with animated transitions powered by Framer Motion. It collects a complete student profile without any page reloads, persists partial state to localStorage under the key pathwise-onboarding-v3, and only writes to Airtable after the user has completed all steps.",
+        },
+        {
+          type: "list",
+          ordered: true,
+          items: [
+            "Welcome — Dark hero screen with feature pills and a 'Get started' CTA.",
+            "Education stage — Selects one of 8 Ghana-specific stages (JHS, SHS, TVET, Polytechnic, University, Graduate, Working Professional, Career Switcher).",
+            "Learning environment — Preferred study mode (online, in-person, blended).",
+            "Interests — Predefined interest grid (10 categories) plus a free-text custom interest input so users can type anything not listed.",
+            "Goals — Career ambitions, income aspiration, and timeline.",
+            "Availability — Hours per week available for study.",
+            "Location — Region within Ghana for geographically-relevant advice.",
+            "Analysis — Simultaneous API calls to /api/recommendations (ML model) and /api/stage-recommendations?stage={stage} (LLM-powered stage engine). Both run in parallel via Promise.allSettled.",
+            "Results — Stage-specific career pathway suggestions rendered from a discriminated-union switch over stage.type, plus top career match cards with colour-coded demand badges and match-score bars.",
+          ],
+        },
+        {
+          type: "heading3",
+          text: "Stage-Specific Recommendations Engine",
+          id: "ch3-stage-engine",
+        },
+        {
+          type: "paragraph",
+          text: "The /api/stage-recommendations endpoint accepts a ?stage= query parameter that overrides the value stored in Airtable. This is necessary because the progressive Airtable column-stripping loop (which skips unknown fields) may silently drop the educationStage column before it can be read back. The stage-engine module (src/lib/recommendation/stage-engine.ts) returns a discriminated union keyed on stage.type — one of: jhs, shs, tvet, polytechnic, university, graduate, professional, or switcher — each containing pathway-specific titles, institutions, and next-step advice.",
+        },
+        {
+          type: "callout",
+          variant: "info",
+          title: "Layout Isolation for Onboarding",
+          text: "The onboarding page lives inside the (dashboard) route group (which normally renders the sidebar shell) but must render full-screen without navigation. This is achieved via a DashboardShell client component that uses usePathname() to detect /onboarding and render children directly, bypassing the AppSidebar and EmailVerificationBanner entirely.",
+        },
+      ],
+    },
+    {
+      id: "ch3-ai-advisor-arch",
+      title: "3.9 AI Advisor Architecture",
+      blocks: [
+        {
+          type: "paragraph",
+          lead: true,
+          text: "The AI Advisor is a full-screen streaming chat interface modelled on modern AI assistant products. It renders in two modes: an empty state with a centred input and suggestion grid, and an active conversation state with flat message rows and a sticky input bar.",
+        },
+        {
+          type: "heading3",
+          text: "Streaming Pipeline",
+          id: "ch3-streaming",
+        },
+        {
+          type: "paragraph",
+          text: "User messages are sent via HTTP POST to /api/chat, which runs an agent tool pipeline (intent detection → tool calls → system prompt construction) before calling Claude Haiku with a grounded system prompt. The response is streamed back as Server-Sent Events (SSE). The frontend consumes the SSE stream with the Fetch API's ReadableStream, accumulating delta text tokens and updating React state on each chunk. A blinking cursor is rendered during streaming to signal active generation.",
+        },
+        {
+          type: "heading3",
+          text: "Multimodal File Attachments",
+          id: "ch3-attachments",
+        },
+        {
+          type: "paragraph",
+          text: "The + button in the input area triggers a hidden <input type='file'> accepting images (JPEG, PNG, WebP, GIF), PDFs, Word documents, plain text, CSV, and spreadsheets. Attached images are displayed as thumbnail chips in the input area. On send, image files are converted to base64 client-side and passed to the API in a separate imageAttachments array. The API route constructs an Anthropic multimodal content array — placing base64 image blocks before the text block — for the final user message only. Text-based documents are read as UTF-8 strings and prepended to the message content as labelled context blocks.",
+        },
+        {
+          type: "code",
+          language: "typescript",
+          filename: "Multimodal message construction (api/chat/route.ts)",
+          code: `// Last user message becomes multimodal when images are attached
+const anthropicMessages = sanitised.map((m, i) => {
+  const isLastUser = m.role === "user" && i === sanitised.length - 1;
+  if (isLastUser && hasImages) {
+    return {
+      role: "user",
+      content: [
+        ...imageAttachments.map((img) => ({
+          type: "image",
+          source: { type: "base64", media_type: img.mediaType, data: img.data },
+        })),
+        { type: "text", text: m.content },
+      ],
+    };
+  }
+  return { role: m.role, content: m.content };
+});`,
         },
       ],
     },

@@ -207,7 +207,7 @@ export function DocNavbar({
             ) : (
               <Download size={14} />
             )}
-            <span className="hidden sm:block">{downloading ? "Preparing…" : "Export Word"}</span>
+            <span className="hidden sm:block">{downloading ? "Preparing…" : "Export All Docs"}</span>
           </button>
         </div>
       </header>

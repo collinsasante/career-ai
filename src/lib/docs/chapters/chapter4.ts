@@ -446,5 +446,123 @@ const generalScience: GhanaProgram = {
         },
       ],
     },
+    {
+      id: "ch4-onboarding-impl",
+      title: "4.6 Onboarding Implementation",
+      blocks: [
+        {
+          type: "paragraph",
+          lead: true,
+          text: "The onboarding flow was redesigned and extended from an earlier 6-step prototype to a 9-step AI-powered journey. The final implementation is a single-file React component (~900 LOC) that manages all form state, animations, API calls, and results rendering in one self-contained unit.",
+        },
+        {
+          type: "heading3",
+          text: "State Management",
+          id: "ch4-onboarding-state",
+        },
+        {
+          type: "paragraph",
+          text: "All onboarding form data is stored in a single FormData object and persisted to localStorage under the key pathwise-onboarding-v3 after every step change. This ensures that if the user closes the browser mid-onboarding, their progress is restored on next visit. The step direction (forward/backward) is stored separately to drive Framer Motion's AnimatePresence slide direction.",
+        },
+        {
+          type: "code",
+          language: "typescript",
+          filename: "Onboarding form state shape",
+          code: `interface FormData {
+  name: string;
+  education: string;          // e.g. "shs_student"
+  environment: string;        // e.g. "blended"
+  interests: string[];        // predefined IDs + custom free-text slugs
+  goals: string;
+  availability: string;
+  location: string;
+}`,
+        },
+        {
+          type: "heading3",
+          text: "Custom Interest Input",
+          id: "ch4-custom-interests",
+        },
+        {
+          type: "paragraph",
+          text: "The Interests step presents a 10-category predefined grid (Technology, Healthcare, Business, Agriculture, Engineering, Arts & Design, Finance, Music, Sports, Education) plus a free-text input below the grid. Users can type any interest not represented in the grid and press Enter or click Add to append it as a custom chip. Custom interests are stored in the same interests string array alongside predefined IDs. A Set<string> named PREDEFINED_IDS is used to distinguish predefined from custom entries when rendering dismissible chips.",
+        },
+        {
+          type: "heading3",
+          text: "Parallel Analysis Fetch",
+          id: "ch4-parallel-fetch",
+        },
+        {
+          type: "paragraph",
+          text: "The Analysis step fires two API calls simultaneously using Promise.allSettled: /api/recommendations (the ML model pipeline) and /api/stage-recommendations?stage={educationStage} (the stage-specific LLM pathway engine). Using allSettled instead of Promise.all ensures that if one endpoint fails, the other's results are still rendered. The stage query parameter bypasses the Airtable round-trip, avoiding failures caused by the progressive column-stripping write loop.",
+        },
+        {
+          type: "heading3",
+          text: "Stage-Specific Results",
+          id: "ch4-stage-results",
+        },
+        {
+          type: "paragraph",
+          text: "The Results step renders a StageSection component that performs a discriminated switch over stage.type. Each branch displays content meaningful to that stage's situation — for example, a JHS student sees SHS programme track recommendations, an SHS student sees university degree and TVET options, a university student sees career entry paths, and a working professional sees promotion and career-switch strategies. Career match cards display colour-coded demand badges (emerald for very high, teal for high, blue for moderate, slate for low) and animated match-score bars.",
+        },
+        {
+          type: "table",
+          headers: ["Education Stage", "stage.type", "Primary Suggestion Content"],
+          rows: [
+            ["JHS Student", "jhs", "SHS programme tracks aligned to interests"],
+            ["SHS Student", "shs", "University degrees + TVET diplomas"],
+            ["TVET Student", "tvet", "Professional certifications + industry entry paths"],
+            ["Polytechnic Student", "polytechnic", "HND top-up degree options + specialisations"],
+            ["University Student", "university", "Graduate programmes + internship strategies"],
+            ["Graduate", "graduate", "Entry-level career paths + graduate schemes"],
+            ["Working Professional", "professional", "Promotion ladders + skill advancement"],
+            ["Career Switcher", "switcher", "Adjacent career maps + retraining resources"],
+          ],
+        },
+      ],
+    },
+    {
+      id: "ch4-advisor-impl",
+      title: "4.7 AI Advisor Implementation",
+      blocks: [
+        {
+          type: "paragraph",
+          lead: true,
+          text: "The AI Advisor chat interface was redesigned from a bubble-style layout to a clean, ChatGPT-inspired flat layout. The redesign centres on usability: a prominent centred input with action pills on the empty state, and flat aligned message rows (user messages as slate chips on the right; assistant responses left-aligned with a PathWise avatar) once conversation begins.",
+        },
+        {
+          type: "heading3",
+          text: "File Attachment System",
+          id: "ch4-file-attach",
+        },
+        {
+          type: "paragraph",
+          text: "The + button in the input box triggers a hidden <input type='file'> accepting images (JPEG, PNG, WebP, GIF), PDFs, Word documents (.doc, .docx), plain text, CSV, Excel, and PowerPoint files. Attachment state is managed as an Attachment[] array, each entry containing the File object, an optional object URL preview (for images), and a kind flag ('image' | 'file'). Object URLs are revoked on message send and component unmount to prevent memory leaks.",
+        },
+        {
+          type: "list",
+          items: [
+            "Image files: Displayed as thumbnail chips. Converted to base64 on send and transmitted to the API in a separate imageAttachments array.",
+            "Text/document files (under 200 KB): Read as UTF-8 text via FileReader.readAsText() and prepended to the message as a labelled context block: [File: filename.txt]\\n<content>.",
+            "Large non-image files: A filename chip is shown and the file name is appended to the message text as context, since full content would exceed Claude's context window.",
+          ],
+        },
+        {
+          type: "heading3",
+          text: "Multimodal API Integration",
+          id: "ch4-multimodal",
+        },
+        {
+          type: "paragraph",
+          text: "The /api/chat route was updated to accept an optional imageAttachments field in the POST body. When images are present, the final user message is constructed as an Anthropic multimodal content array rather than a plain string. All preceding messages retain string content. This minimal-change approach avoids restructuring the entire message history and keeps the serialisation overhead confined to the final turn only. Claude Haiku 4.5 supports vision natively, so no model change was needed.",
+        },
+        {
+          type: "callout",
+          variant: "info",
+          title: "Input Box Reusability",
+          text: "The InputBox component is rendered in both the empty-state centre panel and the sticky chat-state footer. It is extracted as a named function component accepting refs, state, and callbacks as props, ensuring identical behaviour and appearance in both positions without duplicating JSX.",
+        },
+      ],
+    },
   ],
 };

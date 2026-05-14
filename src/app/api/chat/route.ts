@@ -23,9 +23,16 @@ const client = new Anthropic({
 });
 
 // ── Request body type ─────────────────────────
+interface ImageAttachment {
+  name: string;
+  mediaType: string;
+  data: string; // base64
+}
+
 interface ChatRequestBody {
   messages: ChatApiMessage[];
   userId?: string; // optional override; falls back to session userId
+  imageAttachments?: ImageAttachment[];
 }
 
 // ── Auth helper ───────────────────────────────
@@ -83,7 +90,7 @@ export async function POST(request: Request): Promise<Response> {
     });
   }
 
-  const { messages } = body;
+  const { messages, imageAttachments } = body;
 
   if (!Array.isArray(messages) || messages.length === 0) {
     return new Response(JSON.stringify({ error: "messages array is required" }), {
@@ -98,7 +105,7 @@ export async function POST(request: Request): Promise<Response> {
     .slice(-40)
     .map((m) => ({
       role: m.role,
-      content: String(m.content).slice(0, 4000),
+      content: String(m.content).slice(0, 6000),
     }));
 
   // The latest user message drives intent detection
@@ -125,10 +132,29 @@ export async function POST(request: Request): Promise<Response> {
 
   // 4. Build the Anthropic messages array
   // The system prompt already contains all tool context.
-  const anthropicMessages = sanitised.map((m) => ({
-    role: m.role,
-    content: m.content,
-  }));
+  // For the last user message, attach any image files as multimodal content.
+  const hasImages = Array.isArray(imageAttachments) && imageAttachments.length > 0;
+
+  const anthropicMessages = sanitised.map((m, i) => {
+    const isLastUser = m.role === "user" && i === sanitised.length - 1;
+    if (isLastUser && hasImages) {
+      return {
+        role: m.role as "user",
+        content: [
+          ...imageAttachments!.map((img) => ({
+            type: "image" as const,
+            source: {
+              type: "base64" as const,
+              media_type: img.mediaType as "image/jpeg" | "image/png" | "image/gif" | "image/webp",
+              data: img.data,
+            },
+          })),
+          { type: "text" as const, text: m.content },
+        ],
+      };
+    }
+    return { role: m.role as "user" | "assistant", content: m.content };
+  });
 
   // 5. Stream Claude's response
   const encoder = new TextEncoder();
