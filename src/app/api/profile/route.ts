@@ -27,8 +27,9 @@ export async function GET() {
     }
     return NextResponse.json({ data: profile });
   } catch (err) {
-    console.error("[Profile GET]", err);
-    return NextResponse.json({ error: "Failed to fetch profile." }, { status: 500 });
+    const detail = err instanceof Error ? err.message : String(err);
+    console.error("[Profile GET]", detail);
+    return NextResponse.json({ error: "Failed to fetch profile.", detail }, { status: 500 });
   }
 }
 
@@ -75,7 +76,8 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ message: "Profile saved." }, { status: 200 });
   } catch (err) {
-    console.error("[Profile POST]", err);
-    return NextResponse.json({ error: "Failed to save profile." }, { status: 500 });
+    const detail = err instanceof Error ? err.message : String(err);
+    console.error("[Profile POST]", detail);
+    return NextResponse.json({ error: "Failed to save profile.", detail }, { status: 500 });
   }
 }

@@ -224,34 +224,56 @@ export async function upsertProfile(data: ProfileData): Promise<void> {
     `{userId} = "${data.userId}"`
   );
 
-  const fields: AirtableProfile = {
-    userId:                  data.userId,
-    name:                    data.name,
-    email:                   data.email,
-    experienceLevel:         data.experienceLevel ?? "explorer",
-    educationStage:          data.educationStage ?? "",
-    currentProgram:          data.currentProgram ?? "",
-    academicBackground:      data.academicBackground ?? "",
-    preferredNextStep:       data.preferredNextStep ?? "",
-    certificationInterest:   String(data.certificationInterest ?? false),
-    entrepreneurialInterest: String(data.entrepreneurialInterest ?? false),
-    workPreferences:         JSON.stringify(data.workPreferences ?? []),
-    interests:               JSON.stringify(data.interests),
-    skills:                  JSON.stringify(data.skills),
-    weakAreas:               JSON.stringify(data.weakAreas),
-    workStyle:               data.workStyle,
-    learningMode:            data.learningMode,
-    availability:            data.availability,
-    careerGoals:             JSON.stringify(data.careerGoals),
-    industries:              JSON.stringify(data.industries),
-    createdAt:               records[0]?.fields.createdAt ?? new Date().toISOString(),
-    updatedAt:               new Date().toISOString(),
+  const baseFields = {
+    userId:          data.userId,
+    name:            data.name,
+    email:           data.email,
+    experienceLevel: data.experienceLevel ?? "explorer",
+    workPreferences: JSON.stringify(data.workPreferences ?? []),
+    interests:       JSON.stringify(data.interests),
+    skills:          JSON.stringify(data.skills),
+    weakAreas:       JSON.stringify(data.weakAreas),
+    workStyle:       data.workStyle,
+    learningMode:    data.learningMode,
+    availability:    data.availability,
+    careerGoals:     JSON.stringify(data.careerGoals),
+    industries:      JSON.stringify(data.industries),
+    createdAt:       records[0]?.fields.createdAt ?? new Date().toISOString(),
+    updatedAt:       new Date().toISOString(),
   };
 
-  if (records.length > 0) {
-    await updateRecord("Profiles", records[0].id, fields);
-  } else {
-    await createRecord("Profiles", fields);
+  // New stage-aware fields — only include non-empty values so that Airtable
+  // does not reject the write if these columns haven't been created yet.
+  const stageFields: Record<string, string> = {};
+  if (data.educationStage)    stageFields.educationStage          = data.educationStage;
+  if (data.currentProgram)    stageFields.currentProgram          = data.currentProgram;
+  if (data.academicBackground) stageFields.academicBackground     = data.academicBackground;
+  if (data.preferredNextStep) stageFields.preferredNextStep       = data.preferredNextStep;
+  if (data.certificationInterest !== undefined)
+    stageFields.certificationInterest   = String(data.certificationInterest);
+  if (data.entrepreneurialInterest !== undefined)
+    stageFields.entrepreneurialInterest = String(data.entrepreneurialInterest);
+
+  const write = async (fields: object) => {
+    if (records.length > 0) {
+      await updateRecord("Profiles", records[0].id, fields);
+    } else {
+      await createRecord("Profiles", fields);
+    }
+  };
+
+  try {
+    await write({ ...baseFields, ...stageFields });
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : String(err);
+    // If Airtable rejects unknown field names (columns not yet created),
+    // retry with base fields only so core data is never lost.
+    if (msg.includes("UNKNOWN_FIELD_NAME") || msg.includes("Unknown field")) {
+      console.warn("[Airtable] Stage fields rejected — writing base fields only. Add the new columns to Airtable to persist stage data.", msg);
+      await write(baseFields);
+    } else {
+      throw err;
+    }
   }
 }
 
