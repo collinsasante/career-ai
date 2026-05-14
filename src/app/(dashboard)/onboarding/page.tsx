@@ -358,7 +358,10 @@ export default function OnboardingPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
-      if (!profileRes.ok) throw new Error("Failed to save your profile. Please try again.");
+      if (!profileRes.ok) {
+        const errBody = await profileRes.json().catch(() => ({}));
+        throw new Error(errBody.detail ?? "Failed to save your profile. Please try again.");
+      }
 
       const recRes = await fetch("/api/recommendations", {
         method: "POST",
