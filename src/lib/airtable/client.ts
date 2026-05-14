@@ -227,7 +227,7 @@ export async function upsertProfile(data: ProfileData): Promise<void> {
   const baseFields = {
     userId:          data.userId,
     name:            data.name,
-    email:           data.email,
+    ...(data.email ? { email: data.email } : {}),
     experienceLevel: data.experienceLevel ?? "explorer",
     workPreferences: JSON.stringify(data.workPreferences ?? []),
     interests:       JSON.stringify(data.interests),
@@ -264,15 +264,21 @@ export async function upsertProfile(data: ProfileData): Promise<void> {
 
   try {
     await write({ ...baseFields, ...stageFields });
-  } catch (err) {
-    const msg = err instanceof Error ? err.message : String(err);
-    // If Airtable rejects unknown field names (columns not yet created),
-    // retry with base fields only so core data is never lost.
-    if (msg.includes("UNKNOWN_FIELD_NAME") || msg.includes("Unknown field")) {
-      console.warn("[Airtable] Stage fields rejected — writing base fields only. Add the new columns to Airtable to persist stage data.", msg);
+  } catch (stageErr) {
+    const msg = stageErr instanceof Error ? stageErr.message : String(stageErr);
+    // Airtable rejects writes if a column doesn't exist (UNKNOWN_FIELD_NAME)
+    // or has the wrong type (INVALID_VALUE_FOR_COLUMN). Either way, retry
+    // with core fields only so the user's profile is always saved.
+    const isFieldError =
+      msg.includes("UNKNOWN_FIELD_NAME") ||
+      msg.includes("INVALID_VALUE_FOR_COLUMN") ||
+      msg.includes("Unknown field") ||
+      msg.includes("422");
+    if (isFieldError) {
+      console.warn("[Airtable] Stage field write rejected — retrying with base fields only. Check column names and types in Airtable.", msg);
       await write(baseFields);
     } else {
-      throw err;
+      throw stageErr;
     }
   }
 }
