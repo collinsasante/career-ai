@@ -9,7 +9,7 @@ import {
   TrendingUp, Rocket, Star, Zap, BadgeCheck,
   Monitor, Heart, Leaf, Palette, Music, Trophy,
   Home, Building2, Globe, Users, User, BarChart2,
-  Cpu, Brain, MessageSquare, Target,
+  Cpu, Brain, MessageSquare, Target, Layers, RefreshCw,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { EducationStage } from "@/lib/types";
@@ -25,36 +25,42 @@ interface FormState {
   environment: string[];
 }
 
-interface CareerResult {
+interface CareerMatch {
   careerId: string;
   careerTitle: string;
   matchScore: number;
   matchReasons: string[];
 }
 
-interface StageResult {
-  type: string;
-  headline: string;
-  subheadline: string;
-  nextStepMessage: string;
-}
+// Mirrors the StageRecommendation union from stage-engine — we keep it loose
+// so we don't need to import server-side types into a client bundle.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type StageRec = Record<string, any>;
 
 interface ResultsData {
-  careers: CareerResult[];
-  stage: StageResult | null;
+  careers: CareerMatch[];
+  stage: StageRec | null;
 }
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
 const TOTAL_VISIBLE_STEPS = 7;
 
-const EDUCATION_OPTIONS = [
-  { value: "jhs_student",        label: "JHS Student",        desc: "Junior High School",              icon: BookOpen },
-  { value: "shs_student",        label: "SHS Student",        desc: "Senior High School",              icon: GraduationCap },
-  { value: "tvet_student",       label: "TVET Student",       desc: "Technical & Vocational Training", icon: Wrench },
-  { value: "university_student", label: "University Student", desc: "Degree Programme",                icon: Building2 },
-  { value: "graduate",           label: "Graduate",           desc: "Completed Tertiary Education",    icon: Award },
-] as const;
+const EDUCATION_OPTIONS: {
+  value: EducationStage;
+  label: string;
+  desc: string;
+  icon: React.ElementType;
+}[] = [
+  { value: "jhs_student",        label: "JHS Student",          desc: "Junior High School",              icon: BookOpen },
+  { value: "shs_student",        label: "SHS Student",          desc: "Senior High School",              icon: GraduationCap },
+  { value: "tvet_student",       label: "TVET Student",         desc: "Technical & Vocational Training", icon: Wrench },
+  { value: "polytechnic_student",label: "Polytechnic Student",  desc: "HND / Technical University",     icon: Layers },
+  { value: "university_student", label: "University Student",   desc: "Degree Programme",                icon: Building2 },
+  { value: "graduate",           label: "Graduate",             desc: "Completed Tertiary Education",    icon: Award },
+  { value: "working_professional",label: "Working Professional",desc: "Currently Employed",              icon: Briefcase },
+  { value: "career_switcher",    label: "Career Switcher",      desc: "Changing Fields",                 icon: RefreshCw },
+];
 
 const INTERESTS = [
   { id: "technology",  label: "Technology",    icon: Monitor },
@@ -76,11 +82,11 @@ const SUBJECTS = [
 ];
 
 const PERSONALITY_QUESTIONS = [
-  { id: "problemSolving", q: "I enjoy solving complex, analytical problems.",   lo: "Disagree",     hi: "Strongly agree" },
-  { id: "teamwork",       q: "I prefer working in a team over going solo.",      lo: "Prefer solo",  hi: "Love teamwork" },
-  { id: "leadership",     q: "I naturally take charge and lead others.",         lo: "Not at all",   hi: "Absolutely" },
-  { id: "practical",      q: "I prefer hands-on practical work over theory.",    lo: "Love theory",  hi: "Hands-on" },
-  { id: "creativity",     q: "Creativity is essential in my ideal career.",      lo: "Not key",      hi: "Essential" },
+  { id: "problemSolving", q: "I enjoy solving complex, analytical problems.",  lo: "Disagree",    hi: "Strongly agree" },
+  { id: "teamwork",       q: "I prefer working in a team over going solo.",     lo: "Prefer solo", hi: "Love teamwork" },
+  { id: "leadership",     q: "I naturally take charge and lead others.",        lo: "Not at all",  hi: "Absolutely" },
+  { id: "practical",      q: "I prefer hands-on practical work over theory.",   lo: "Love theory", hi: "Hands-on" },
+  { id: "creativity",     q: "Creativity is essential in my ideal career.",     lo: "Not key",     hi: "Essential" },
 ];
 
 const ENVIRONMENTS = [
@@ -220,10 +226,7 @@ function StepDots({ current, total }: { current: number; total: number }) {
 function WelcomeStep({ onStart, onExplore }: { onStart: () => void; onExplore: () => void }) {
   return (
     <div className="relative min-h-screen flex flex-col bg-slate-950 overflow-hidden">
-      {/* Ghana accent bar */}
       <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-red-500 via-amber-400 to-green-500" />
-
-      {/* Subtle grid overlay */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
@@ -232,19 +235,15 @@ function WelcomeStep({ onStart, onExplore }: { onStart: () => void; onExplore: (
           backgroundSize: "64px 64px",
         }}
       />
-
-      {/* Glow orb */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[560px] h-[560px] rounded-full bg-indigo-600/10 blur-[130px] pointer-events-none" />
 
-      {/* Main content */}
       <div className="relative z-10 flex flex-col items-center justify-center flex-1 px-6 py-16 text-center">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
+          transition={{ duration: 0.5 }}
           className="w-full max-w-lg"
         >
-          {/* Logo pill */}
           <div className="inline-flex items-center gap-2.5 mb-10 px-4 py-2 rounded-full border border-white/10 bg-white/5">
             <div className="w-5 h-5 rounded-md bg-indigo-500 flex items-center justify-center">
               <Rocket size={11} className="text-white" />
@@ -278,7 +277,6 @@ function WelcomeStep({ onStart, onExplore }: { onStart: () => void; onExplore: (
         </motion.div>
       </div>
 
-      {/* Bottom stats bar */}
       <motion.div
         initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }}
         className="relative z-10 border-t border-white/5 px-8 py-6"
@@ -307,10 +305,10 @@ function EducationStep({ value, onChange }: { value: string; onChange: (v: Educa
     <div className="space-y-6">
       <div>
         <h2 className="text-2xl font-bold text-slate-900">Where are you right now?</h2>
-        <p className="text-slate-500 mt-1.5 text-sm">Select your current education level to personalise your results.</p>
+        <p className="text-slate-500 mt-1.5 text-sm">Select your current education or career stage.</p>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
         {EDUCATION_OPTIONS.map((opt) => {
           const selected = value === opt.value;
           const Icon = opt.icon;
@@ -318,19 +316,19 @@ function EducationStep({ value, onChange }: { value: string; onChange: (v: Educa
             <motion.button
               key={opt.value}
               whileHover={{ y: -1 }} whileTap={{ scale: 0.99 }}
-              onClick={() => onChange(opt.value as EducationStage)}
+              onClick={() => onChange(opt.value)}
               className={cn(
-                "relative flex items-center gap-4 p-4 rounded-xl border-2 text-left transition-all duration-200",
+                "relative flex items-center gap-3.5 p-3.5 rounded-xl border-2 text-left transition-all duration-200",
                 selected
                   ? "border-indigo-500 bg-indigo-50/70 shadow-sm"
                   : "border-slate-200 bg-white hover:border-slate-300 hover:shadow-sm",
               )}
             >
               <div className={cn(
-                "w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0 transition-all",
+                "w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 transition-all",
                 selected ? "bg-indigo-100" : "bg-slate-100",
               )}>
-                <Icon size={20} className={selected ? "text-indigo-600" : "text-slate-500"} />
+                <Icon size={18} className={selected ? "text-indigo-600" : "text-slate-500"} />
               </div>
               <div className="min-w-0">
                 <p className={cn("font-semibold text-sm", selected ? "text-indigo-900" : "text-slate-900")}>
@@ -341,7 +339,7 @@ function EducationStep({ value, onChange }: { value: string; onChange: (v: Educa
               {selected && (
                 <motion.div
                   initial={{ scale: 0 }} animate={{ scale: 1 }}
-                  className="absolute top-3.5 right-3.5 w-5 h-5 rounded-full bg-indigo-600 flex items-center justify-center"
+                  className="absolute top-3 right-3 w-5 h-5 rounded-full bg-indigo-600 flex items-center justify-center"
                 >
                   <Check size={11} className="text-white" />
                 </motion.div>
@@ -484,10 +482,7 @@ function PersonalityStep({
         {PERSONALITY_QUESTIONS.map((q, qi) => {
           const val = answers[q.id] ?? 0;
           return (
-            <div
-              key={q.id}
-              className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm"
-            >
+            <div key={q.id} className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
               <div className="flex items-start gap-3 mb-4">
                 <span className="w-6 h-6 rounded-md bg-slate-100 text-slate-500 text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">
                   {qi + 1}
@@ -558,11 +553,7 @@ function AspirationsStep({
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder="e.g. Software Engineer, Medical Doctor…"
-          className={cn(
-            "w-full pl-11 pr-4 py-3.5 rounded-xl border-2 outline-none text-sm font-medium transition-all",
-            "bg-white text-slate-900 placeholder:text-slate-400",
-            "border-slate-200 focus:border-indigo-500",
-          )}
+          className="w-full pl-11 pr-4 py-3.5 rounded-xl border-2 border-slate-200 focus:border-indigo-500 outline-none text-sm text-slate-900 bg-white placeholder:text-slate-400 transition-all font-medium"
         />
       </div>
 
@@ -679,22 +670,29 @@ function AnalysisStep({ form, onDone }: { form: FormState; onDone: (data: Result
       };
 
       const apiCalls = async () => {
+        // Save profile first, then fetch recommendations in parallel
         await fetch("/api/profile", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
         });
+
+        // Pass education_stage directly so stage-recs doesn't depend on Airtable column existence
+        const stageParam = encodeURIComponent(form.education);
         const [recRes, stageRes] = await Promise.all([
           fetch("/api/recommendations", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ profile: payload }),
           }),
-          fetch("/api/stage-recommendations"),
+          fetch(`/api/stage-recommendations?stage=${stageParam}`),
         ]);
         const recJson   = await recRes.json().catch(() => ({ data: [] }));
         const stageJson = await stageRes.json().catch(() => ({ data: null }));
-        return { careers: (recJson.data ?? []).slice(0, 4), stage: stageJson.data ?? null };
+        return {
+          careers: (recJson.data ?? []).slice(0, 4) as CareerMatch[],
+          stage: stageJson.data ?? null,
+        };
       };
 
       const [resultsData] = await Promise.all([
@@ -714,7 +712,6 @@ function AnalysisStep({ form, onDone }: { form: FormState; onDone: (data: Result
 
   return (
     <div className="relative min-h-screen flex flex-col items-center justify-center bg-slate-950 overflow-hidden">
-      {/* Glow */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
         <motion.div
           animate={{ scale: [1, 1.1, 1], opacity: [0.25, 0.45, 0.25] }}
@@ -724,7 +721,6 @@ function AnalysisStep({ form, onDone }: { form: FormState; onDone: (data: Result
       </div>
 
       <div className="relative z-10 flex flex-col items-center text-center px-6 w-full max-w-sm">
-        {/* Spinner */}
         <div className="relative w-24 h-24 mb-12">
           <motion.div
             animate={{ rotate: 360 }}
@@ -796,22 +792,242 @@ function AnalysisStep({ form, onDone }: { form: FormState; onDone: (data: Result
   );
 }
 
-// ─── Step 8: Results ──────────────────────────────────────────────────────────
+// ─── Step 8: Results — stage-specific sections ────────────────────────────────
+
+function StageSection({ stage }: { stage: StageRec }) {
+  const type: string = stage.type ?? "";
+
+  // JHS → show recommended SHS programmes
+  if (type === "jhs") {
+    const programs: { id: string; name: string; rationale: string }[] =
+      stage.suggestedShsPrograms ?? [];
+    if (!programs.length) return null;
+    return (
+      <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
+        <div className="flex items-center gap-2 mb-3">
+          <div className="w-8 h-8 rounded-lg bg-amber-50 flex items-center justify-center">
+            <GraduationCap size={15} className="text-amber-600" />
+          </div>
+          <span className="text-xs font-bold text-amber-600 uppercase tracking-wider">
+            Recommended SHS Programmes
+          </span>
+        </div>
+        <div className="space-y-2">
+          {programs.slice(0, 4).map((p, i) => (
+            <div key={p.id} className="flex items-start gap-3">
+              <span className="w-5 h-5 rounded-md bg-amber-100 text-amber-700 text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">
+                {i + 1}
+              </span>
+              <div>
+                <p className="text-sm font-semibold text-slate-900">{p.name}</p>
+                <p className="text-xs text-slate-500 mt-0.5">{p.rationale}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+        <p className="text-xs text-slate-400 mt-3 pt-3 border-t border-slate-100">
+          {stage.nextStepMessage}
+        </p>
+      </div>
+    );
+  }
+
+  // SHS → show tertiary / university programme options
+  if (type === "shs") {
+    const programs: { name: string; level: string; institutions: string[]; rationale: string }[] =
+      stage.suggestedTertiaryPrograms ?? [];
+    if (!programs.length) return null;
+    return (
+      <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
+        <div className="flex items-center gap-2 mb-3">
+          <div className="w-8 h-8 rounded-lg bg-violet-50 flex items-center justify-center">
+            <Building2 size={15} className="text-violet-600" />
+          </div>
+          <span className="text-xs font-bold text-violet-600 uppercase tracking-wider">
+            Tertiary Programme Options
+          </span>
+        </div>
+        <div className="space-y-2">
+          {programs.slice(0, 5).map((p, i) => (
+            <div key={i} className="flex items-start gap-3">
+              <span className={cn(
+                "px-2 py-0.5 rounded text-xs font-semibold flex-shrink-0 mt-0.5",
+                p.level === "degree" ? "bg-violet-100 text-violet-700" : "bg-slate-100 text-slate-600",
+              )}>
+                {p.level === "degree" ? "BSc" : p.level === "diploma" ? "Dip" : "HND"}
+              </span>
+              <div>
+                <p className="text-sm font-semibold text-slate-900">{p.name}</p>
+                {p.institutions?.length > 0 && (
+                  <p className="text-xs text-slate-500 mt-0.5">{p.institutions.slice(0, 3).join(" · ")}</p>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+        <p className="text-xs text-slate-400 mt-3 pt-3 border-t border-slate-100">
+          {stage.nextStepMessage}
+        </p>
+      </div>
+    );
+  }
+
+  // TVET → show certifications + career paths
+  if (type === "tvet") {
+    const certs: { name: string; rationale: string }[] = stage.certifications ?? [];
+    const entrepreneurship: string[] = stage.entrepreneurshipOpps ?? [];
+    return (
+      <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
+        <div className="flex items-center gap-2 mb-3">
+          <div className="w-8 h-8 rounded-lg bg-orange-50 flex items-center justify-center">
+            <Award size={15} className="text-orange-600" />
+          </div>
+          <span className="text-xs font-bold text-orange-600 uppercase tracking-wider">
+            Certifications to Pursue
+          </span>
+        </div>
+        {certs.length > 0 ? (
+          <div className="space-y-2 mb-3">
+            {certs.slice(0, 4).map((c, i) => (
+              <div key={i} className="flex items-start gap-3">
+                <Check size={13} className="text-orange-500 mt-0.5 flex-shrink-0" />
+                <div>
+                  <p className="text-sm font-semibold text-slate-900">{c.name}</p>
+                  <p className="text-xs text-slate-500 mt-0.5">{c.rationale}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : null}
+        {entrepreneurship.length > 0 && (
+          <div className="mt-3 pt-3 border-t border-slate-100">
+            <p className="text-xs font-semibold text-slate-500 mb-2">Entrepreneurship opportunities</p>
+            {entrepreneurship.slice(0, 2).map((e, i) => (
+              <p key={i} className="text-xs text-slate-600 flex items-start gap-1.5 mb-1">
+                <span className="text-orange-400 mt-0.5">→</span> {e}
+              </p>
+            ))}
+          </div>
+        )}
+        <p className="text-xs text-slate-400 mt-3 pt-3 border-t border-slate-100">
+          {stage.nextStepMessage}
+        </p>
+      </div>
+    );
+  }
+
+  // University / Polytechnic → show internship sectors + certifications
+  if (type === "university" || type === "polytechnic") {
+    const internships: string[] = stage.internshipSectors ?? [];
+    const certs: { name: string; rationale: string }[] = stage.certifications ?? [];
+    return (
+      <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
+        <div className="flex items-center gap-2 mb-3">
+          <div className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center">
+            <Briefcase size={15} className="text-blue-600" />
+          </div>
+          <span className="text-xs font-bold text-blue-600 uppercase tracking-wider">
+            Internship Sectors & Certifications
+          </span>
+        </div>
+        {internships.length > 0 && (
+          <div className="flex flex-wrap gap-1.5 mb-3">
+            {internships.slice(0, 6).map((s) => (
+              <span key={s} className="px-2.5 py-1 bg-blue-50 text-blue-700 text-xs font-medium rounded-lg">
+                {s}
+              </span>
+            ))}
+          </div>
+        )}
+        {certs.slice(0, 3).map((c, i) => (
+          <div key={i} className="flex items-start gap-2 mt-2">
+            <Check size={13} className="text-blue-500 mt-0.5 flex-shrink-0" />
+            <p className="text-xs text-slate-700 font-medium">{c.name}</p>
+          </div>
+        ))}
+        <p className="text-xs text-slate-400 mt-3 pt-3 border-t border-slate-100">
+          {stage.nextStepMessage}
+        </p>
+      </div>
+    );
+  }
+
+  // Graduate / Professional / Switcher → show advancement paths
+  if (type === "graduate" || type === "professional" || type === "switcher") {
+    const paths: { title: string; description: string }[] = stage.advancementPaths ?? [];
+    const transitions: { to: string; bridgeSkills: string[] }[] = stage.transitionPaths ?? [];
+    return (
+      <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
+        <div className="flex items-center gap-2 mb-3">
+          <div className="w-8 h-8 rounded-lg bg-emerald-50 flex items-center justify-center">
+            <TrendingUp size={15} className="text-emerald-600" />
+          </div>
+          <span className="text-xs font-bold text-emerald-600 uppercase tracking-wider">
+            {type === "switcher" ? "Career Switch Plan" : "Advancement Paths"}
+          </span>
+        </div>
+        <div className="space-y-2">
+          {paths.slice(0, 3).map((p, i) => (
+            <div key={i} className="flex items-start gap-3">
+              <span className="w-5 h-5 rounded-md bg-emerald-100 text-emerald-700 text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">
+                {i + 1}
+              </span>
+              <div>
+                <p className="text-sm font-semibold text-slate-900">{p.title}</p>
+                <p className="text-xs text-slate-500 mt-0.5">{p.description}</p>
+              </div>
+            </div>
+          ))}
+          {type === "switcher" && transitions.slice(0, 2).map((t, i) => (
+            <div key={i} className="flex items-start gap-3 mt-2">
+              <RefreshCw size={13} className="text-emerald-500 mt-0.5 flex-shrink-0" />
+              <div>
+                <p className="text-sm font-semibold text-slate-900">Pivot to: {t.to}</p>
+                {t.bridgeSkills?.length > 0 && (
+                  <p className="text-xs text-slate-500 mt-0.5">Bridge skills: {t.bridgeSkills.slice(0, 3).join(", ")}</p>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+        <p className="text-xs text-slate-400 mt-3 pt-3 border-t border-slate-100">
+          {stage.nextStepMessage}
+        </p>
+      </div>
+    );
+  }
+
+  // Fallback: just show the subheadline
+  return (
+    <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
+      <div className="flex items-center gap-2 mb-2">
+        <div className="w-8 h-8 rounded-lg bg-emerald-50 flex items-center justify-center">
+          <Target size={15} className="text-emerald-600" />
+        </div>
+        <span className="text-xs font-bold text-emerald-600 uppercase tracking-wider">Recommended Pathway</span>
+      </div>
+      <p className="text-sm font-semibold text-slate-900">{stage.subheadline}</p>
+      {stage.nextStepMessage && (
+        <p className="text-xs text-slate-500 mt-1.5">{stage.nextStepMessage}</p>
+      )}
+    </div>
+  );
+}
 
 function ResultsStep({ results, form, onDashboard }: {
   results: ResultsData; form: FormState; onDashboard: () => void;
 }) {
-  const edu    = EDUCATION_OPTIONS.find((e) => e.value === form.education);
+  const edu = EDUCATION_OPTIONS.find((e) => e.value === form.education);
   const EduIcon = edu?.icon ?? BookOpen;
 
   return (
-    <div className="space-y-5">
-      {/* Hero banner */}
+    <div className="space-y-4">
+      {/* Hero */}
       <motion.div
         initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
-        className="relative rounded-2xl overflow-hidden bg-indigo-600 p-6 text-white"
+        className="relative rounded-2xl overflow-hidden p-6 text-white"
+        style={{ background: "linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%)" }}
       >
-        <div className="absolute inset-0 bg-gradient-to-br from-indigo-600 to-violet-700" />
         <div className="relative z-10">
           <div className="flex items-center gap-2 mb-3">
             <Sparkles size={14} className="text-indigo-200" />
@@ -826,24 +1042,12 @@ function ResultsStep({ results, form, onDashboard }: {
         </div>
       </motion.div>
 
-      {/* Pathway */}
+      {/* Stage-specific primary section */}
       {results.stage && (
         <motion.div
           initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-          className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm"
         >
-          <div className="flex items-center gap-2 mb-2">
-            <div className="w-8 h-8 rounded-lg bg-emerald-50 flex items-center justify-center">
-              <Target size={15} className="text-emerald-600" />
-            </div>
-            <span className="text-xs font-bold text-emerald-600 uppercase tracking-wider">
-              Recommended Pathway
-            </span>
-          </div>
-          <p className="font-semibold text-slate-900 text-sm leading-snug">{results.stage.subheadline}</p>
-          {results.stage.nextStepMessage && (
-            <p className="text-xs text-slate-500 mt-1.5 leading-relaxed">{results.stage.nextStepMessage}</p>
-          )}
+          <StageSection stage={results.stage} />
         </motion.div>
       )}
 
@@ -931,7 +1135,7 @@ function ResultsStep({ results, form, onDashboard }: {
 
 // ─── Main ─────────────────────────────────────────────────────────────────────
 
-const DRAFT_KEY = "pathwise-onboarding-v2";
+const DRAFT_KEY = "pathwise-onboarding-v3";
 
 const defaultForm: FormState = {
   education:   "",
@@ -987,7 +1191,6 @@ export default function OnboardingPage() {
     }
   };
 
-  // Full-screen steps bypass the shell
   if (step === 0) {
     return <WelcomeStep onStart={() => go(1)} onExplore={() => router.push("/careers")} />;
   }
@@ -1089,18 +1292,13 @@ export default function OnboardingPage() {
       {/* Header */}
       <div className="sticky top-0 z-30 bg-white border-b border-slate-200 px-4 py-3.5">
         <div className="max-w-lg mx-auto flex items-center justify-between">
-          {/* Logo */}
           <div className="flex items-center gap-2 flex-shrink-0">
             <div className="w-6 h-6 rounded-md bg-indigo-600 flex items-center justify-center">
               <Rocket size={12} className="text-white" />
             </div>
             <span className="text-sm font-bold text-slate-800">PathWise</span>
           </div>
-
-          {/* Step dots */}
           <StepDots current={step} total={TOTAL_VISIBLE_STEPS} />
-
-          {/* Step counter */}
           <span className="text-xs text-slate-400 w-10 text-right flex-shrink-0">
             {step}/{TOTAL_VISIBLE_STEPS}
           </span>
@@ -1123,7 +1321,7 @@ export default function OnboardingPage() {
         </AnimatePresence>
       </div>
 
-      {/* Footer nav */}
+      {/* Footer */}
       <div className="fixed bottom-0 left-0 right-0 z-30 bg-white border-t border-slate-200 px-4 py-4">
         <div className="max-w-lg mx-auto flex items-center gap-3">
           {step > 1 && (
