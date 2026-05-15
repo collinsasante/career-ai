@@ -24,22 +24,72 @@ import {
   type PersonalizedRoadmap,
 } from "@/lib/agent/roadmap-generator";
 
-function enrichWithYouTubeLinks(roadmap: PersonalizedRoadmap): PersonalizedRoadmap {
-  return {
-    ...roadmap,
-    phases: roadmap.phases.map((phase) => ({
+import {
+  findCuratedVideo,
+  findCuratedCourse,
+  findCuratedPractice,
+} from "@/lib/resources/curated";
+import { searchYouTubeVideo, youTubeSearchUrl } from "@/lib/resources/youtube";
+import type { RoadmapResource } from "@/lib/agent/roadmap-generator";
+
+/**
+ * Resolve a URL for a single resource.
+ * Priority: curated library → YouTube Data API → YouTube search page.
+ */
+async function resolveResourceUrl(
+  resource: RoadmapResource,
+  stepTitle: string,
+  careerTitle: string
+): Promise<string | undefined> {
+  if (resource.url) return resource.url;
+
+  const searchText = `${resource.title} ${stepTitle}`.toLowerCase();
+
+  if (resource.type === "video") {
+    const curated = findCuratedVideo(searchText);
+    if (curated) return curated.url;
+    // Try YouTube Data API
+    const yt = await searchYouTubeVideo(`${resource.title} ${careerTitle} tutorial`);
+    if (yt) return yt.url;
+    return youTubeSearchUrl(`${resource.title} ${careerTitle} tutorial`);
+  }
+
+  if (resource.type === "course") {
+    const curated = findCuratedCourse(searchText);
+    if (curated) return curated.url;
+    const yt = await searchYouTubeVideo(`${resource.title} ${careerTitle} full course`);
+    if (yt) return yt.url;
+    return youTubeSearchUrl(`${resource.title} ${careerTitle} full course`);
+  }
+
+  if (resource.type === "practice") {
+    const curated = findCuratedPractice(searchText);
+    if (curated) return curated.url;
+    return undefined;
+  }
+
+  // book / project — no automatic URL
+  return undefined;
+}
+
+async function enrichResources(roadmap: PersonalizedRoadmap): Promise<PersonalizedRoadmap> {
+  const phases = await Promise.all(
+    roadmap.phases.map(async (phase) => ({
       ...phase,
-      steps: phase.steps.map((step) => ({
-        ...step,
-        resources: step.resources.map((r) => ({
-          ...r,
-          url: r.url ?? ((r.type === "video" || r.type === "course")
-            ? `https://www.youtube.com/results?search_query=${encodeURIComponent(r.title)}`
-            : undefined),
-        })),
-      })),
-    })),
-  };
+      steps: await Promise.all(
+        phase.steps.map(async (step) => ({
+          ...step,
+          resources: await Promise.all(
+            step.resources.map(async (r) => ({
+              ...r,
+              url: await resolveResourceUrl(r, step.title, roadmap.careerTitle),
+            }))
+          ),
+        }))
+      ),
+    }))
+  );
+  return { ...roadmap, phases };
 }
 import { CAREERS_DATA } from "@/lib/recommendation/careers-data";
 
@@ -74,7 +124,7 @@ export async function GET(
   try {
     const cached = await getRoadmap(session.userId, careerId);
     if (cached) {
-      return NextResponse.json({ data: { roadmap: enrichWithYouTubeLinks(cached as PersonalizedRoadmap), completedSteps } });
+      return NextResponse.json({ data: { roadmap: await enrichResources(cached as PersonalizedRoadmap), completedSteps } });
     }
   } catch {
     // cache miss or Airtable unavailable — continue to generation
@@ -125,7 +175,7 @@ export async function GET(
     // Cache in Airtable (fire-and-forget — don't block response)
     saveRoadmap(session.userId, careerId, roadmap).catch(() => {});
 
-    return NextResponse.json({ data: { roadmap: enrichWithYouTubeLinks(roadmap), completedSteps } });
+    return NextResponse.json({ data: { roadmap: await enrichResources(roadmap), completedSteps } });
   } catch (err) {
     const isTimeout = err instanceof Error && err.message === "timeout";
     console.error("[Roadmap] Generation failed:", err);

@@ -250,27 +250,59 @@ function StepCard({
               <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">
                 Resources
               </p>
-              <div className="space-y-1.5">
-                {step.resources.map((r, i) => (
-                  <div key={i} className="flex items-center gap-2">
-                    {RESOURCE_ICONS[r.type] ?? <ExternalLink size={12} className="text-slate-400" />}
-                    {r.url ? (
-                      <a
-                        href={r.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-xs text-brand-600 hover:text-brand-800 hover:underline flex items-center gap-1"
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        {r.title}
-                        <ExternalLink size={10} className="flex-shrink-0" />
-                      </a>
-                    ) : (
-                      <span className="text-xs text-slate-700">{r.title}</span>
-                    )}
-                    <Badge variant="slate" size="sm" className="capitalize">{r.type}</Badge>
-                  </div>
-                ))}
+              <div className="space-y-2.5">
+                {step.resources.map((r, i) => {
+                  const platformLabel = (() => {
+                    if (!r.url) return null;
+                    try {
+                      const host = new URL(r.url).hostname.replace("www.", "");
+                      if (host.includes("youtube"))      return "YouTube";
+                      if (host.includes("coursera"))     return "Coursera";
+                      if (host.includes("freecodecamp")) return "freeCodeCamp";
+                      if (host.includes("kaggle"))       return "Kaggle";
+                      if (host.includes("hackerrank"))   return "HackerRank";
+                      if (host.includes("leetcode"))     return "LeetCode";
+                      if (host.includes("codewars"))     return "Codewars";
+                      if (host.includes("react.dev"))    return "React Docs";
+                      if (host.includes("grow.google") || host.includes("google")) return "Google";
+                      if (host.includes("microsoft"))    return "Microsoft Learn";
+                      if (host.includes("khanacademy"))  return "Khan Academy";
+                      if (host.includes("udemy"))        return "Udemy";
+                      if (host.includes("linkedin"))     return "LinkedIn Learning";
+                    } catch { /* ignore */ }
+                    return null;
+                  })();
+
+                  return (
+                    <div key={i} className="flex items-start gap-2.5">
+                      <span className="mt-0.5 flex-shrink-0">
+                        {RESOURCE_ICONS[r.type] ?? <ExternalLink size={12} className="text-slate-400" />}
+                      </span>
+                      <div className="flex-1 min-w-0">
+                        {r.url ? (
+                          <a
+                            href={r.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-xs text-brand-600 hover:text-brand-800 hover:underline flex items-start gap-1 leading-snug"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            <span>{r.title}</span>
+                            <ExternalLink size={9} className="flex-shrink-0 mt-0.5" />
+                          </a>
+                        ) : (
+                          <span className="text-xs text-slate-700 leading-snug">{r.title}</span>
+                        )}
+                        <div className="flex items-center gap-1.5 mt-1">
+                          <Badge variant="slate" size="sm" className="capitalize">{r.type}</Badge>
+                          {platformLabel && (
+                            <span className="text-2xs text-slate-400 font-medium">{platformLabel}</span>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           )}

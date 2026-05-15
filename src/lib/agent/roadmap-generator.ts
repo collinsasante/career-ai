@@ -127,9 +127,8 @@ export async function generatePersonalizedRoadmap(
       description: s.description,
       resources:   (s.resources ?? []).map((r) => ({
         ...r,
-        url: (r.type === "video" || r.type === "course")
-          ? `https://www.youtube.com/results?search_query=${encodeURIComponent(r.title)}`
-          : r.url,
+        // URLs are resolved by the route's enrichResources() after generation
+        url: r.url ?? undefined,
       })),
     })),
   }));
