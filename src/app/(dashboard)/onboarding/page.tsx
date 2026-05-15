@@ -930,7 +930,7 @@ function StageSection({ stage }: { stage: StageRec }) {
       <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
         <div className="flex items-center gap-2 px-4 py-3 border-b border-slate-100 bg-amber-50/60">
           <GraduationCap size={15} className="text-amber-600" />
-          <span className="text-xs font-bold text-amber-700 uppercase tracking-wider">Recommended SHS Programmes</span>
+          <span className="text-xs font-bold text-amber-700 uppercase tracking-wider">Next Step: Choose Your SHS Programme</span>
         </div>
         <div className="divide-y divide-slate-100">
           {programs.slice(0, 4).map((p, i) => (
@@ -960,7 +960,7 @@ function StageSection({ stage }: { stage: StageRec }) {
       <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
         <div className="flex items-center gap-2 px-4 py-3 border-b border-slate-100 bg-violet-50/60">
           <Building2 size={15} className="text-violet-600" />
-          <span className="text-xs font-bold text-violet-700 uppercase tracking-wider">Tertiary Programme Options</span>
+          <span className="text-xs font-bold text-violet-700 uppercase tracking-wider">Next Step: University & Tertiary Options After SHS</span>
         </div>
         <div className="divide-y divide-slate-100">
           {programs.slice(0, 5).map((p, i) => (
@@ -994,7 +994,7 @@ function StageSection({ stage }: { stage: StageRec }) {
       <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
         <div className="flex items-center gap-2 px-4 py-3 border-b border-slate-100 bg-orange-50/60">
           <Award size={15} className="text-orange-600" />
-          <span className="text-xs font-bold text-orange-700 uppercase tracking-wider">Certifications & Opportunities</span>
+          <span className="text-xs font-bold text-orange-700 uppercase tracking-wider">Career Paths & Industry Certifications After TVET</span>
         </div>
         {certs.length > 0 && (
           <div className="divide-y divide-slate-100">
@@ -1029,11 +1029,12 @@ function StageSection({ stage }: { stage: StageRec }) {
   if (type === "university" || type === "polytechnic") {
     const internships: string[] = stage.internshipSectors ?? [];
     const certs: { name: string; rationale: string }[] = stage.certifications ?? [];
+    const label = type === "polytechnic" ? "Career Paths & Top-Up Degree Options" : "Career Paths & Internship Sectors to Target";
     return (
       <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
         <div className="flex items-center gap-2 px-4 py-3 border-b border-slate-100 bg-blue-50/60">
           <Briefcase size={15} className="text-blue-600" />
-          <span className="text-xs font-bold text-blue-700 uppercase tracking-wider">Internships & Certifications</span>
+          <span className="text-xs font-bold text-blue-700 uppercase tracking-wider">{label}</span>
         </div>
         {internships.length > 0 && (
           <div className="px-4 py-3 border-b border-slate-100">
@@ -1063,12 +1064,16 @@ function StageSection({ stage }: { stage: StageRec }) {
   if (type === "graduate" || type === "professional" || type === "switcher") {
     const paths: { title: string; description: string }[] = stage.advancementPaths ?? [];
     const transitions: { to: string; bridgeSkills: string[] }[] = stage.transitionPaths ?? [];
+    const sectionLabel =
+      type === "switcher" ? "Career Switch Roadmap & Bridge Skills" :
+      type === "graduate" ? "Entry-Level Career Paths & First Job Strategy" :
+      "Advancement & Growth Paths";
     return (
       <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
         <div className="flex items-center gap-2 px-4 py-3 border-b border-slate-100 bg-emerald-50/60">
           <ChevronUp size={15} className="text-emerald-600" />
           <span className="text-xs font-bold text-emerald-700 uppercase tracking-wider">
-            {type === "switcher" ? "Your Career Switch Plan" : "Advancement Paths"}
+            {sectionLabel}
           </span>
         </div>
         <div className="divide-y divide-slate-100">
@@ -1135,8 +1140,14 @@ function ResultsStep({ results, form, onDashboard }: {
             <span className="text-xs font-bold tracking-widest text-indigo-200 uppercase">Analysis Complete</span>
           </div>
           <h2 className="text-2xl font-extrabold tracking-tight">Your results are ready!</h2>
+          {edu && (
+            <div className="flex items-center gap-1.5 mt-2 mb-1">
+              <EduIcon size={12} className="text-indigo-300" />
+              <span className="text-xs font-semibold text-indigo-200">{edu.label} — {edu.desc}</span>
+            </div>
+          )}
           {results.stage && (
-            <p className="text-indigo-100/90 text-sm mt-1.5 leading-relaxed">{results.stage.headline}</p>
+            <p className="text-indigo-100/80 text-sm mt-1 leading-relaxed">{results.stage.subheadline}</p>
           )}
         </div>
       </motion.div>
@@ -1272,15 +1283,17 @@ export default function OnboardingPage() {
       const raw = localStorage.getItem(DRAFT_KEY);
       if (raw) {
         const s = JSON.parse(raw);
+        // Restore form values but always start at step 0 (welcome screen).
+        // This prevents a stale education stage from a previous session
+        // being silently carried into a new run.
         setForm(s.form ?? defaultForm);
-        setStep(s.step ?? 0);
       }
     } catch { /* ignore */ }
   }, []);
 
   useEffect(() => {
     if (step > 0 && step < 7) {
-      try { localStorage.setItem(DRAFT_KEY, JSON.stringify({ form, step })); } catch { /* ignore */ }
+      try { localStorage.setItem(DRAFT_KEY, JSON.stringify({ form })); } catch { /* ignore */ }
     }
   }, [form, step]);
 
